@@ -1,0 +1,11 @@
+node_modules
+dist
+build
+.next
+coverage
+.cache
+.tmp
+vendor
+target
+.venv
+.env
