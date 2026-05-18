@@ -28,9 +28,12 @@ export function AppShell({ children, dock = true, role }: { children: ReactNode;
   return (
     <main
       className={`mx-auto min-h-screen w-full max-w-[430px] ${shellBg} text-[#111111]`}
-      style={{ paddingBottom: dock ? "calc(8rem + env(safe-area-inset-bottom))" : undefined }}
+      style={{
+        paddingTop: "env(safe-area-inset-top)",
+        paddingBottom: dock ? "calc(8rem + env(safe-area-inset-bottom))" : "env(safe-area-inset-bottom)",
+      }}
     >
-      <div className="px-4 pb-6 pt-4 overflow-x-hidden [&_table]:text-xs">{children}</div>
+      <div className="px-4 pt-4 pb-6 overflow-x-hidden [&_table]:text-xs">{children}</div>
       {dock ? <BottomDock role={role} /> : null}
     </main>
   );
