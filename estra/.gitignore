@@ -9,4 +9,5 @@ vendor
 target
 .venv
 .env
-/.junie/
+.idea
+.junie

@@ -12,7 +12,7 @@ import {
 import { Dashboard } from "./pages/Dashboard";
 import { Landing } from "./pages/Landing";
 import { MapPage } from "./pages/MapPage";
-import { AppShell, MobileNativeApp } from "./pages/MobileNativeApp";
+import { AppShell, MoreScreen } from "./pages/MobileNativeApp";
 import { Properties } from "./pages/Properties";
 import { Reports } from "./pages/Reports";
 import { Agents } from "./pages/Agents";
@@ -102,7 +102,7 @@ function MobileRoutes({ role }: { role: UserRole }) {
       <Route path="/reports" element={<M role={role}><Reports /></M>} />
       <Route path="/notifications" element={<M role={role}><NotificationsPage /></M>} />
       <Route path="/settings" element={<M role={role}><SettingsPage /></M>} />
-      <Route path="/more" element={<MobileNativeApp role={role} />} />
+      <Route path="/more" element={<MoreScreen role={role} />} />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );

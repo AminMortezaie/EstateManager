@@ -374,7 +374,7 @@ function ChatScreen({ role }: { role: UserRole }) {
   );
 }
 
-function MoreScreen({ role }: { role: UserRole }) {
+export function MoreScreen({ role }: { role: UserRole }) {
   const { state, logout } = useAppState();
   const navigate = useNavigate();
   const links = desktopLinksByRole[role];
