@@ -26,19 +26,11 @@ const mintBg = "bg-[#e8f8ea]";
 
 export function AppShell({ children, dock = true, role }: { children: ReactNode; dock?: boolean; role: UserRole }) {
   return (
-    <main className={`mx-auto min-h-screen w-full max-w-[430px] ${shellBg} text-[#111111] pb-24`}>
-      <div className="sticky top-0 z-20 bg-[#f6f4ee]/95 px-5 pb-3 pt-4 backdrop-blur">
-        <div className="flex items-center justify-between text-[13px] font-semibold">
-          <span>13:13</span>
-          <div className="h-8 w-28 rounded-full bg-[#102022]" />
-          <div className="flex items-center gap-1 text-[11px] text-slate-500">
-            <span className="h-2 w-2 rounded-full bg-slate-700" />
-            <span className="h-2 w-2 rounded-full bg-slate-700" />
-            <span className="h-2 w-2 rounded-full bg-slate-700" />
-          </div>
-        </div>
-      </div>
-      <div className="px-5 pb-6">{children}</div>
+    <main
+      className={`mx-auto min-h-screen w-full max-w-[430px] ${shellBg} text-[#111111]`}
+      style={{ paddingBottom: dock ? "calc(8rem + env(safe-area-inset-bottom))" : undefined }}
+    >
+      <div className="px-4 pb-6 pt-4 overflow-x-hidden [&_table]:text-xs">{children}</div>
       {dock ? <BottomDock role={role} /> : null}
     </main>
   );
@@ -121,7 +113,10 @@ export function BottomDock({ role }: { role: UserRole }) {
         ];
 
   return (
-    <nav className="fixed bottom-0 inset-x-0 z-50 flex justify-center px-5 pb-4 pointer-events-none">
+    <nav
+      className="fixed bottom-0 inset-x-0 z-50 flex justify-center px-5 pointer-events-none"
+      style={{ paddingBottom: "calc(1rem + env(safe-area-inset-bottom))" }}
+    >
       <div className="w-full max-w-[430px] rounded-[28px] border border-white/80 bg-[#fbfaf6]/95 p-2 shadow-[0_12px_30px_rgba(0,0,0,0.06)] backdrop-blur pointer-events-auto">
         <div className="grid grid-cols-4 gap-2">
           {items.map((item) => (
