@@ -1,21 +1,24 @@
-import { ReactNode } from "react";
+import { ReactNode, useState, FormEvent } from "react";
 import {
   ArrowLeft,
   Bath,
+  Bell,
   BedDouble,
   Building2,
   ChevronRight,
-  CircleEllipsis,
+  LogOut,
   Paperclip,
+  Plus,
   SendHorizontal,
   Share2,
   Trophy,
   Users,
 } from "lucide-react";
-import { Navigate, NavLink, Route, Routes } from "react-router-dom";
-import { agents, nodes, properties, roleWindows, sourcingBreakdown } from "../data/mockData";
-import { roleMeta, UserRole } from "../lib/roles";
+import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
+import { agents, nodes, properties, sourcingBreakdown } from "../data/mockData";
+import { roleMeta, UserRole, desktopLinksByRole } from "../lib/roles";
 import { cls } from "../lib/ui";
+import { useAppState } from "../state/AppState";
 
 const shellBg = "bg-[#f6f4ee]";
 const cardBg = "bg-[#fbfaf6]";
@@ -94,13 +97,28 @@ export function Pill({ children, dark = false }: { children: ReactNode; dark?: b
   );
 }
 
-export function BottomDock({ role: _role }: { role: UserRole }) {
-  const items = [
-    { to: `/dashboard`, label: "Overview" },
-    { to: `/properties`, label: "Inventory" },
-    { to: `/chat`, label: "Chat" },
-    { to: `/more`, label: "More" },
-  ];
+export function BottomDock({ role }: { role: UserRole }) {
+  const items =
+    role === "agent"
+      ? [
+          { to: `/dashboard`, label: "My Day" },
+          { to: `/add-listing`, label: "Add" },
+          { to: `/conflict-check`, label: "Check" },
+          { to: `/more`, label: "More" },
+        ]
+      : role === "secretary"
+      ? [
+          { to: `/dashboard`, label: "Overview" },
+          { to: `/ops`, label: "Live" },
+          { to: `/properties`, label: "Inventory" },
+          { to: `/more`, label: "More" },
+        ]
+      : [
+          { to: `/dashboard`, label: "Overview" },
+          { to: `/ops`, label: "Live" },
+          { to: `/leaderboard`, label: "Leaderboard" },
+          { to: `/more`, label: "More" },
+        ];
 
   return (
     <nav className="fixed bottom-0 inset-x-0 z-50 flex justify-center px-5 pb-4 pointer-events-none">
@@ -135,11 +153,30 @@ function OverviewScreen({ role }: { role: UserRole }) {
       ? "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
       : property.image;
 
+  const priorityItems =
+    role === "director"
+      ? [
+          { label: "Review node subscription health and at-risk renewals.", to: "/nodes" },
+          { label: "Approve exclusive listing ownership and conflict routing.", to: "/conflict-check" },
+          { label: "Check leaderboard and commission approval queue.", to: "/leaderboard" },
+        ]
+      : role === "secretary"
+      ? [
+          { label: "Monitor live agent statuses and district coverage.", to: "/ops" },
+          { label: "Coordinate owner paperwork and follow-up queues.", to: "/owners" },
+          { label: "Prevent duplicate field assignments from the inventory history.", to: "/conflict-check" },
+        ]
+      : [
+          { label: "Update your field status before leaving the office.", to: "/ops" },
+          { label: "Review exclusive and recently visited properties.", to: "/properties" },
+          { label: "Log sourcing method and progress toward today\u2019s options goal.", to: "/add-listing" },
+        ];
+
   return (
     <AppShell role={role}>
       <PageHeader
         title={role === "agent" ? "My Day" : role === "secretary" ? "Operations Board" : "Director Board"}
-        left={<CircleLink to="/"><ArrowLeft size={18} /></CircleLink>}
+        left={<CircleLink to="/notifications"><Bell size={18} /></CircleLink>}
         right={<CircleLink to={`/more`}><Share2 size={18} /></CircleLink>}
       />
 
@@ -174,32 +211,15 @@ function OverviewScreen({ role }: { role: UserRole }) {
       <Surface className="mt-4 p-5">
         <div className="mb-4 flex items-center justify-between">
           <p className="text-[18px] font-medium">Priority Flow</p>
-          <CircleEllipsis size={18} className="text-slate-500" />
         </div>
         <div className="space-y-4">
-          {(role === "director"
-            ? [
-                "Review node subscription health and at-risk renewals.",
-                "Approve exclusive listing ownership and conflict routing.",
-                "Check leaderboard and commission approval queue.",
-              ]
-            : role === "secretary"
-            ? [
-                "Monitor live agent statuses and district coverage.",
-                "Coordinate owner paperwork and follow-up queues.",
-                "Prevent duplicate field assignments from the inventory history.",
-              ]
-            : [
-                "Update your field status before leaving the office.",
-                "Review exclusive and recently visited properties.",
-                "Log sourcing method and progress toward today’s options goal.",
-              ]).map((item) => (
+          {priorityItems.map((item) => (
             <NavLink
-              key={item}
-              to={role === "agent" ? `/properties` : role === "secretary" ? `/chat` : `/more`}
+              key={item.label}
+              to={item.to}
               className="flex items-start justify-between gap-3 rounded-[22px] p-2 transition active:bg-white/70"
             >
-              <p className="text-[15px] text-slate-600">{item}</p>
+              <p className="text-[15px] text-slate-600">{item.label}</p>
               <ChevronRight size={18} className="mt-1 text-slate-300" />
             </NavLink>
           ))}
@@ -217,7 +237,7 @@ function WorkspaceScreen({ role }: { role: UserRole }) {
       <PageHeader
         title={role === "agent" ? "Property Details" : role === "secretary" ? "Operations Detail" : "Agency Detail"}
         left={<CircleLink to={`/dashboard`}><ArrowLeft size={18} /></CircleLink>}
-        right={<CircleLink to={`/chat`}><Share2 size={18} /></CircleLink>}
+        right={<CircleLink to={`/properties`}><Share2 size={18} /></CircleLink>}
       />
 
       <Surface className="overflow-hidden p-3">
@@ -249,7 +269,6 @@ function WorkspaceScreen({ role }: { role: UserRole }) {
       <Surface className="mt-4 p-5">
         <div className="mb-4 flex items-center justify-between">
           <p className="text-[18px] font-medium">Details</p>
-          <CircleEllipsis size={18} className="text-slate-500" />
         </div>
         <div className="space-y-4 text-[15px]">
           {(role === "director"
@@ -285,6 +304,14 @@ function WorkspaceScreen({ role }: { role: UserRole }) {
 
 function ChatScreen({ role }: { role: UserRole }) {
   const avatar = role === "director" ? agents[5].avatar : role === "secretary" ? agents[3].avatar : agents[0].avatar;
+  const [draft, setDraft] = useState("");
+  const [messages, setMessages] = useState<string[]>([]);
+  const send = (e: FormEvent) => {
+    e.preventDefault();
+    if (!draft.trim()) return;
+    setMessages((m) => [...m, draft.trim()]);
+    setDraft("");
+  };
 
   return (
     <AppShell role={role}>
@@ -319,29 +346,40 @@ function ChatScreen({ role }: { role: UserRole }) {
               {role === "director"
                 ? "Approve exclusive ownership after secretary confirms paperwork."
                 : role === "secretary"
-                ? "I’ll update the status board and block duplicate outreach."
+                ? "I\u2019ll update the status board and block duplicate outreach."
                 : "Need owner phone number and whether the listing is already visited."}
             </p>
           </div>
+          {messages.map((m, i) => (
+            <div key={i} className="mt-3 rounded-[26px] bg-black px-4 py-3 text-white">
+              <p className="text-[15px]">{m}</p>
+            </div>
+          ))}
         </Surface>
       </div>
 
-      <div className="mt-6 flex items-center gap-3 rounded-[32px] bg-white px-5 py-4 shadow-[0_10px_24px_rgba(0,0,0,0.05)]">
-        <span className="flex-1 text-[17px] text-slate-400">Enter your message</span>
-        <Paperclip size={20} className="text-slate-500" />
-        <button className="flex h-14 w-14 items-center justify-center rounded-full bg-black text-white">
+      <form onSubmit={send} className="mt-6 flex items-center gap-3 rounded-[32px] bg-white px-5 py-4 shadow-[0_10px_24px_rgba(0,0,0,0.05)]">
+        <input
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          placeholder="Enter your message"
+          className="flex-1 bg-transparent text-[17px] outline-none placeholder:text-slate-400"
+        />
+        <button type="button" className="text-slate-500" title="Attach">
+          <Paperclip size={20} />
+        </button>
+        <button type="submit" className="flex h-14 w-14 items-center justify-center rounded-full bg-black text-white disabled:opacity-40" disabled={!draft.trim()}>
           <SendHorizontal size={20} />
         </button>
-      </div>
+      </form>
     </AppShell>
   );
 }
 
 function MoreScreen({ role }: { role: UserRole }) {
-  const permissions = roleWindows.find(
-    (window) =>
-      window.role.toLowerCase() === (role === "director" ? "director" : role === "secretary" ? "secretary" : "agent")
-  );
+  const { state, logout } = useAppState();
+  const navigate = useNavigate();
+  const links = desktopLinksByRole[role];
 
   return (
     <AppShell role={role}>
@@ -351,26 +389,52 @@ function MoreScreen({ role }: { role: UserRole }) {
         right={<Pill>{roleMeta[role].badge}</Pill>}
       />
 
+      {state.user && (
+        <Surface className="mb-4 p-5">
+          <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Signed in</p>
+          <p className="mt-1 text-[18px] font-medium">{state.user.displayName}</p>
+          <p className="text-sm text-slate-500">{state.user.username} · {state.user.role}</p>
+          <button
+            onClick={() => {
+              logout();
+              navigate("/login", { replace: true });
+            }}
+            className="mt-4 inline-flex items-center gap-2 rounded-[18px] bg-black px-4 py-2.5 text-sm font-medium text-white"
+          >
+            <LogOut size={14} /> Sign out
+          </button>
+        </Surface>
+      )}
+
       <Surface className="mt-4 p-5">
         <div className="mb-4 flex items-center justify-between">
-          <p className="text-[18px] font-medium">Allowed Access</p>
+          <p className="text-[18px] font-medium">All Features</p>
           <Users size={18} className="text-slate-500" />
         </div>
-        <div className="space-y-4">
-          {(permissions?.access ?? []).map((item) => {
-            const link = item.toLowerCase().includes("agents") ? "/agents" :
-                         item.toLowerCase().includes("inventory") || item.toLowerCase().includes("listings") ? "/properties" :
-                         item.toLowerCase().includes("map") || item.toLowerCase().includes("districts") ? "/map" :
-                         item.toLowerCase().includes("dashboard") || item.toLowerCase().includes("overview") ? "/dashboard" : "/properties";
+        <div className="space-y-2">
+          {links.map((link) => {
+            const Icon = link.icon;
             return (
-              <NavLink key={item} to={link} className="flex items-center justify-between rounded-[18px] p-1.5 transition active:bg-white">
-                <p className="text-[15px] text-slate-600">{item}</p>
+              <NavLink key={link.to} to={link.to} className="flex items-center justify-between rounded-[18px] p-2 transition active:bg-white">
+                <div className="flex items-center gap-3">
+                  <Icon size={16} className="text-slate-500" />
+                  <p className="text-[15px] text-slate-700">{link.label}</p>
+                </div>
                 <ChevronRight size={18} className="text-slate-300" />
               </NavLink>
             );
           })}
         </div>
       </Surface>
+
+      {role === "agent" && (
+        <NavLink
+          to="/add-listing"
+          className="mt-4 flex items-center justify-center gap-2 rounded-[22px] bg-black px-4 py-4 text-sm font-medium text-white"
+        >
+          <Plus size={16} /> Add new listing
+        </NavLink>
+      )}
 
       <Surface className="mt-4 p-5">
         <div className="mb-4 flex items-center justify-between">
@@ -403,7 +467,7 @@ export function MobileNativeApp({
   return (
     <Routes>
       <Route path="dashboard" element={<OverviewScreen role={role} />} />
-      <Route path="properties" element={<WorkspaceScreen role={role} />} />
+      <Route path="workspace" element={<WorkspaceScreen role={role} />} />
       <Route path="chat" element={<ChatScreen role={role} />} />
       <Route path="more" element={<MoreScreen role={role} />} />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
