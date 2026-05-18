@@ -9,15 +9,15 @@ interface StatCardProps {
 
 export function StatCard({ label, value, change, icon: Icon }: StatCardProps) {
   return (
-    <article className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft">
-      <div className="mb-4 flex items-center justify-between">
+    <article className="rounded-[28px] border border-white/80 bg-[#fbfaf6] px-5 py-4 shadow-[0_10px_28px_rgba(0,0,0,0.04)]">
+      <div className="mb-2 flex items-center justify-between">
         <p className="text-sm font-medium text-slate-500">{label}</p>
-        <div className="rounded-xl bg-brand-50 p-2 text-brand-600">
-          <Icon size={18} />
+        <div className="rounded-[18px] bg-[#e8f8ea] p-2 text-[#1a9d36]">
+          <Icon size={15} />
         </div>
       </div>
-      <p className="text-2xl font-semibold text-slate-900">{value}</p>
-      <p className="mt-1 text-xs font-medium text-emerald-600">{change}</p>
+      <p className="text-3xl font-medium leading-none tracking-tight text-[#111111]">{value}</p>
+      <p className="mt-2 text-sm font-medium text-slate-400">{change}</p>
     </article>
   );
 }

@@ -2,7 +2,11 @@ import { Activity, MapPin } from "lucide-react";
 import { Agent } from "../data/mockData";
 import { cls } from "../lib/ui";
 
-const statusClasses = {
+const statusClasses: Record<Agent["status"], string> = {
+  "In-Office": "bg-emerald-50 text-emerald-700",
+  "Coffee Break": "bg-amber-50 text-amber-700",
+  "Lunch Break": "bg-orange-50 text-orange-700",
+  "On-Field": "bg-indigo-50 text-indigo-700",
   Available: "bg-emerald-50 text-emerald-700",
   "In Visit": "bg-indigo-50 text-indigo-700",
   Traveling: "bg-amber-50 text-amber-700",
@@ -42,7 +46,7 @@ export function AgentCard({ agent, onClick }: AgentCardProps) {
         </p>
         <p className="flex items-center gap-2">
           <Activity size={14} />
-          Visits today: {agent.visitsToday} - Score {agent.score}
+          Options today: {agent.actualOptions} - Score {agent.score}
         </p>
       </div>
     </article>

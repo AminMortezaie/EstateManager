@@ -1,59 +1,113 @@
-import { useState } from "react";
-import { AgentCard } from "../components/AgentCard";
+import { Activity, Coffee, MapPinned, Target } from "lucide-react";
 import { Topbar } from "../components/Topbar";
-import { Agent, agents } from "../data/mockData";
+import { agents } from "../data/mockData";
+
+const statusTone: Record<string, string> = {
+  "In-Office": "bg-emerald-50 text-emerald-700",
+  "Coffee Break": "bg-amber-50 text-amber-700",
+  "Lunch Break": "bg-orange-50 text-orange-700",
+  "On-Field": "bg-indigo-50 text-indigo-700",
+};
 
 export function Agents() {
-  const [selected, setSelected] = useState<Agent | null>(null);
-
   return (
     <div>
-      <Topbar title="Agents" subtitle="Team availability, location, and daily productivity" />
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {agents.map((agent) => (
-          <AgentCard key={agent.id} agent={agent} onClick={() => setSelected(agent)} />
-        ))}
-      </div>
-
-      {selected && (
-        <div className="fixed inset-0 z-20 grid place-items-center bg-slate-900/35 p-4" onClick={() => setSelected(null)}>
-          <div
-            className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 shadow-soft"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="mb-4 flex items-center gap-3">
-              <img src={selected.avatar} alt={selected.name} className="h-14 w-14 rounded-2xl object-cover" />
-              <div>
-                <h3 className="text-lg font-semibold text-slate-900">{selected.name}</h3>
-                <p className="text-sm text-slate-500">{selected.location}</p>
-              </div>
-            </div>
-            <div className="space-y-2 text-sm text-slate-600">
-              <p>
-                <span className="font-semibold text-slate-900">Status:</span> {selected.status}
-              </p>
-              <p>
-                <span className="font-semibold text-slate-900">Visits Today:</span> {selected.visitsToday}
-              </p>
-              <p>
-                <span className="font-semibold text-slate-900">Performance Score:</span> {selected.score}/100
-              </p>
-              <p>
-                <span className="font-semibold text-slate-900">Phone:</span> {selected.phone}
-              </p>
-              <p>
-                <span className="font-semibold text-slate-900">Email:</span> {selected.email}
-              </p>
-            </div>
-            <button
-              onClick={() => setSelected(null)}
-              className="mt-5 w-full rounded-xl bg-brand-600 px-3 py-2 text-sm font-semibold text-white hover:bg-brand-700"
-            >
-              Close
-            </button>
+      <Topbar
+        title="Real-Time Operations"
+        subtitle="Live agent status, district assignments, field research coverage, and daily activity"
+      />
+      <section className="grid gap-4 xl:grid-cols-[1.4fr_1fr]">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
+          <div className="mb-4 flex items-center gap-2">
+            <Activity size={17} className="text-brand-600" />
+            <h3 className="text-lg font-semibold text-slate-900">Live status tracker</h3>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2">
+            {agents.map((agent) => (
+              <article key={agent.id} className="rounded-xl border border-slate-200 p-4">
+                <div className="flex items-start gap-3">
+                  <img src={agent.avatar} alt={agent.name} className="h-12 w-12 rounded-xl object-cover" />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="text-sm font-semibold text-slate-900">{agent.name}</h3>
+                      <span className={`rounded-full px-2 py-1 text-[11px] font-medium ${statusTone[agent.status] ?? "bg-slate-100 text-slate-700"}`}>
+                        {agent.status}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-xs text-slate-500">{agent.role} • {agent.specialty}</p>
+                    <p className="mt-3 text-sm text-slate-600">{agent.location}</p>
+                  </div>
+                </div>
+                <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                  <div className="rounded-lg bg-slate-50 p-3">
+                    <p className="text-xs text-slate-500">District</p>
+                    <p className="mt-1 text-sm font-semibold text-slate-900">{agent.district}</p>
+                  </div>
+                  <div className="rounded-lg bg-slate-50 p-3">
+                    <p className="text-xs text-slate-500">Options today</p>
+                    <p className="mt-1 text-sm font-semibold text-slate-900">
+                      {agent.actualOptions}/{agent.dailyTarget || 0}
+                    </p>
+                  </div>
+                </div>
+                <p className="mt-3 text-xs text-slate-500">Primary sourcing: {agent.sourcingMethod}</p>
+              </article>
+            ))}
           </div>
         </div>
-      )}
+
+        <div className="space-y-4">
+          <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
+            <div className="mb-3 flex items-center gap-2">
+              <MapPinned size={16} className="text-brand-600" />
+              <h3 className="text-lg font-semibold text-slate-900">District coverage</h3>
+            </div>
+            <div className="space-y-2">
+              {["Arabkir", "Ajapnyak", "Nor Nork", "Shengavit", "Commercial Spaces"].map((zone) => {
+                const assigned = agents.filter(
+                  (agent) => agent.district === zone || agent.specialty === zone
+                );
+                return (
+                  <div key={zone} className="rounded-xl bg-slate-50 p-3">
+                    <p className="text-sm font-medium text-slate-900">{zone}</p>
+                    <p className="text-xs text-slate-500">
+                      {assigned.length > 0 ? assigned.map((agent) => agent.name).join(", ") : "Unassigned"}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
+            <div className="mb-3 flex items-center gap-2">
+              <Target size={16} className="text-brand-600" />
+              <h3 className="text-lg font-semibold text-slate-900">Field research rules</h3>
+            </div>
+            <ul className="space-y-3 text-sm text-slate-600">
+              <li>On-field agents are sourcing unlisted properties through neighbors and building guards.</li>
+              <li>Each district should have a clearly assigned primary agent to avoid duplicated effort.</li>
+              <li>Exclusive leads must be locked immediately into the protected inventory window.</li>
+            </ul>
+          </article>
+
+          <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
+            <div className="mb-3 flex items-center gap-2">
+              <Coffee size={16} className="text-amber-500" />
+              <h3 className="text-lg font-semibold text-slate-900">Break visibility</h3>
+            </div>
+            <div className="space-y-2 text-sm text-slate-600">
+              {agents
+                .filter((agent) => agent.status === "Coffee Break" || agent.status === "Lunch Break")
+                .map((agent) => (
+                  <div key={agent.id} className="rounded-xl bg-slate-50 p-3">
+                    {agent.name} • {agent.status}
+                  </div>
+                ))}
+            </div>
+          </article>
+        </div>
+      </section>
     </div>
   );
 }
