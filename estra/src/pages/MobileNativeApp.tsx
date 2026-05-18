@@ -14,7 +14,7 @@ import {
   Trophy,
   Users,
 } from "lucide-react";
-import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, NavLink, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { agents, nodes, properties, sourcingBreakdown } from "../data/mockData";
 import { roleMeta, UserRole, desktopLinksByRole } from "../lib/roles";
 import { cls } from "../lib/ui";
@@ -92,8 +92,10 @@ export function Pill({ children, dark = false }: { children: ReactNode; dark?: b
   );
 }
 
+type DockItem = { to: string; label: string };
+
 export function BottomDock({ role }: { role: UserRole }) {
-  const items =
+  const items: DockItem[] =
     role === "agent"
       ? [
           { to: `/dashboard`, label: "My Day" },
@@ -111,9 +113,15 @@ export function BottomDock({ role }: { role: UserRole }) {
       : [
           { to: `/dashboard`, label: "Overview" },
           { to: `/ops`, label: "Live" },
-          { to: `/leaderboard`, label: "Leaderboard" },
+          { to: `/leaderboard`, label: "Ranking" },
           { to: `/more`, label: "More" },
         ];
+
+  const { pathname } = useLocation();
+  const primaryRoutes = items.filter((i) => i.to !== "/more").map((i) => i.to);
+  const matchesAnyPrimary = primaryRoutes.some(
+    (r) => pathname === r || pathname.startsWith(r + "/")
+  );
 
   return (
     <nav
@@ -122,20 +130,24 @@ export function BottomDock({ role }: { role: UserRole }) {
     >
       <div className="w-full max-w-[430px] rounded-[28px] border border-white/80 bg-[#fbfaf6]/95 p-2 shadow-[0_12px_30px_rgba(0,0,0,0.06)] backdrop-blur pointer-events-auto">
         <div className="grid grid-cols-4 gap-2">
-          {items.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                cls(
+          {items.map((item) => {
+            const matchesOwn = pathname === item.to || pathname.startsWith(item.to + "/");
+            const isMoreItem = item.to === "/more";
+            const isActive = matchesOwn || (isMoreItem && !matchesAnyPrimary);
+            return (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end
+                className={cls(
                   "rounded-[22px] px-3 py-3 text-center text-[12px] font-medium transition",
                   isActive ? "bg-black text-white" : "text-slate-500"
-                )
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
+                )}
+              >
+                {item.label}
+              </NavLink>
+            );
+          })}
         </div>
       </div>
     </nav>
