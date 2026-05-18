@@ -4,14 +4,23 @@
 
 :root {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+  --surface-bg: #f6f4ee;
+  --surface-card: #fbfaf6;
+  --surface-mint: #e8f8ea;
+  --surface-ink: #111111;
 }
 
 body {
   margin: 0;
-  background: #f8fafc;
-  color: #0f172a;
+  background: var(--surface-bg);
+  color: var(--surface-ink);
 }
 
 * {
   box-sizing: border-box;
+}
+
+#root {
+  min-height: 100vh;
 }

@@ -2,7 +2,12 @@ import { Building2, UserRound } from "lucide-react";
 import { Property } from "../data/mockData";
 import { cls } from "../lib/ui";
 
-const statusColors = {
+const statusColors: Record<Property["status"], string> = {
+  Exclusive: "bg-amber-50 text-amber-700",
+  "Open Inventory": "bg-emerald-50 text-emerald-700",
+  "Visited by Team": "bg-blue-50 text-blue-700",
+  "Client Match": "bg-purple-50 text-purple-700",
+  Closed: "bg-slate-100 text-slate-700",
   Available: "bg-emerald-50 text-emerald-700",
   Visited: "bg-blue-50 text-blue-700",
   "Interested Client": "bg-purple-50 text-purple-700",
