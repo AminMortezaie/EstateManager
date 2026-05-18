@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useMemo, useState } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Sidebar } from "./components/Sidebar";
 import { MobilePreview } from "./components/MobilePreview";
 import {
@@ -26,6 +26,17 @@ import { Leaderboard } from "./pages/Leaderboard";
 import { NodesAdmin } from "./pages/NodesAdmin";
 import { desktopLinksByRole, UserRole } from "./lib/roles";
 import { useAppState } from "./state/AppState";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    document.querySelectorAll<HTMLElement>("main, [data-scroll-container]").forEach((el) => {
+      el.scrollTop = 0;
+    });
+  }, [pathname]);
+  return null;
+}
 
 function DesktopRoleHome({ role }: { role: UserRole }) {
   if (role === "director") return <Dashboard />;
@@ -147,20 +158,26 @@ export default function App() {
 
   if (isMobileViewport) {
     return (
-      <Routes>
-        <Route path="/login" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/*" element={<MobileRoutes role={role} />} />
-      </Routes>
+      <>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/login" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/*" element={<MobileRoutes role={role} />} />
+        </Routes>
+      </>
     );
   }
 
   return (
-    <Routes>
-      <Route path="/login" element={<Navigate to="/dashboard" replace />} />
-      <Route path="/landing" element={<Landing />} />
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
-      <Route path="/*" element={<AppLayout role={role} />} />
-    </Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/login" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/landing" element={<Landing />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/*" element={<AppLayout role={role} />} />
+      </Routes>
+    </>
   );
 }
