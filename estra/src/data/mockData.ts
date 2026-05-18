@@ -262,7 +262,7 @@ export const agents: Agent[] = [
     id: "a5",
     name: "Vardan Sargsyan",
     avatar:
-      "https://images.unsplash.com/photo-1502767089025-6572583495b0?auto=format&fit=crop&w=200&q=80",
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
     status: "On-Field",
     location: "Gai Ave, Nor Nork",
     district: "Nor Nork",

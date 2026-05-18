@@ -1,199 +1,611 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import {
   BellRing,
+  CheckCheck,
   CreditCard,
   Layers3,
-  Presentation,
-  Settings2,
+  LogOut,
   ShieldCheck,
+  Sparkles,
   UsersRound,
+  Activity,
+  AlertTriangle,
+  Building2,
+  Trash2,
+  Plus,
+  Settings2,
+  Moon,
+  Sun,
 } from "lucide-react";
-import { MobilePreview } from "../components/MobilePreview";
 import { Topbar } from "../components/Topbar";
-import { commissionScenarios, nodes, roleWindows } from "../data/mockData";
+import { useAppState, ACCOUNTS } from "../state/AppState";
+import { desktopLinksByRole, UserRole, roleMeta } from "../lib/roles";
+import { cls } from "../lib/ui";
 
 function Card({
   title,
   icon: Icon,
   children,
+  action,
 }: {
   title: string;
   icon: typeof UsersRound;
   children: ReactNode;
+  action?: ReactNode;
 }) {
   return (
-    <article className="rounded-xl border border-slate-200 bg-white p-4">
-      <p className="mb-3 inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
-        <Icon size={15} className="text-brand-600" />
-        {title}
-      </p>
+    <article className="rounded-2xl border border-[#efe9dd] bg-white p-4 shadow-[0_10px_28px_rgba(0,0,0,0.04)]">
+      <div className="mb-3 flex items-center justify-between gap-2">
+        <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
+          <Icon size={15} className="text-brand-600" />
+          {title}
+        </p>
+        {action}
+      </div>
       {children}
     </article>
   );
 }
 
+function Kpi({ label, value, accent }: { label: string; value: string | number; accent?: string }) {
+  return (
+    <div className="rounded-2xl border border-[#efe9dd] bg-white p-4">
+      <p className="text-[11px] uppercase tracking-[0.18em] text-slate-500">{label}</p>
+      <p className={cls("mt-1 text-xl font-semibold", accent ?? "text-slate-800")}>{value}</p>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  ClientsPage — live subscription / nodes overview                          */
+/* -------------------------------------------------------------------------- */
 export function ClientsPage() {
+  const { state } = useAppState();
+  const navigate = useNavigate();
+  const nodes = state.nodes;
+
+  const [statusFilter, setStatusFilter] = useState<"All" | "Active" | "Trial" | "At Risk">("All");
+  const filtered = statusFilter === "All" ? nodes : nodes.filter((n) => n.status === statusFilter);
+
+  const active = nodes.filter((n) => n.status === "Active").length;
+  const trial = nodes.filter((n) => n.status === "Trial").length;
+  const pastDue = nodes.filter((n) => n.status === "At Risk").length;
+  const mrr = nodes
+    .filter((n) => n.status !== "At Risk")
+    .reduce((sum, n) => sum + (parseFloat(String(n.mrr).replace(/[^0-9.]/g, "")) || 0), 0);
+
+  const canManage = state.user?.role === "director";
+
   return (
     <div>
-      <Topbar title="Master Admin - Node & Subscription Management" subtitle="Platform owner view for agency onboarding, activation, and renewals" />
-      <section className="grid gap-4 xl:grid-cols-[1.1fr_1fr]">
-        <Card title="Agency Node Onboarding" icon={ShieldCheck}>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div className="rounded-xl bg-slate-50 p-3">
-              <p className="text-xs text-slate-500">Step 1</p>
-              <p className="mt-1 text-sm font-semibold text-slate-900">Create agency node</p>
-              <p className="mt-1 text-xs text-slate-500">Provision a secure workspace for the subscribing agency.</p>
-            </div>
-            <div className="rounded-xl bg-slate-50 p-3">
-              <p className="text-xs text-slate-500">Step 2</p>
-              <p className="mt-1 text-sm font-semibold text-slate-900">Assign director and seats</p>
-              <p className="mt-1 text-xs text-slate-500">Define node owner, roles, and package capacity.</p>
-            </div>
-            <div className="rounded-xl bg-slate-50 p-3">
-              <p className="text-xs text-slate-500">Step 3</p>
-              <p className="mt-1 text-sm font-semibold text-slate-900">Activate billing</p>
-              <p className="mt-1 text-xs text-slate-500">Start subscription cycle and mark continuity checks.</p>
-            </div>
-            <div className="rounded-xl bg-slate-50 p-3">
-              <p className="text-xs text-slate-500">Step 4</p>
-              <p className="mt-1 text-sm font-semibold text-slate-900">Enable scale</p>
-              <p className="mt-1 text-xs text-slate-500">New nodes can be added without changing the product structure.</p>
-            </div>
-          </div>
-        </Card>
+      <Topbar
+        title="Master Admin — Node & Subscription Management"
+        subtitle="Platform owner view for agency onboarding, activation, and renewals"
+      />
 
-        <Card title="Subscription Tracking" icon={Layers3}>
-          <div className="space-y-3">
-            {nodes.map((node) => (
-              <div key={node.id} className="rounded-xl border border-slate-200 p-3">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <p className="text-sm font-medium text-slate-900">{node.agency}</p>
-                    <p className="text-xs text-slate-500">
-                      {node.plan} • {node.seats} seats • {node.mrr}
-                    </p>
-                  </div>
-                  <span
-                    className={`rounded-full px-2 py-1 text-xs font-medium ${
-                      node.status === "Active"
-                        ? "bg-emerald-50 text-emerald-700"
-                        : node.status === "Trial"
-                        ? "bg-blue-50 text-blue-700"
-                        : "bg-rose-50 text-rose-700"
-                    }`}
-                  >
-                    {node.status}
-                  </span>
+      <div className="mb-4 grid gap-3 sm:grid-cols-4">
+        <Kpi label="Total Nodes" value={nodes.length} />
+        <Kpi label="Active" value={active} accent="text-emerald-700" />
+        <Kpi label="Trial" value={trial} accent="text-blue-700" />
+        <Kpi label="At Risk" value={pastDue} accent="text-rose-700" />
+      </div>
+
+      <div className="mb-4 flex flex-wrap items-center gap-2">
+        {(["All", "Active", "Trial", "At Risk"] as const).map((s) => (
+          <button
+            key={s}
+            onClick={() => setStatusFilter(s)}
+            className={cls(
+              "rounded-full border px-3 py-1.5 text-xs transition",
+              statusFilter === s
+                ? "border-black bg-black text-white"
+                : "border-[#ece6db] bg-white text-slate-600 hover:bg-slate-50"
+            )}
+          >
+            {s}
+          </button>
+        ))}
+        <span className="ml-auto text-xs text-slate-500">
+          Approx MRR: <strong className="text-slate-800">${mrr.toLocaleString()}</strong>
+        </span>
+        {canManage && (
+          <button
+            onClick={() => navigate("/nodes")}
+            className="inline-flex items-center gap-1 rounded-full bg-black px-3 py-1.5 text-xs text-white hover:bg-slate-800"
+          >
+            <Plus size={12} /> Manage Nodes
+          </button>
+        )}
+      </div>
+
+      <Card title="Subscriptions" icon={Layers3}>
+        {filtered.length === 0 && (
+          <p className="rounded-xl bg-slate-50 px-3 py-3 text-xs text-slate-500">No nodes for this filter.</p>
+        )}
+        <div className="space-y-2">
+          {filtered.map((node) => (
+            <div key={node.id} className="rounded-xl border border-[#efe9dd] p-3">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium text-slate-900">{node.agency}</p>
+                  <p className="truncate text-xs text-slate-500">
+                    {node.plan} · {node.seats} seats · {node.mrr}
+                  </p>
                 </div>
-                <p className="mt-2 text-xs text-slate-500">
-                  Director: {node.director} • Renewal: {node.billingDate}
-                </p>
+                <span
+                  className={cls(
+                    "rounded-full px-2 py-0.5 text-[10px] font-medium",
+                    node.status === "Active"
+                      ? "bg-emerald-50 text-emerald-700"
+                      : node.status === "Trial"
+                      ? "bg-blue-50 text-blue-700"
+                      : "bg-rose-50 text-rose-700"
+                  )}
+                >
+                  {node.status}
+                </span>
               </div>
-            ))}
-          </div>
-        </Card>
-      </section>
+              <p className="mt-2 text-xs text-slate-500">
+                Director: {node.director} · Region: {node.region} · Renewal: {node.billingDate}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Card>
     </div>
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/*  OwnersPage — live Users & Permissions matrix                              */
+/* -------------------------------------------------------------------------- */
 export function OwnersPage() {
+  const { state } = useAppState();
+  const me = state.user;
+
   return (
     <div>
-      <Topbar title="Per-Node Role Access" subtitle="Secure role separation for directors, secretaries, and agents inside each agency node" />
-      <Card title="Internal User Roles" icon={UsersRound}>
-        <div className="grid gap-3 md:grid-cols-3">
-          {roleWindows.map((roleWindow) => (
-            <div key={roleWindow.role} className="rounded-xl border border-slate-200 p-4">
-              <p className="text-sm font-semibold text-slate-900">{roleWindow.role}</p>
-              <p className="mt-1 text-xs text-slate-500">{roleWindow.primaryOutcome}</p>
-              <ul className="mt-3 space-y-2 text-sm text-slate-600">
-                {roleWindow.access.map((item) => (
-                  <li key={item}>• {item}</li>
-                ))}
-              </ul>
+      <Topbar
+        title="Users & Permissions"
+        subtitle="Per-node access control for directors, secretaries, and agents"
+      />
+
+      <div className="mb-4 grid gap-3 sm:grid-cols-3">
+        {(Object.keys(roleMeta) as UserRole[]).map((role) => {
+          const count = ACCOUNTS.filter((a) => a.role === role).length;
+          const features = desktopLinksByRole[role].length;
+          return (
+            <div key={role} className="rounded-2xl border border-[#efe9dd] bg-white p-4">
+              <p className="text-[11px] uppercase tracking-[0.18em] text-slate-500">
+                {roleMeta[role].label}
+              </p>
+              <p className="mt-1 text-xl font-semibold text-slate-800">{count} user</p>
+              <p className="mt-1 text-xs text-slate-500">{features} features available</p>
             </div>
-          ))}
+          );
+        })}
+      </div>
+
+      <Card title="Accounts" icon={UsersRound}>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="text-[11px] uppercase tracking-[0.16em] text-slate-500">
+                <th className="py-2">User</th>
+                <th className="py-2">Role</th>
+                <th className="py-2">Username</th>
+                <th className="py-2">Linked agent</th>
+                <th className="py-2 text-right">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ACCOUNTS.map((acc) => {
+                const linkedAgent = state.agents.find((a) => a.id === acc.agentId);
+                const isMe = me?.username === acc.username;
+                return (
+                  <tr key={acc.username} className="border-t border-[#efe9dd]">
+                    <td className="py-3">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-slate-900">{acc.displayName}</span>
+                        {isMe && (
+                          <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] text-emerald-700">
+                            You
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="py-3">
+                      <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700">
+                        {roleMeta[acc.role].label}
+                      </span>
+                    </td>
+                    <td className="py-3 text-slate-600">{acc.username}</td>
+                    <td className="py-3 text-slate-600">
+                      {linkedAgent ? `${linkedAgent.name} · ${linkedAgent.district}` : "—"}
+                    </td>
+                    <td className="py-3 text-right text-xs text-emerald-700">Active</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </Card>
+
+      <div className="mt-4 grid gap-3 md:grid-cols-3">
+        {(Object.keys(roleMeta) as UserRole[]).map((role) => (
+          <div key={role} className="rounded-2xl border border-[#efe9dd] bg-white p-4">
+            <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
+              <ShieldCheck size={14} className="text-brand-600" />
+              {roleMeta[role].label} access
+            </p>
+            <p className="mt-1 text-xs text-slate-500">{roleMeta[role].subtitle}</p>
+            <ul className="mt-3 space-y-1 text-sm text-slate-600">
+              {desktopLinksByRole[role].map((l) => (
+                <li key={l.to} className="flex items-center justify-between gap-2">
+                  <span>• {l.label}</span>
+                  <Link to={l.to} className="text-[11px] text-slate-400 hover:text-slate-700">
+                    {l.to}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/*  MessagesPage — redirect to the real Commission Calculator                 */
+/* -------------------------------------------------------------------------- */
 export function MessagesPage() {
-  return (
-    <div>
-      <Topbar title="Financial Engine - Commission Logic" subtitle="Automated commission splits for standard deals and collaboration scenarios" />
-      <Card title="Commission Scenarios" icon={CreditCard}>
-        <div className="grid gap-3 md:grid-cols-3">
-          {commissionScenarios.map((scenario) => (
-            <div key={scenario.id} className="rounded-xl border border-slate-200 p-4">
-              <p className="text-sm font-semibold text-slate-900">{scenario.title}</p>
-              <p className="mt-1 text-xs text-slate-500">{scenario.logic}</p>
-              <div className="mt-3 space-y-2 text-sm text-slate-600">
-                <p>Gross commission: {scenario.gross}</p>
-                <p>Agency share: {scenario.agencyShare}</p>
-                <p>Lead agent share: {scenario.agentShare}</p>
-                {scenario.collaborationShare ? <p>Second agent share: {scenario.collaborationShare}</p> : null}
-              </div>
-            </div>
-          ))}
-        </div>
-      </Card>
-    </div>
-  );
+  return <Navigate to="/commission" replace />;
+}
+
+/* -------------------------------------------------------------------------- */
+/*  NotificationsPage — live feed                                             */
+/* -------------------------------------------------------------------------- */
+interface Notice {
+  id: string;
+  icon: ReactNode;
+  title: string;
+  body: string;
+  to?: string;
+  tone: "info" | "warn" | "ok";
 }
 
 export function NotificationsPage() {
+  const { state } = useAppState();
+  const navigate = useNavigate();
+  const [readIds, setReadIds] = useState<Set<string>>(new Set());
+
+  const items = useMemo<Notice[]>(() => {
+    const onField = state.agents.filter((a) => a.status === "On-Field");
+    const recentListings = [...state.listingLog]
+      .sort((a, b) => (a.loggedAt < b.loggedAt ? 1 : -1))
+      .slice(0, 5);
+    const conflicts = state.properties.filter(
+      (p) =>
+        p.conflictNote?.toLowerCase().includes("visited") ||
+        p.conflictNote?.toLowerCase().includes("blocked")
+    );
+
+    const out: Notice[] = [];
+
+    onField.forEach((a) =>
+      out.push({
+        id: `field-${a.id}`,
+        tone: "ok",
+        icon: <Activity size={14} className="text-emerald-700" />,
+        title: `${a.name} is on-field`,
+        body: `${a.location} · ${a.district}`,
+        to: "/ops",
+      })
+    );
+
+    recentListings.forEach((l) => {
+      const prop = state.properties.find((p) => p.id === l.propertyId);
+      const agent = state.agents.find((a) => a.id === l.agentId);
+      if (!prop) return;
+      out.push({
+        id: `listing-${l.propertyId}`,
+        tone: "info",
+        icon: <Building2 size={14} className="text-brand-600" />,
+        title: `${agent?.name ?? "An agent"} added "${prop.name}"`,
+        body: `${prop.address} · ${prop.price}`,
+        to: "/properties",
+      });
+    });
+
+    conflicts.slice(0, 3).forEach((p) =>
+      out.push({
+        id: `conflict-${p.id}`,
+        tone: "warn",
+        icon: <AlertTriangle size={14} className="text-amber-700" />,
+        title: `Conflict on ${p.address}`,
+        body: p.conflictNote ?? "Possible duplicate visit",
+        to: "/conflict-check",
+      })
+    );
+
+    return out;
+  }, [state]);
+
+  const unread = items.filter((i) => !readIds.has(i.id)).length;
+
   return (
-    <div className="space-y-4">
-      <Topbar title="Presentation Flow" subtitle="Recommended stakeholder sequence for showing scalability, control, and field usability" />
-      <Card title="Presentation Sequence" icon={Presentation}>
-        <div className="grid gap-3 md:grid-cols-3">
-          <div className="rounded-xl bg-slate-50 p-4">
-            <p className="text-sm font-semibold text-slate-900">1. Master Node Panel</p>
-            <p className="mt-2 text-sm text-slate-600">Lead with scalability, onboarding, and subscription continuity.</p>
-          </div>
-          <div className="rounded-xl bg-slate-50 p-4">
-            <p className="text-sm font-semibold text-slate-900">2. Director Overview</p>
-            <p className="mt-2 text-sm text-slate-600">Show live operations, exclusive inventory, and team performance control.</p>
-          </div>
-          <div className="rounded-xl bg-slate-50 p-4">
-            <p className="text-sm font-semibold text-slate-900">3. Agent Mobile View</p>
-            <p className="mt-2 text-sm text-slate-600">End with the simplest field workflow to demonstrate adoption.</p>
-          </div>
-        </div>
+    <div>
+      <Topbar
+        title="Notifications"
+        subtitle="Live feed from agents, listings, and conflict signals"
+      />
+
+      <div className="mb-4 flex items-center justify-between">
+        <p className="text-sm text-slate-600">
+          <strong className="text-slate-900">{unread}</strong> unread of {items.length}
+        </p>
+        <button
+          onClick={() => setReadIds(new Set(items.map((i) => i.id)))}
+          className="inline-flex items-center gap-1 rounded-full border border-[#ece6db] bg-white px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50"
+        >
+          <CheckCheck size={12} /> Mark all read
+        </button>
+      </div>
+
+      <Card title="Recent activity" icon={BellRing}>
+        {items.length === 0 && (
+          <p className="rounded-xl bg-slate-50 px-3 py-3 text-xs text-slate-500">
+            Nothing to show right now.
+          </p>
+        )}
+        <ul className="divide-y divide-[#efe9dd]">
+          {items.map((n) => {
+            const isRead = readIds.has(n.id);
+            return (
+              <li
+                key={n.id}
+                className={cls(
+                  "flex items-start gap-3 py-3",
+                  isRead ? "opacity-60" : ""
+                )}
+              >
+                <span
+                  className={cls(
+                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-full",
+                    n.tone === "warn"
+                      ? "bg-amber-50"
+                      : n.tone === "ok"
+                      ? "bg-emerald-50"
+                      : "bg-slate-100"
+                  )}
+                >
+                  {n.icon}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium text-slate-900">{n.title}</p>
+                  <p className="truncate text-xs text-slate-500">{n.body}</p>
+                </div>
+                <div className="flex shrink-0 items-center gap-2">
+                  {n.to && (
+                    <button
+                      onClick={() => navigate(n.to!)}
+                      className="rounded-full border border-[#ece6db] px-2 py-1 text-[11px] text-slate-700 hover:bg-slate-50"
+                    >
+                      Open
+                    </button>
+                  )}
+                  {!isRead && (
+                    <button
+                      onClick={() =>
+                        setReadIds((prev) => {
+                          const next = new Set(prev);
+                          next.add(n.id);
+                          return next;
+                        })
+                      }
+                      className="text-[11px] text-slate-500 underline-offset-2 hover:underline"
+                    >
+                      Mark read
+                    </button>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </Card>
-      <MobilePreview />
     </div>
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/*  SettingsPage — real account + working preferences                         */
+/* -------------------------------------------------------------------------- */
+const THEME_KEY = "estateflow-theme-v1";
+const DENSITY_KEY = "estateflow-density-v1";
+
 export function SettingsPage() {
+  const { state, logout } = useAppState();
+  const navigate = useNavigate();
+  const me = state.user;
+  const linkedAgent = me ? state.agents.find((a) => a.id === me.agentId) : null;
+
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    if (typeof window === "undefined") return "light";
+    return (window.localStorage.getItem(THEME_KEY) as "light" | "dark") ?? "light";
+  });
+  const [density, setDensity] = useState<"comfortable" | "compact">(() => {
+    if (typeof window === "undefined") return "comfortable";
+    return (window.localStorage.getItem(DENSITY_KEY) as "comfortable" | "compact") ?? "comfortable";
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem(THEME_KEY, theme);
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+
+  useEffect(() => {
+    window.localStorage.setItem(DENSITY_KEY, density);
+    document.documentElement.dataset.density = density;
+  }, [density]);
+
+  const onSignOut = () => {
+    logout();
+    navigate("/login", { replace: true });
+  };
+
+  if (!me) return <Navigate to="/login" replace />;
+
   return (
     <div>
-      <Topbar title="Platform Notes" subtitle="High-level product framing for this mock UI" />
-      <Card title="Mock Scope" icon={Settings2}>
-        <div className="grid gap-3 md:grid-cols-2">
-          {[
-            "Multi-node SaaS model with subscription management",
-            "Per-node role isolation for director, secretary, and agent",
-            "Live operational tracker replacing Telegram-style coordination",
-            "Protected inventory for exclusives and duplicate-visit prevention",
-            "Target vs actual goal view and monthly leaderboard",
-            "Configurable commission splits for solo and collaborative deals",
-          ].map((item) => (
-            <div key={item} className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm text-slate-700">
-              {item}
+      <Topbar title="Settings" subtitle="Account, preferences, and session" />
+
+      <div className="grid gap-4 lg:grid-cols-[1.1fr_1fr]">
+        <Card title="Account" icon={UsersRound}>
+          <div className="space-y-2 text-sm">
+            <Row label="Signed in as" value={me.displayName} />
+            <Row label="Username" value={me.username} />
+            <Row label="Role" value={roleMeta[me.role].label} />
+            {linkedAgent && (
+              <>
+                <Row label="Linked agent" value={linkedAgent.name} />
+                <Row label="District" value={linkedAgent.district} />
+                <Row label="Today's status" value={linkedAgent.status} />
+              </>
+            )}
+          </div>
+          <button
+            onClick={onSignOut}
+            className="mt-4 inline-flex items-center gap-2 rounded-full bg-rose-600 px-4 py-2 text-sm text-white hover:bg-rose-700"
+          >
+            <LogOut size={14} /> Sign out
+          </button>
+        </Card>
+
+        <Card title="Preferences" icon={Settings2}>
+          <div className="space-y-3 text-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-medium text-slate-900">Theme</p>
+                <p className="text-xs text-slate-500">Applies across desktop and mobile shell</p>
+              </div>
+              <div className="flex rounded-full border border-[#ece6db] bg-white p-1">
+                <button
+                  onClick={() => setTheme("light")}
+                  className={cls(
+                    "inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs",
+                    theme === "light" ? "bg-black text-white" : "text-slate-600"
+                  )}
+                >
+                  <Sun size={12} /> Light
+                </button>
+                <button
+                  onClick={() => setTheme("dark")}
+                  className={cls(
+                    "inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs",
+                    theme === "dark" ? "bg-black text-white" : "text-slate-600"
+                  )}
+                >
+                  <Moon size={12} /> Dark
+                </button>
+              </div>
             </div>
-          ))}
+
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-medium text-slate-900">Density</p>
+                <p className="text-xs text-slate-500">Adjusts list and card spacing</p>
+              </div>
+              <div className="flex rounded-full border border-[#ece6db] bg-white p-1">
+                <button
+                  onClick={() => setDensity("comfortable")}
+                  className={cls(
+                    "rounded-full px-3 py-1 text-xs",
+                    density === "comfortable" ? "bg-black text-white" : "text-slate-600"
+                  )}
+                >
+                  Comfortable
+                </button>
+                <button
+                  onClick={() => setDensity("compact")}
+                  className={cls(
+                    "rounded-full px-3 py-1 text-xs",
+                    density === "compact" ? "bg-black text-white" : "text-slate-600"
+                  )}
+                >
+                  Compact
+                </button>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-dashed border-[#ece6db] bg-slate-50 px-3 py-3 text-xs text-slate-500">
+              <p className="inline-flex items-center gap-1 text-slate-700">
+                <Sparkles size={12} /> Tip
+              </p>
+              Preferences are persisted in this browser only. They follow you across reloads but not across devices.
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      {me.role === "director" && (
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <ActionCard
+            icon={<CreditCard size={14} className="text-brand-600" />}
+            title="Commissions"
+            desc="Open the calculator"
+            to="/commission"
+          />
+          <ActionCard
+            icon={<Trash2 size={14} className="text-rose-600" />}
+            title="Manage nodes"
+            desc="Add or remove subscriptions"
+            to="/nodes"
+          />
+          <ActionCard
+            icon={<ShieldCheck size={14} className="text-emerald-700" />}
+            title="Users & permissions"
+            desc="Review role access"
+            to="/owners"
+          />
         </div>
-      </Card>
-      <Card title="Stakeholder Reminder" icon={BellRing}>
-        <p className="text-sm text-slate-600">
-          This prototype is intentionally optimized for a professional walkthrough, not deep workflow completeness.
-        </p>
-      </Card>
+      )}
     </div>
+  );
+}
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between border-b border-[#efe9dd] py-2 last:border-0">
+      <span className="text-xs uppercase tracking-[0.16em] text-slate-500">{label}</span>
+      <span className="text-sm font-medium text-slate-800">{value}</span>
+    </div>
+  );
+}
+
+function ActionCard({
+  icon,
+  title,
+  desc,
+  to,
+}: {
+  icon: ReactNode;
+  title: string;
+  desc: string;
+  to: string;
+}) {
+  return (
+    <Link
+      to={to}
+      className="rounded-2xl border border-[#efe9dd] bg-white p-4 transition hover:border-slate-400"
+    >
+      <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
+        {icon} {title}
+      </p>
+      <p className="mt-1 text-xs text-slate-500">{desc}</p>
+    </Link>
   );
 }
