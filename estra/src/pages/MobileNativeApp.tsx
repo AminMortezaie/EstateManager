@@ -26,7 +26,10 @@ const mintBg = "bg-[#e8f8ea]";
 
 export function AppShell({ children, dock = true, role }: { children: ReactNode; dock?: boolean; role: UserRole }) {
   return (
-    <main className={`mx-auto min-h-screen w-full max-w-[430px] ${shellBg} text-[#111111] pb-32`}>
+    <main
+      className={`mx-auto min-h-screen w-full max-w-[430px] ${shellBg} text-[#111111]`}
+      style={{ paddingBottom: dock ? "calc(8rem + env(safe-area-inset-bottom))" : undefined }}
+    >
       <div className="px-4 pb-6 pt-4 overflow-x-hidden [&_table]:text-xs">{children}</div>
       {dock ? <BottomDock role={role} /> : null}
     </main>
@@ -110,7 +113,10 @@ export function BottomDock({ role }: { role: UserRole }) {
         ];
 
   return (
-    <nav className="fixed bottom-0 inset-x-0 z-50 flex justify-center px-5 pb-4 pointer-events-none">
+    <nav
+      className="fixed bottom-0 inset-x-0 z-50 flex justify-center px-5 pointer-events-none"
+      style={{ paddingBottom: "calc(1rem + env(safe-area-inset-bottom))" }}
+    >
       <div className="w-full max-w-[430px] rounded-[28px] border border-white/80 bg-[#fbfaf6]/95 p-2 shadow-[0_12px_30px_rgba(0,0,0,0.06)] backdrop-blur pointer-events-auto">
         <div className="grid grid-cols-4 gap-2">
           {items.map((item) => (
