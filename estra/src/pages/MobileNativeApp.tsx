@@ -26,19 +26,8 @@ const mintBg = "bg-[#e8f8ea]";
 
 export function AppShell({ children, dock = true, role }: { children: ReactNode; dock?: boolean; role: UserRole }) {
   return (
-    <main className={`mx-auto min-h-screen w-full max-w-[430px] ${shellBg} text-[#111111] pb-24`}>
-      <div className="sticky top-0 z-20 bg-[#f6f4ee]/95 px-5 pb-3 pt-4 backdrop-blur">
-        <div className="flex items-center justify-between text-[13px] font-semibold">
-          <span>13:13</span>
-          <div className="h-8 w-28 rounded-full bg-[#102022]" />
-          <div className="flex items-center gap-1 text-[11px] text-slate-500">
-            <span className="h-2 w-2 rounded-full bg-slate-700" />
-            <span className="h-2 w-2 rounded-full bg-slate-700" />
-            <span className="h-2 w-2 rounded-full bg-slate-700" />
-          </div>
-        </div>
-      </div>
-      <div className="px-5 pb-6">{children}</div>
+    <main className={`mx-auto min-h-screen w-full max-w-[430px] ${shellBg} text-[#111111] pb-32`}>
+      <div className="px-4 pb-6 pt-4 overflow-x-hidden [&_table]:text-xs">{children}</div>
       {dock ? <BottomDock role={role} /> : null}
     </main>
   );

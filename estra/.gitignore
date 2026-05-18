@@ -9,3 +9,4 @@ vendor
 target
 .venv
 .env
+/.junie/

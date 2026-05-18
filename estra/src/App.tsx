@@ -72,31 +72,38 @@ function RoleAwareDesktopRoutes({ role }: { role: UserRole }) {
   );
 }
 
+function M({ role, children }: { role: UserRole; children: ReactNode }) {
+  return <AppShell role={role}>{children}</AppShell>;
+}
+
 function MobileRoutes({ role }: { role: UserRole }) {
   return (
     <Routes>
-      <Route path="/ops" element={<AppShell role={role}><OpsBoard /></AppShell>} />
-      <Route path="/conflict-check" element={<AppShell role={role}><ConflictCheck /></AppShell>} />
+      <Route path="/dashboard" element={<M role={role}><DesktopRoleHome role={role} /></M>} />
+      <Route path="/ops" element={<M role={role}><OpsBoard /></M>} />
+      <Route path="/conflict-check" element={<M role={role}><ConflictCheck /></M>} />
       <Route
         path="/add-listing"
         element={
           <RoleGuard allow={["agent"]}>
-            <AppShell role={role}><AddListing /></AppShell>
+            <M role={role}><AddListing /></M>
           </RoleGuard>
         }
       />
-      <Route path="/agents" element={<RoleGuard allow={["director", "secretary"]}><AppShell role={role}><Agents /></AppShell></RoleGuard>} />
-      <Route path="/leaderboard" element={<AppShell role={role}><Leaderboard /></AppShell>} />
-      <Route path="/commission" element={<RoleGuard allow={["director", "secretary"]}><AppShell role={role}><CommissionCalculator /></AppShell></RoleGuard>} />
-      <Route path="/nodes" element={<RoleGuard allow={["director"]}><AppShell role={role}><NodesAdmin /></AppShell></RoleGuard>} />
-      <Route path="/clients" element={<AppShell role={role}><ClientsPage /></AppShell>} />
-      <Route path="/owners" element={<AppShell role={role}><OwnersPage /></AppShell>} />
-      <Route path="/messages" element={<AppShell role={role}><MessagesPage /></AppShell>} />
-      <Route path="/map" element={<AppShell role={role}><MapPage /></AppShell>} />
-      <Route path="/reports" element={<AppShell role={role}><Reports /></AppShell>} />
-      <Route path="/notifications" element={<AppShell role={role}><NotificationsPage /></AppShell>} />
-      <Route path="/settings" element={<AppShell role={role}><SettingsPage /></AppShell>} />
-      <Route path="/*" element={<MobileNativeApp role={role} />} />
+      <Route path="/agents" element={<RoleGuard allow={["director", "secretary"]}><M role={role}><Agents /></M></RoleGuard>} />
+      <Route path="/leaderboard" element={<M role={role}><Leaderboard /></M>} />
+      <Route path="/commission" element={<RoleGuard allow={["director", "secretary"]}><M role={role}><CommissionCalculator /></M></RoleGuard>} />
+      <Route path="/nodes" element={<RoleGuard allow={["director"]}><M role={role}><NodesAdmin /></M></RoleGuard>} />
+      <Route path="/properties" element={<M role={role}><Properties /></M>} />
+      <Route path="/clients" element={<M role={role}><ClientsPage /></M>} />
+      <Route path="/owners" element={<M role={role}><OwnersPage /></M>} />
+      <Route path="/messages" element={<M role={role}><MessagesPage /></M>} />
+      <Route path="/map" element={<M role={role}><MapPage /></M>} />
+      <Route path="/reports" element={<M role={role}><Reports /></M>} />
+      <Route path="/notifications" element={<M role={role}><NotificationsPage /></M>} />
+      <Route path="/settings" element={<M role={role}><SettingsPage /></M>} />
+      <Route path="/more" element={<MobileNativeApp role={role} />} />
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
 }
