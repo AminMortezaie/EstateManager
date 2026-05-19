@@ -1,6 +1,18 @@
 import { Activity, MapPin } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Agent } from "../data/mockData";
 import { cls } from "../lib/ui";
+
+const agentStatusKey: Record<Agent["status"], string> = {
+  "In-Office": "agent_status.in_office",
+  "Coffee Break": "agent_status.coffee_break",
+  "Lunch Break": "agent_status.lunch_break",
+  "On-Field": "agent_status.on_field",
+  Available: "agent_status.available",
+  "In Visit": "agent_status.in_visit",
+  Traveling: "agent_status.traveling",
+  Offline: "agent_status.offline",
+};
 
 const statusClasses: Record<Agent["status"], string> = {
   "In-Office": "bg-emerald-50 text-emerald-700",
@@ -19,6 +31,7 @@ interface AgentCardProps {
 }
 
 export function AgentCard({ agent, onClick }: AgentCardProps) {
+  const { t } = useTranslation();
   return (
     <article
       className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft"
@@ -35,7 +48,7 @@ export function AgentCard({ agent, onClick }: AgentCardProps) {
               statusClasses[agent.status]
             )}
           >
-            {agent.status}
+            {t(agentStatusKey[agent.status])}
           </span>
         </div>
       </div>
@@ -46,7 +59,7 @@ export function AgentCard({ agent, onClick }: AgentCardProps) {
         </p>
         <p className="flex items-center gap-2">
           <Activity size={14} />
-          Options today: {agent.actualOptions} - Score {agent.score}
+          {t("agent_card.options_today")}: {agent.actualOptions} - {t("agent_card.score")} {agent.score}
         </p>
       </div>
     </article>

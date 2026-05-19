@@ -9,6 +9,7 @@ import {
   Search,
   ArrowRight,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Topbar } from "../components/Topbar";
 import { useAppState } from "../state/AppState";
 import { cls } from "../lib/ui";
@@ -16,6 +17,7 @@ import { cls } from "../lib/ui";
 const ALL = "All";
 
 export function MapPage() {
+  const { t } = useTranslation();
   const { state } = useAppState();
   const navigate = useNavigate();
   const { agents, properties, user } = state;
@@ -64,8 +66,8 @@ export function MapPage() {
   return (
     <div>
       <Topbar
-        title="District & Field Coverage"
-        subtitle="Live view of agents, exclusives, and conflicts per district"
+        title={t("mappage.title")}
+        subtitle={t("mappage.subtitle")}
       />
 
       {/* District chips */}
@@ -86,7 +88,7 @@ export function MapPage() {
                   : "border-[#ece6db] bg-white text-slate-600 hover:bg-slate-50"
               )}
             >
-              {d} <span className="opacity-60">· {count}</span>
+              {d === ALL ? t("mappage.all") : d} <span className="opacity-60">· {count}</span>
             </button>
           );
         })}
@@ -94,10 +96,10 @@ export function MapPage() {
 
       {/* KPIs for selected district */}
       <div className="mb-4 grid gap-3 sm:grid-cols-4">
-        <Kpi icon={<Building2 size={14} />} label="Listings" value={filteredProps.length} />
-        <Kpi icon={<MapPinned size={14} />} label="Exclusives" value={exclusiveCount} />
-        <Kpi icon={<AlertTriangle size={14} />} label="Conflicts" value={conflictCount} accent="text-amber-700" />
-        <Kpi icon={<Activity size={14} />} label="On-field now" value={onFieldCount} accent="text-emerald-700" />
+        <Kpi icon={<Building2 size={14} />} label={t("mappage.kpi.listings")} value={filteredProps.length} />
+        <Kpi icon={<MapPinned size={14} />} label={t("mappage.kpi.exclusives")} value={exclusiveCount} />
+        <Kpi icon={<AlertTriangle size={14} />} label={t("mappage.kpi.conflicts")} value={conflictCount} accent="text-amber-700" />
+        <Kpi icon={<Activity size={14} />} label={t("mappage.kpi.onfield")} value={onFieldCount} accent="text-emerald-700" />
       </div>
 
       <section className="grid gap-4 xl:grid-cols-[1fr_1.3fr]">
@@ -105,18 +107,18 @@ export function MapPage() {
         <div className="rounded-[24px] border border-white/80 bg-[#fbfaf6] p-4 shadow-[0_10px_28px_rgba(0,0,0,0.04)]">
           <div className="mb-3 flex items-center justify-between">
             <h3 className="inline-flex items-center gap-2 text-sm font-semibold text-slate-800">
-              <Compass size={15} /> Agents in {active}
+              <Compass size={15} /> {t("mappage.agents_in", { district: active === ALL ? t("mappage.all") : active })}
             </h3>
             <button
               onClick={() => navigate("/ops")}
               className="text-xs text-slate-500 underline-offset-2 hover:underline"
             >
-              Open Live Status →
+              {t("mappage.open_live")}
             </button>
           </div>
           {filteredAgents.length === 0 && (
             <p className="rounded-xl bg-white px-3 py-3 text-xs text-slate-500">
-              No agents assigned to this district.
+              {t("mappage.no_agents")}
             </p>
           )}
           <div className="space-y-2">
@@ -142,7 +144,7 @@ export function MapPage() {
                       : "bg-amber-50 text-amber-700"
                   )}
                 >
-                  {a.status}
+                  {t(`agent_status.${a.status.toLowerCase().replace(/[\s-]/g, "_")}`)}
                 </span>
               </article>
             ))}
@@ -153,18 +155,18 @@ export function MapPage() {
         <div className="rounded-[24px] border border-white/80 bg-[#fbfaf6] p-4 shadow-[0_10px_28px_rgba(0,0,0,0.04)]">
           <div className="mb-3 flex items-center justify-between">
             <h3 className="inline-flex items-center gap-2 text-sm font-semibold text-slate-800">
-              <Building2 size={15} /> Listings in {active}
+              <Building2 size={15} /> {t("mappage.listings_in", { district: active === ALL ? t("mappage.all") : active })}
             </h3>
             <Link
               to="/conflict-check"
               className="inline-flex items-center gap-1 text-xs text-slate-500 underline-offset-2 hover:underline"
             >
-              <Search size={12} /> Check before visit
+              <Search size={12} /> {t("mappage.check_before")}
             </Link>
           </div>
           {filteredProps.length === 0 && (
             <p className="rounded-xl bg-white px-3 py-3 text-xs text-slate-500">
-              No listings yet for this district.
+              {t("mappage.no_listings")}
             </p>
           )}
           <div className="space-y-2">
@@ -184,14 +186,14 @@ export function MapPage() {
                     <p className="text-sm font-medium text-slate-800">{p.price}</p>
                     {p.exclusive && (
                       <span className="mt-1 inline-block rounded-full bg-black px-2 py-0.5 text-[10px] text-white">
-                        Exclusive
+                        {t("mappage.exclusive")}
                       </span>
                     )}
                   </div>
                 </div>
                 {p.lastVisitedBy && (
                   <p className="mt-2 text-[11px] text-slate-500">
-                    Last by <strong>{p.lastVisitedBy}</strong> · {p.lastVisitedAt}
+                    {t("mappage.last_by")} <strong>{p.lastVisitedBy}</strong> · {p.lastVisitedAt}
                   </p>
                 )}
               </article>
@@ -201,7 +203,7 @@ export function MapPage() {
                 onClick={() => navigate("/properties")}
                 className="mt-1 inline-flex items-center gap-1 text-xs text-slate-600 underline-offset-2 hover:underline"
               >
-                View all {filteredProps.length} listings <ArrowRight size={12} />
+                {t("mappage.view_all", { count: filteredProps.length })} <ArrowRight size={12} />
               </button>
             )}
           </div>
@@ -211,7 +213,7 @@ export function MapPage() {
       {/* Per-district overview (only when "All" selected) */}
       {active === ALL && (
         <section className="mt-4 rounded-[24px] border border-white/80 bg-[#fbfaf6] p-4 shadow-[0_10px_28px_rgba(0,0,0,0.04)]">
-          <h3 className="mb-3 text-sm font-semibold text-slate-800">District overview</h3>
+          <h3 className="mb-3 text-sm font-semibold text-slate-800">{t("mappage.overview")}</h3>
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {districtStats.map((d) => (
               <button
@@ -221,7 +223,7 @@ export function MapPage() {
               >
                 <p className="text-sm font-medium text-slate-900">{d.name}</p>
                 <p className="mt-1 text-xs text-slate-500">
-                  {d.listings} listings · {d.agents} agents · {d.onField} on-field
+                  {t("mappage.row_stats", { listings: d.listings, agents: d.agents, onField: d.onField })}
                 </p>
               </button>
             ))}

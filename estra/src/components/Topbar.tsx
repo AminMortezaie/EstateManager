@@ -1,16 +1,21 @@
 import { useState, FormEvent } from "react";
 import { Bell, Calendar, LogOut, Search, SlidersHorizontal } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAppState } from "../state/AppState";
+import { cls } from "../lib/ui";
 
 interface TopbarProps {
   title: string;
   subtitle?: string;
 }
 
+const LANGS = ["en", "hy", "ru"] as const;
+
 export function Topbar({ title, subtitle }: TopbarProps) {
   const { state, logout } = useAppState();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const user = state.user;
   const [search, setSearch] = useState("");
   const onSearch = (e: FormEvent) => {
@@ -30,29 +35,47 @@ export function Topbar({ title, subtitle }: TopbarProps) {
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search inventory... (press Enter)"
+              placeholder={t("topbar.search_placeholder")}
               className="w-56 bg-transparent text-sm outline-none placeholder:text-slate-400"
             />
           </form>
           <button
             onClick={() => navigate("/reports")}
             className="hidden sm:inline-flex items-center gap-1 rounded-[18px] border border-[#ece6db] bg-white px-3 py-2 text-sm text-slate-600 hover:bg-slate-100"
-            title="Reports"
+            title={t("topbar.reports")}
           >
             <Calendar size={13} />
-            May 17, 2026
+            {t("topbar.date")}
           </button>
+
+          <div className="flex rounded-[18px] border border-[#ece6db] bg-white p-0.5">
+            {LANGS.map((lang) => (
+              <button
+                key={lang}
+                onClick={() => i18n.changeLanguage(lang)}
+                className={cls(
+                  "rounded-[16px] px-2 py-1.5 text-[11px] font-semibold uppercase transition",
+                  i18n.language === lang
+                    ? "bg-black text-white"
+                    : "text-slate-500 hover:text-slate-800"
+                )}
+              >
+                {t(`topbar.lang.${lang}`)}
+              </button>
+            ))}
+          </div>
+
           <button
             onClick={() => navigate("/settings")}
             className="rounded-[18px] border border-[#ece6db] bg-white p-2.5 lg:p-3 text-slate-500 hover:bg-slate-100"
-            title="Settings"
+            title={t("topbar.settings")}
           >
             <SlidersHorizontal size={15} />
           </button>
           <button
             onClick={() => navigate("/notifications")}
             className="rounded-[18px] border border-[#ece6db] bg-white p-2.5 lg:p-3 text-slate-500 hover:bg-slate-100"
-            title="Notifications"
+            title={t("topbar.notifications")}
           >
             <Bell size={18} />
           </button>
@@ -65,7 +88,7 @@ export function Topbar({ title, subtitle }: TopbarProps) {
           {user && (
             <button
               onClick={logout}
-              title="Sign out"
+              title={t("topbar.sign_out")}
               className="rounded-[18px] border border-[#ece6db] bg-white p-2.5 lg:p-3 text-slate-500 hover:bg-slate-100"
             >
               <LogOut size={16} />

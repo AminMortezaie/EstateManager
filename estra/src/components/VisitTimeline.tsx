@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Visit } from "../data/mockData";
 import { cls } from "../lib/ui";
 
@@ -8,14 +9,22 @@ const colorByStatus = {
   Delayed: "bg-rose-50 text-rose-700",
 };
 
+const statusKeyMap: Record<Visit["status"], string> = {
+  Scheduled: "visit_status.scheduled",
+  "In Progress": "visit_status.in_progress",
+  Completed: "visit_status.completed",
+  Delayed: "visit_status.delayed",
+};
+
 interface VisitTimelineProps {
   visits: Visit[];
 }
 
 export function VisitTimeline({ visits }: VisitTimelineProps) {
+  const { t } = useTranslation();
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
-      <h3 className="mb-4 text-lg font-semibold text-slate-900">Visit timeline</h3>
+      <h3 className="mb-4 text-lg font-semibold text-slate-900">{t("visit_timeline.title")}</h3>
       <div className="space-y-4">
         {visits.map((visit) => (
           <article key={visit.id} className="flex gap-3">
@@ -32,7 +41,7 @@ export function VisitTimeline({ visits }: VisitTimelineProps) {
                   colorByStatus[visit.status]
                 )}
               >
-                {visit.status}
+                {t(statusKeyMap[visit.status])}
               </span>
             </div>
           </article>

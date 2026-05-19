@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Calculator, Users, Percent, DollarSign } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Topbar } from "../components/Topbar";
 import { cls } from "../lib/ui";
 
@@ -8,6 +9,7 @@ function fmt(n: number) {
 }
 
 export function CommissionCalculator() {
+  const { t } = useTranslation();
   const [dealPrice, setDealPrice] = useState(120000);
   const [commissionPct, setCommissionPct] = useState(3);
   const [agencyPct, setAgencyPct] = useState(60);
@@ -28,14 +30,14 @@ export function CommissionCalculator() {
 
   return (
     <div>
-      <Topbar title="Commission Calculator" subtitle="Split gross commission between agency and agents" />
+      <Topbar title={t("commission.title")} subtitle={t("commission.subtitle")} />
       <div className="grid gap-4 lg:grid-cols-[1.1fr,1fr]">
         <div className="rounded-[24px] border border-white/80 bg-[#fbfaf6] p-5 lg:p-6 shadow-[0_10px_28px_rgba(0,0,0,0.04)]">
           <div className="mb-4 flex items-center gap-2 text-slate-700">
-            <Calculator size={18} /> <h3 className="text-base font-medium">Deal Inputs</h3>
+            <Calculator size={18} /> <h3 className="text-base font-medium">{t("commission.deal_inputs")}</h3>
           </div>
           <div className="space-y-4">
-            <Field label="Deal price (USD)" icon={<DollarSign size={14} />}>
+            <Field label={t("commission.deal_price")} icon={<DollarSign size={14} />}>
               <input
                 type="number"
                 value={dealPrice}
@@ -43,7 +45,7 @@ export function CommissionCalculator() {
                 className="w-full bg-transparent text-base outline-none"
               />
             </Field>
-            <Field label="Commission %" icon={<Percent size={14} />}>
+            <Field label={t("commission.commission_pct")} icon={<Percent size={14} />}>
               <input
                 type="number"
                 step="0.1"
@@ -52,7 +54,7 @@ export function CommissionCalculator() {
                 className="w-full bg-transparent text-base outline-none"
               />
             </Field>
-            <Field label="Agency share %" icon={<Percent size={14} />}>
+            <Field label={t("commission.agency_share")} icon={<Percent size={14} />}>
               <input
                 type="range"
                 min={0}
@@ -61,14 +63,16 @@ export function CommissionCalculator() {
                 onChange={(e) => setAgencyPct(Number(e.target.value))}
                 className="w-full"
               />
-              <p className="mt-1 text-xs text-slate-500">Agency {agencyPct}% · Agent {100 - agencyPct}%</p>
+              <p className="mt-1 text-xs text-slate-500">
+                {t("commission.agency_label")} {agencyPct}% · {t("commission.agent_label")} {100 - agencyPct}%
+              </p>
             </Field>
             <label className="flex items-center gap-2 text-sm text-slate-700">
               <input type="checkbox" checked={collab} onChange={(e) => setCollab(e.target.checked)} />
-              <Users size={14} /> Two agents collaborated
+              <Users size={14} /> {t("commission.collab")}
             </label>
             {collab && (
-              <Field label={`Agent A share %`}>
+              <Field label={t("commission.agent_a_share")}>
                 <input
                   type="range"
                   min={0}
@@ -77,26 +81,28 @@ export function CommissionCalculator() {
                   onChange={(e) => setCollabSplit(Number(e.target.value))}
                   className="w-full"
                 />
-                <p className="mt-1 text-xs text-slate-500">Agent A {collabSplit}% · Agent B {100 - collabSplit}%</p>
+                <p className="mt-1 text-xs text-slate-500">
+                  {t("commission.agent_a")} {collabSplit}% · {t("commission.agent_b")} {100 - collabSplit}%
+                </p>
               </Field>
             )}
           </div>
         </div>
 
         <div className="space-y-3">
-          <ResultCard label="Gross commission" value={fmt(result.gross)} accent="bg-black text-white" />
-          <ResultCard label={`Agency cut (${agencyPct}%)`} value={fmt(result.agency)} />
-          <ResultCard label={`Agent pool (${100 - agencyPct}%)`} value={fmt(result.agentTotal)} />
+          <ResultCard label={t("commission.gross")} value={fmt(result.gross)} accent="bg-black text-white" />
+          <ResultCard label={`${t("commission.agency_cut")} (${agencyPct}%)`} value={fmt(result.agency)} />
+          <ResultCard label={`${t("commission.agent_pool")} (${100 - agencyPct}%)`} value={fmt(result.agentTotal)} />
           {collab ? (
             <div className="grid grid-cols-2 gap-3">
-              <ResultCard label={`Agent A (${collabSplit}%)`} value={fmt(result.agentA)} accent="bg-[#e9f5ec]" />
-              <ResultCard label={`Agent B (${100 - collabSplit}%)`} value={fmt(result.agentB)} accent="bg-[#e9f5ec]" />
+              <ResultCard label={`${t("commission.agent_a")} (${collabSplit}%)`} value={fmt(result.agentA)} accent="bg-[#e9f5ec]" />
+              <ResultCard label={`${t("commission.agent_b")} (${100 - collabSplit}%)`} value={fmt(result.agentB)} accent="bg-[#e9f5ec]" />
             </div>
           ) : (
-            <ResultCard label="Agent payout" value={fmt(result.agentA)} accent="bg-[#e9f5ec]" />
+            <ResultCard label={t("commission.agent_payout")} value={fmt(result.agentA)} accent="bg-[#e9f5ec]" />
           )}
           <div className="rounded-[20px] border border-dashed border-[#ddd6c4] p-4 text-xs text-slate-500">
-            Example: $120,000 deal × 3% = $3,600 gross. With 60/40 split, agency keeps $2,160 and the agent pool is $1,440. Toggle collaboration to split the agent pool (e.g. 20/20).
+            {t("commission.example")}
           </div>
         </div>
       </div>

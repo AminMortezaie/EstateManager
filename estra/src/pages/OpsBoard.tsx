@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Coffee, Building, UtensilsCrossed, MapPin, Filter } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Topbar } from "../components/Topbar";
 import { useAppState, STATUS_OPTIONS } from "../state/AppState";
 import { AgentStatus } from "../data/mockData";
@@ -17,6 +18,9 @@ const STATUS_META: Record<AgentStatus, { color: string; bg: string; icon: typeof
 };
 
 export function OpsBoard() {
+  const { t } = useTranslation();
+  const statusKey: Record<string, string> = { "In-Office": "agent_status.in_office", "Coffee Break": "agent_status.coffee_break", "Lunch Break": "agent_status.lunch_break", "On-Field": "agent_status.on_field", Available: "agent_status.available", "In Visit": "agent_status.in_visit", Traveling: "agent_status.traveling", Offline: "agent_status.offline" };
+  const labelFor = (s: AgentStatus | "All") => s === "All" ? t("ops.all") : t(statusKey[s] || s);
   const { state, setStatus } = useAppState();
   const [filter, setFilter] = useState<AgentStatus | "All">("All");
   const [selected, setSelected] = useState<string | null>(null);
@@ -37,12 +41,12 @@ export function OpsBoard() {
 
   return (
     <>
-      <Topbar title="Live Status Board" subtitle="See where every agent is right now" />
+      <Topbar title={t("ops.title")} subtitle={t("ops.subtitle")} />
 
       {me?.role === "agent" && myAgent && (
         <div className="mb-4 rounded-[24px] border border-white/80 bg-[#fbfaf6] p-4 shadow-[0_10px_28px_rgba(0,0,0,0.04)]">
-          <p className="text-xs uppercase tracking-[0.18em] text-slate-500">My Status</p>
-          <p className="mt-1 text-lg font-medium text-[#111111]">{myAgent.status} · {myAgent.location}</p>
+          <p className="text-xs uppercase tracking-[0.18em] text-slate-500">{t("ops.my_status")}</p>
+          <p className="mt-1 text-lg font-medium text-[#111111]">{t(statusKey[myAgent.status] || myAgent.status)} · {myAgent.location}</p>
           <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
             {STATUS_OPTIONS.map((s) => {
               const Icon = STATUS_META[s].icon;
@@ -59,7 +63,7 @@ export function OpsBoard() {
                   )}
                 >
                   <Icon size={14} />
-                  {s}
+                  {t(statusKey[s] || s)}
                 </button>
               );
             })}
@@ -69,7 +73,7 @@ export function OpsBoard() {
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <span className="inline-flex items-center gap-1 text-xs uppercase tracking-[0.18em] text-slate-500">
-          <Filter size={12} /> Filter
+          <Filter size={12} /> {t("ops.filter")}
         </span>
         {(["All", ...STATUS_OPTIONS] as const).map((s) => (
           <button
@@ -82,7 +86,7 @@ export function OpsBoard() {
                 : "border border-[#ece6db] bg-white text-slate-600 hover:bg-slate-50"
             )}
           >
-            {s} · {counts[s] ?? 0}
+            {labelFor(s)} · {counts[s] ?? 0}
           </button>
         ))}
       </div>
@@ -105,15 +109,15 @@ export function OpsBoard() {
                 </div>
                 <span className={cls("inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium", meta.bg, meta.color)}>
                   <Icon size={12} />
-                  {a.status}
+                  {t(statusKey[a.status] || a.status)}
                 </span>
               </div>
               <p className="mt-3 text-xs text-slate-500">📍 {a.location}</p>
-              <p className="mt-1 text-xs text-slate-500">Visits today: {a.visitsToday} · Options: {a.actualOptions}/{a.dailyTarget}</p>
+              <p className="mt-1 text-xs text-slate-500">{t("ops.visits_today")}: {a.visitsToday} · {t("ops.options")}: {a.actualOptions}/{a.dailyTarget}</p>
 
               {selected === a.id && me?.role !== "agent" && a.role === "Agent" && (
                 <div className="mt-3 border-t border-[#ece6db] pt-3">
-                  <p className="mb-2 text-xs uppercase tracking-[0.18em] text-slate-500">Override status</p>
+                  <p className="mb-2 text-xs uppercase tracking-[0.18em] text-slate-500">{t("ops.override_status")}</p>
                   <div className="grid grid-cols-2 gap-2">
                     {STATUS_OPTIONS.map((s) => (
                       <button
@@ -129,7 +133,7 @@ export function OpsBoard() {
                             : "border border-[#ece6db] bg-white text-slate-600 hover:bg-slate-50"
                         )}
                       >
-                        {s}
+                        {t(statusKey[s] || s)}
                       </button>
                     ))}
                   </div>
@@ -141,7 +145,7 @@ export function OpsBoard() {
       </div>
 
       {filtered.length === 0 && (
-        <p className="mt-6 text-center text-sm text-slate-500">No agents match this filter.</p>
+        <p className="mt-6 text-center text-sm text-slate-500">{t("ops.no_match")}</p>
       )}
     </>
   );

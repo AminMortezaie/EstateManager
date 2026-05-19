@@ -17,6 +17,7 @@ import {
   User as UserIcon,
   X,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Topbar } from "../components/Topbar";
 import { useAppState } from "../state/AppState";
 import { Property } from "../data/mockData";
@@ -44,6 +45,7 @@ const TYPE_ICON: Record<Property["type"], typeof HomeIcon> = {
 type Tab = "all" | "exclusive" | "conflicts" | "mine";
 
 function PropertyImage({ property }: { property: Property }) {
+  const { t } = useTranslation();
   const [errored, setErrored] = useState(false);
   const src = errored || !property.image ? TYPE_FALLBACK[property.type] : property.image;
   return (
@@ -57,15 +59,15 @@ function PropertyImage({ property }: { property: Property }) {
       />
       {property.exclusive && (
         <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-amber-500/95 px-2 py-0.5 text-[10px] font-semibold text-white shadow">
-          <Star size={10} /> Exclusive
+          <Star size={10} /> {t("properties.tab.exclusive")}
         </span>
       )}
       <span className="absolute right-2 top-2 rounded-full bg-black/70 px-2 py-0.5 text-[10px] font-medium text-white">
-        {property.type}
+        {t(`properties.type.${property.type.toLowerCase()}`, { defaultValue: property.type })}
       </span>
       {errored && (
         <span className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-full bg-white/85 px-2 py-0.5 text-[10px] text-slate-500">
-          <ImageOff size={10} /> placeholder
+          <ImageOff size={10} /> {t("properties.placeholder")}
         </span>
       )}
     </div>
@@ -79,6 +81,7 @@ function PropertyCard({
   property: Property;
   onOpen: (p: Property) => void;
 }) {
+  const { t } = useTranslation();
   const Icon = TYPE_ICON[property.type];
   const hasConflict =
     property.conflictNote?.toLowerCase().includes("visited") ||
@@ -103,7 +106,7 @@ function PropertyCard({
             {property.district}
           </span>
           <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-slate-700">
-            <Icon size={10} /> {property.type}
+            <Icon size={10} /> {t(`properties.type.${property.type.toLowerCase()}`, { defaultValue: property.type })}
           </span>
           <span
             className={cls(
@@ -117,18 +120,18 @@ function PropertyCard({
                 : "bg-emerald-50 text-emerald-700"
             )}
           >
-            {property.status}
+            {property.status === "Exclusive" ? t("properties.tab.exclusive") : t(`properties.status.${property.status.toLowerCase().replace(/ /g, "_")}`, { defaultValue: property.status })}
           </span>
         </div>
         <div className="mt-auto flex items-center justify-between border-t border-[#efe9dd] pt-2 text-[11px] text-slate-500">
-          <span>Last: {property.lastVisitedBy || "—"}</span>
+          <span>{t("properties.card.last")} {property.lastVisitedBy || "—"}</span>
           {hasConflict ? (
             <span className="inline-flex items-center gap-1 text-amber-700">
-              <AlertTriangle size={11} /> Conflict
+              <AlertTriangle size={11} /> {t("properties.card.conflict")}
             </span>
           ) : (
             <span className="inline-flex items-center gap-1 text-emerald-700">
-              <ShieldCheck size={11} /> Safe
+              <ShieldCheck size={11} /> {t("properties.card.safe")}
             </span>
           )}
         </div>
@@ -145,6 +148,7 @@ function DetailDrawer({
   onClose: () => void;
 }) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   if (!property) return null;
   const Icon = TYPE_ICON[property.type];
   return (
@@ -172,41 +176,41 @@ function DetailDrawer({
 
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-xl bg-slate-50 p-3">
-              <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500">Price</p>
+              <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500">{t("properties.detail.price")}</p>
               <p className="mt-1 text-base font-semibold text-slate-900">{property.price}</p>
             </div>
             <div className="rounded-xl bg-slate-50 p-3">
-              <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500">District</p>
+              <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500">{t("properties.detail.district")}</p>
               <p className="mt-1 text-base font-semibold text-slate-900">{property.district}</p>
             </div>
             <div className="rounded-xl bg-slate-50 p-3">
-              <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500">Type</p>
+              <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500">{t("properties.detail.type")}</p>
               <p className="mt-1 inline-flex items-center gap-1 text-base font-semibold text-slate-900">
                 <Icon size={14} /> {property.type}
               </p>
             </div>
             <div className="rounded-xl bg-slate-50 p-3">
-              <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500">Status</p>
+              <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500">{t("properties.detail.status")}</p>
               <p className="mt-1 text-base font-semibold text-slate-900">{property.status}</p>
             </div>
           </div>
 
           <div className="rounded-xl border border-[#efe9dd] p-3">
             <p className="inline-flex items-center gap-1 text-xs font-semibold text-slate-700">
-              <UserIcon size={12} /> Owner
+              <UserIcon size={12} /> {t("properties.detail.owner")}
             </p>
             <p className="mt-1 text-sm text-slate-900">{property.owner}</p>
             <p className="mt-2 inline-flex items-center gap-1 text-[11px] text-slate-500">
-              <Phone size={11} /> Contact via agency desk
+              <Phone size={11} /> {t("properties.detail.contact")}
             </p>
           </div>
 
           <div className="rounded-xl border border-[#efe9dd] p-3">
-            <p className="text-xs font-semibold text-slate-700">Sourcing & history</p>
-            <p className="mt-1 text-xs text-slate-500">Source: {property.sourcingMethod}</p>
+            <p className="text-xs font-semibold text-slate-700">{t("properties.detail.sourcing_history")}</p>
+            <p className="mt-1 text-xs text-slate-500">{t("properties.detail.source")} {property.sourcingMethod}</p>
             <p className="mt-1 text-xs text-slate-500">
-              Last visited by <strong className="text-slate-700">{property.lastVisitedBy}</strong> on{" "}
-              {property.lastVisitedAt}
+              {t("properties.detail.last_visited")} <strong className="text-slate-700">{property.lastVisitedBy}</strong>{" "}
+              {t("properties.detail.on")} {property.lastVisitedAt}
             </p>
           </div>
 
@@ -227,7 +231,7 @@ function DetailDrawer({
                 ) : (
                   <CheckCircle2 size={12} />
                 )}
-                Conflict status
+                {t("properties.detail.conflict_status")}
               </p>
               <p className="mt-1">{property.conflictNote}</p>
             </div>
@@ -238,13 +242,13 @@ function DetailDrawer({
               onClick={() => navigate(`/conflict-check?q=${encodeURIComponent(property.address)}`)}
               className="flex-1 rounded-full border border-[#ece6db] bg-white px-3 py-2 text-xs text-slate-700 hover:bg-slate-50"
             >
-              Run conflict check
+              {t("properties.detail.run_conflict")}
             </button>
             <button
               onClick={() => navigate("/ops")}
               className="flex-1 rounded-full bg-black px-3 py-2 text-xs text-white hover:bg-slate-800"
             >
-              See team activity
+              {t("properties.detail.team_activity")}
             </button>
           </div>
         </div>
@@ -255,6 +259,7 @@ function DetailDrawer({
 
 export function Properties() {
   const { state } = useAppState();
+  const { t } = useTranslation();
   const me = state.user;
   const myAgentId = me?.agentId;
   const [searchParams] = useSearchParams();
@@ -316,44 +321,44 @@ export function Properties() {
     };
   }, [state.properties, state.agents, myAgentId]);
 
-  const tabs: { key: Tab; label: string; count: number; hide?: boolean }[] = [
-    { key: "all", label: "All", count: counts.all },
-    { key: "exclusive", label: "Exclusive", count: counts.exclusive },
-    { key: "conflicts", label: "Conflicts", count: counts.conflicts },
-    { key: "mine", label: "Mine", count: counts.mine, hide: !myAgentId },
+  const tabs: { key: Tab; labelKey: string; count: number; hide?: boolean }[] = [
+    { key: "all", labelKey: "properties.tab.all", count: counts.all },
+    { key: "exclusive", labelKey: "properties.tab.exclusive", count: counts.exclusive },
+    { key: "conflicts", labelKey: "properties.tab.conflicts", count: counts.conflicts },
+    { key: "mine", labelKey: "properties.tab.mine", count: counts.mine, hide: !myAgentId },
   ];
 
   return (
     <div>
       <Topbar
-        title="Inventory & Listings"
-        subtitle="Searchable database with exclusives, conflict prevention, and full sourcing history"
+        title={t("properties.title")}
+        subtitle={t("properties.subtitle")}
       />
 
       {/* KPI strip */}
       <div className="mb-4 grid gap-3 sm:grid-cols-4">
-        <Kpi label="Total" value={counts.all} />
-        <Kpi label="Exclusive" value={counts.exclusive} accent="text-amber-700" />
-        <Kpi label="Conflicts" value={counts.conflicts} accent="text-rose-700" />
-        <Kpi label="Districts" value={districts.length - 1} />
+        <Kpi label={t("properties.kpi.total")} value={counts.all} />
+        <Kpi label={t("properties.kpi.exclusive")} value={counts.exclusive} accent="text-amber-700" />
+        <Kpi label={t("properties.kpi.conflicts")} value={counts.conflicts} accent="text-rose-700" />
+        <Kpi label={t("properties.kpi.districts")} value={districts.length - 1} />
       </div>
 
       {/* Tabs + Add CTA */}
       <div className="mb-3 flex flex-wrap items-center gap-2">
         {tabs
           .filter((t) => !t.hide)
-          .map((t) => (
+          .map((tabItem) => (
             <button
-              key={t.key}
-              onClick={() => setTab(t.key)}
+              key={tabItem.key}
+              onClick={() => setTab(tabItem.key)}
               className={cls(
                 "rounded-full border px-3 py-1.5 text-xs transition",
-                tab === t.key
+                tab === tabItem.key
                   ? "border-black bg-black text-white"
                   : "border-[#ece6db] bg-white text-slate-600 hover:bg-slate-50"
               )}
             >
-              {t.label} <span className="ml-1 opacity-70">{t.count}</span>
+              {t(tabItem.labelKey)} <span className="ml-1 opacity-70">{tabItem.count}</span>
             </button>
           ))}
         <div className="ml-auto flex gap-2">
@@ -361,14 +366,14 @@ export function Properties() {
             to="/conflict-check"
             className="inline-flex items-center gap-1 rounded-full border border-[#ece6db] bg-white px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50"
           >
-            <ShieldCheck size={12} /> Conflict check
+            <ShieldCheck size={12} /> {t("properties.conflict_check")}
           </Link>
           {me?.role === "agent" && (
             <Link
               to="/add-listing"
               className="inline-flex items-center gap-1 rounded-full bg-black px-3 py-1.5 text-xs text-white hover:bg-slate-800"
             >
-              <Plus size={12} /> Add listing
+              <Plus size={12} /> {t("properties.add_listing")}
             </Link>
           )}
         </div>
@@ -381,7 +386,7 @@ export function Properties() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by name, address, owner, or agent…"
+            placeholder={t("properties.search_placeholder")}
             className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400"
           />
           {query && (
@@ -408,8 +413,8 @@ export function Properties() {
           onChange={(e) => setType(e.target.value as typeof type)}
           className="rounded-full border border-[#ece6db] bg-white px-3 py-2 text-sm text-slate-700 outline-none"
         >
-          {(["All", "Apartment", "House", "Commercial", "Studio"] as const).map((t) => (
-            <option key={t}>{t}</option>
+          {(["All", "Apartment", "House", "Commercial", "Studio"] as const).map((typeOpt) => (
+            <option key={typeOpt}>{typeOpt}</option>
           ))}
         </select>
       </div>
@@ -418,10 +423,8 @@ export function Properties() {
       {filtered.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-[#efe9dd] bg-white p-10 text-center">
           <Lock className="mx-auto mb-2 text-slate-400" size={20} />
-          <p className="text-sm font-medium text-slate-700">No listings match these filters.</p>
-          <p className="mt-1 text-xs text-slate-500">
-            Try clearing the search or switching tab.
-          </p>
+          <p className="text-sm font-medium text-slate-700">{t("properties.no_matches")}</p>
+          <p className="mt-1 text-xs text-slate-500">{t("properties.clear_filters")}</p>
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

@@ -15,6 +15,7 @@ import {
   Users,
 } from "lucide-react";
 import { Navigate, NavLink, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { agents, nodes, properties, sourcingBreakdown } from "../data/mockData";
 import { roleMeta, UserRole, desktopLinksByRole } from "../lib/roles";
 import { cls } from "../lib/ui";
@@ -92,29 +93,30 @@ export function Pill({ children, dark = false }: { children: ReactNode; dark?: b
   );
 }
 
-type DockItem = { to: string; label: string };
+type DockItem = { to: string; labelKey: string };
 
 export function BottomDock({ role }: { role: UserRole }) {
+  const { t } = useTranslation();
   const items: DockItem[] =
     role === "agent"
       ? [
-          { to: `/dashboard`, label: "My Day" },
-          { to: `/add-listing`, label: "Add" },
-          { to: `/conflict-check`, label: "Check" },
-          { to: `/more`, label: "More" },
+          { to: `/dashboard`, labelKey: "mobile.my_day" },
+          { to: `/add-listing`, labelKey: "mobile.add" },
+          { to: `/conflict-check`, labelKey: "mobile.check" },
+          { to: `/more`, labelKey: "mobile.more" },
         ]
       : role === "secretary"
       ? [
-          { to: `/dashboard`, label: "Overview" },
-          { to: `/ops`, label: "Live" },
-          { to: `/properties`, label: "Inventory" },
-          { to: `/more`, label: "More" },
+          { to: `/dashboard`, labelKey: "mobile.overview" },
+          { to: `/ops`, labelKey: "mobile.live" },
+          { to: `/properties`, labelKey: "mobile.inventory" },
+          { to: `/more`, labelKey: "mobile.more" },
         ]
       : [
-          { to: `/dashboard`, label: "Overview" },
-          { to: `/ops`, label: "Live" },
-          { to: `/leaderboard`, label: "Ranking" },
-          { to: `/more`, label: "More" },
+          { to: `/dashboard`, labelKey: "mobile.overview" },
+          { to: `/ops`, labelKey: "mobile.live" },
+          { to: `/leaderboard`, labelKey: "mobile.ranking" },
+          { to: `/more`, labelKey: "mobile.more" },
         ];
 
   const { pathname } = useLocation();
@@ -144,7 +146,7 @@ export function BottomDock({ role }: { role: UserRole }) {
                   isActive ? "bg-black text-white" : "text-slate-500"
                 )}
               >
-                {item.label}
+                {t(item.labelKey)}
               </NavLink>
             );
           })}
@@ -155,6 +157,7 @@ export function BottomDock({ role }: { role: UserRole }) {
 }
 
 function OverviewScreen({ role }: { role: UserRole }) {
+  const { t } = useTranslation();
   const property = properties[0];
   const roleImage =
     role === "director"
@@ -166,26 +169,33 @@ function OverviewScreen({ role }: { role: UserRole }) {
   const priorityItems =
     role === "director"
       ? [
-          { label: "Review node subscription health and at-risk renewals.", to: "/nodes" },
-          { label: "Approve exclusive listing ownership and conflict routing.", to: "/conflict-check" },
-          { label: "Check leaderboard and commission approval queue.", to: "/leaderboard" },
+          { labelKey: "mobile.priority.director.1", to: "/nodes" },
+          { labelKey: "mobile.priority.director.2", to: "/conflict-check" },
+          { labelKey: "mobile.priority.director.3", to: "/leaderboard" },
         ]
       : role === "secretary"
       ? [
-          { label: "Monitor live agent statuses and district coverage.", to: "/ops" },
-          { label: "Coordinate owner paperwork and follow-up queues.", to: "/owners" },
-          { label: "Prevent duplicate field assignments from the inventory history.", to: "/conflict-check" },
+          { labelKey: "mobile.priority.secretary.1", to: "/ops" },
+          { labelKey: "mobile.priority.secretary.2", to: "/owners" },
+          { labelKey: "mobile.priority.secretary.3", to: "/conflict-check" },
         ]
       : [
-          { label: "Update your field status before leaving the office.", to: "/ops" },
-          { label: "Review exclusive and recently visited properties.", to: "/properties" },
-          { label: "Log sourcing method and progress toward today\u2019s options goal.", to: "/add-listing" },
+          { labelKey: "mobile.priority.agent.1", to: "/ops" },
+          { labelKey: "mobile.priority.agent.2", to: "/properties" },
+          { labelKey: "mobile.priority.agent.3", to: "/add-listing" },
         ];
+
+  const pageTitle =
+    role === "agent"
+      ? t("mobile.my_day")
+      : role === "secretary"
+      ? t("mobile.operations_board")
+      : t("mobile.director_board");
 
   return (
     <AppShell role={role}>
       <PageHeader
-        title={role === "agent" ? "My Day" : role === "secretary" ? "Operations Board" : "Director Board"}
+        title={pageTitle}
         left={<CircleLink to="/notifications"><Bell size={18} /></CircleLink>}
         right={<CircleLink to={`/more`}><Share2 size={18} /></CircleLink>}
       />
@@ -195,24 +205,30 @@ function OverviewScreen({ role }: { role: UserRole }) {
         <div className="p-2 pt-4">
           <div className="mb-3 flex items-center justify-between">
             <div>
-              <p className="text-[24px] font-light">{roleMeta[role].label}</p>
-              <p className="text-sm text-slate-500">{roleMeta[role].subtitle}</p>
+              <p className="text-[24px] font-light">{t(roleMeta[role].label)}</p>
+              <p className="text-sm text-slate-500">{t(roleMeta[role].subtitle)}</p>
             </div>
-            <Pill>{roleMeta[role].badge}</Pill>
+            <Pill>{t(roleMeta[role].badge)}</Pill>
           </div>
 
           <div className="grid grid-cols-3 gap-3">
             <div className={`${mintBg} rounded-[22px] p-4`}>
-              <p className="text-sm text-slate-500">{role === "director" ? "Nodes" : role === "secretary" ? "Open Tasks" : "Target"}</p>
+              <p className="text-sm text-slate-500">
+                {role === "director" ? t("mobile.nodes_stat") : role === "secretary" ? t("mobile.open_tasks_stat") : t("mobile.target_stat")}
+              </p>
               <p className="mt-1 text-[32px] font-medium">{role === "director" ? "12" : role === "secretary" ? "18" : "3"}</p>
             </div>
             <div className={`${mintBg} rounded-[22px] p-4`}>
-              <p className="text-sm text-slate-500">{role === "director" ? "Revenue" : role === "secretary" ? "Live Agents" : "Actual"}</p>
+              <p className="text-sm text-slate-500">
+                {role === "director" ? t("mobile.revenue_stat") : role === "secretary" ? t("mobile.live_agents_stat") : t("mobile.actual_stat")}
+              </p>
               <p className="mt-1 text-[32px] font-medium">{role === "director" ? "$84k" : role === "secretary" ? "8" : "2"}</p>
             </div>
             <div className={`${mintBg} rounded-[22px] p-4`}>
-              <p className="text-sm text-slate-500">{role === "director" ? "Exclusives" : role === "secretary" ? "Follow-ups" : "Status"}</p>
-              <p className="mt-1 text-[22px] font-medium">{role === "agent" ? "Field" : role === "director" ? "91" : "14"}</p>
+              <p className="text-sm text-slate-500">
+                {role === "director" ? t("mobile.exclusives_stat") : role === "secretary" ? t("mobile.follow_ups_stat") : t("mobile.status_stat")}
+              </p>
+              <p className="mt-1 text-[22px] font-medium">{role === "agent" ? t("mobile.field_stat") : role === "director" ? "91" : "14"}</p>
             </div>
           </div>
         </div>
@@ -220,16 +236,16 @@ function OverviewScreen({ role }: { role: UserRole }) {
 
       <Surface className="mt-4 p-5">
         <div className="mb-4 flex items-center justify-between">
-          <p className="text-[18px] font-medium">Priority Flow</p>
+          <p className="text-[18px] font-medium">{t("mobile.priority_flow")}</p>
         </div>
         <div className="space-y-4">
           {priorityItems.map((item) => (
             <NavLink
-              key={item.label}
+              key={item.labelKey}
               to={item.to}
               className="flex items-start justify-between gap-3 rounded-[22px] p-2 transition active:bg-white/70"
             >
-              <p className="text-[15px] text-slate-600">{item.label}</p>
+              <p className="text-[15px] text-slate-600">{t(item.labelKey)}</p>
               <ChevronRight size={18} className="mt-1 text-slate-300" />
             </NavLink>
           ))}
@@ -240,12 +256,71 @@ function OverviewScreen({ role }: { role: UserRole }) {
 }
 
 function WorkspaceScreen({ role }: { role: UserRole }) {
+  const { t } = useTranslation();
   const property = properties[0];
+
+  const pageTitle =
+    role === "agent"
+      ? t("mobile.agent_detail")
+      : role === "secretary"
+      ? t("mobile.secretary_detail")
+      : t("mobile.director_detail");
+
+  const pill1 =
+    role === "agent"
+      ? t("mobile.exclusive_lead")
+      : role === "secretary"
+      ? t("mobile.workflow")
+      : t("mobile.agency_node");
+
+  const pill2 =
+    role === "agent"
+      ? t("mobile.on_field_pill")
+      : role === "secretary"
+      ? t("mobile.in_progress_pill")
+      : t("mobile.active_pill");
+
+  const stat1Label =
+    role === "director" ? t("mobile.seats_stat") : role === "secretary" ? t("mobile.agents_stat") : t("mobile.floor_stat");
+  const stat1Val =
+    role === "director" ? nodes[0].seats : role === "secretary" ? 8 : 2;
+
+  const stat2Label =
+    role === "director" ? t("mobile.exclusives_stat") : role === "secretary" ? t("mobile.queue_stat") : t("mobile.bedroom_stat");
+  const stat2Val =
+    role === "director" ? 91 : role === "secretary" ? 14 : 4;
+
+  const stat3Label =
+    role === "director" ? t("mobile.at_risk_stat") : role === "secretary" ? t("mobile.calls_stat") : t("mobile.bathroom_stat");
+  const stat3Val =
+    role === "director" ? 1 : role === "secretary" ? 6 : 3;
+
+  const detailRows: [string, string][] =
+    role === "director"
+      ? [
+          [t("dashboard.director_label"), nodes[0].director],
+          ["MRR", nodes[0].mrr],
+          [t("dashboard.renewal_date"), nodes[0].billingDate],
+          ["Plan", nodes[0].plan],
+        ]
+      : role === "secretary"
+      ? [
+          [t("mobile.open_paperwork"), "6 owner files"],
+          [t("mobile.follow_ups_stat"), "14 pending"],
+          [t("mobile.coverage_label"), "Arabkir + Nor Nork"],
+          [t("mobile.escalations_label"), "2 blocked visits"],
+        ]
+      : [
+          [t("properties.detail.owner"), property.owner],
+          [t("mobile.source_label"), property.sourcingMethod],
+          [t("properties.detail.district"), property.district],
+          [t("mobile.conflict_note_label"), property.conflictNote ?? "—"],
+        ];
 
   return (
     <AppShell role={role}>
       <PageHeader
-        title={role === "agent" ? "Property Details" : role === "secretary" ? "Operations Detail" : "Agency Detail"}
+        title={pageTitle}
         left={<CircleLink to={`/dashboard`}><ArrowLeft size={18} /></CircleLink>}
         right={<CircleLink to={`/properties`}><Share2 size={18} /></CircleLink>}
       />
@@ -253,54 +328,35 @@ function WorkspaceScreen({ role }: { role: UserRole }) {
       <Surface className="overflow-hidden p-3">
         <div className="relative">
           <img src={property.image} alt={property.name} className="h-[260px] w-full rounded-[24px] object-cover" />
-          <Pill dark>{role === "agent" ? "Exclusive Lead" : role === "secretary" ? "Workflow" : "Agency Node"}</Pill>
-          <div className="absolute right-4 top-4"><Pill>{role === "agent" ? "On-Field" : role === "secretary" ? "In Progress" : "Active"}</Pill></div>
+          <Pill dark>{pill1}</Pill>
+          <div className="absolute right-4 top-4"><Pill>{pill2}</Pill></div>
         </div>
 
         <div className="mt-4 grid grid-cols-3 gap-3">
           <div className={`${mintBg} rounded-[22px] p-4`}>
             <Building2 size={18} />
-            <p className="mt-3 text-sm text-slate-500">{role === "director" ? "Seats" : role === "secretary" ? "Agents" : "Floor"}</p>
-            <p className="mt-1 text-[30px] font-medium">{role === "director" ? nodes[0].seats : role === "secretary" ? 8 : 2}</p>
+            <p className="mt-3 text-sm text-slate-500">{stat1Label}</p>
+            <p className="mt-1 text-[30px] font-medium">{stat1Val}</p>
           </div>
           <div className={`${mintBg} rounded-[22px] p-4`}>
             <BedDouble size={18} />
-            <p className="mt-3 text-sm text-slate-500">{role === "director" ? "Exclusives" : role === "secretary" ? "Queue" : "Bedroom"}</p>
-            <p className="mt-1 text-[30px] font-medium">{role === "director" ? 91 : role === "secretary" ? 14 : 4}</p>
+            <p className="mt-3 text-sm text-slate-500">{stat2Label}</p>
+            <p className="mt-1 text-[30px] font-medium">{stat2Val}</p>
           </div>
           <div className={`${mintBg} rounded-[22px] p-4`}>
             <Bath size={18} />
-            <p className="mt-3 text-sm text-slate-500">{role === "director" ? "At Risk" : role === "secretary" ? "Calls" : "Bathroom"}</p>
-            <p className="mt-1 text-[30px] font-medium">{role === "director" ? 1 : role === "secretary" ? 6 : 3}</p>
+            <p className="mt-3 text-sm text-slate-500">{stat3Label}</p>
+            <p className="mt-1 text-[30px] font-medium">{stat3Val}</p>
           </div>
         </div>
       </Surface>
 
       <Surface className="mt-4 p-5">
         <div className="mb-4 flex items-center justify-between">
-          <p className="text-[18px] font-medium">Details</p>
+          <p className="text-[18px] font-medium">{t("mobile.details")}</p>
         </div>
         <div className="space-y-4 text-[15px]">
-          {(role === "director"
-            ? [
-                ["Director", nodes[0].director],
-                ["MRR", nodes[0].mrr],
-                ["Renewal", nodes[0].billingDate],
-                ["Plan", nodes[0].plan],
-              ]
-            : role === "secretary"
-            ? [
-                ["Open paperwork", "6 owner files"],
-                ["Follow-ups", "14 pending"],
-                ["Coverage", "Arabkir + Nor Nork"],
-                ["Escalations", "2 blocked visits"],
-              ]
-            : [
-                ["Owner", property.owner],
-                ["Source", property.sourcingMethod],
-                ["District", property.district],
-                ["Conflict note", property.conflictNote],
-              ]).map(([label, value]) => (
+          {detailRows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4">
               <span className="text-slate-500">{label}</span>
               <span className="text-right font-medium text-black">{value}</span>
@@ -313,6 +369,7 @@ function WorkspaceScreen({ role }: { role: UserRole }) {
 }
 
 function ChatScreen({ role }: { role: UserRole }) {
+  const { t } = useTranslation();
   const avatar = role === "director" ? agents[5].avatar : role === "secretary" ? agents[3].avatar : agents[0].avatar;
   const [draft, setDraft] = useState("");
   const [messages, setMessages] = useState<string[]>([]);
@@ -323,10 +380,17 @@ function ChatScreen({ role }: { role: UserRole }) {
     setDraft("");
   };
 
+  const chatTitle =
+    role === "agent" ? t("mobile.field_chat") : role === "secretary" ? t("mobile.coordination_chat") : t("mobile.leadership_chat");
+  const groupName =
+    role === "director" ? t("mobile.agency_group") : role === "secretary" ? t("mobile.office_team") : t("mobile.field_team");
+  const msg1 = t(`mobile.chat.${role}.1`);
+  const msg2 = t(`mobile.chat.${role}.2`);
+
   return (
     <AppShell role={role}>
       <PageHeader
-        title={role === "agent" ? "Field Chat" : role === "secretary" ? "Coordination Chat" : "Leadership Chat"}
+        title={chatTitle}
         left={<CircleLink to={`/dashboard`}><ArrowLeft size={18} /></CircleLink>}
         right={<Pill>23 Online</Pill>}
       />
@@ -336,29 +400,15 @@ function ChatScreen({ role }: { role: UserRole }) {
           <div className="mb-4 flex items-center justify-between text-sm text-slate-500">
             <span>10:45 am</span>
             <div className="flex items-center gap-3">
-              <span className="font-medium text-black">
-                {role === "director" ? "Agency Group" : role === "secretary" ? "Office Team" : "Field Team"}
-              </span>
+              <span className="font-medium text-black">{groupName}</span>
               <img src={avatar} alt="avatar" className="h-12 w-12 rounded-full object-cover" />
             </div>
           </div>
           <div className={`${mintBg} rounded-[26px] p-4`}>
-            <p className="text-[15px] text-slate-700">
-              {role === "director"
-                ? "North District Homes renewal is flagged. Review before tomorrow."
-                : role === "secretary"
-                ? "Owner document package is ready. Reassign Nor Nork follow-up after lunch."
-                : "Neighbor confirmed a second-floor vacancy. Logging it as on-field source."}
-            </p>
+            <p className="text-[15px] text-slate-700">{msg1}</p>
           </div>
           <div className="mt-4 rounded-[26px] bg-white px-4 py-4">
-            <p className="text-[15px] text-slate-700">
-              {role === "director"
-                ? "Approve exclusive ownership after secretary confirms paperwork."
-                : role === "secretary"
-                ? "I\u2019ll update the status board and block duplicate outreach."
-                : "Need owner phone number and whether the listing is already visited."}
-            </p>
+            <p className="text-[15px] text-slate-700">{msg2}</p>
           </div>
           {messages.map((m, i) => (
             <div key={i} className="mt-3 rounded-[26px] bg-black px-4 py-3 text-white">
@@ -372,7 +422,7 @@ function ChatScreen({ role }: { role: UserRole }) {
         <input
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
-          placeholder="Enter your message"
+          placeholder={t("mobile.message_placeholder")}
           className="flex-1 bg-transparent text-[17px] outline-none placeholder:text-slate-400"
         />
         <button type="button" className="text-slate-500" title="Attach">
@@ -388,20 +438,21 @@ function ChatScreen({ role }: { role: UserRole }) {
 
 export function MoreScreen({ role }: { role: UserRole }) {
   const { state, logout } = useAppState();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const links = desktopLinksByRole[role];
 
   return (
     <AppShell role={role}>
       <PageHeader
-        title={roleMeta[role].label}
+        title={t(roleMeta[role].label)}
         left={<CircleLink to={`/dashboard`}><ArrowLeft size={18} /></CircleLink>}
-        right={<Pill>{roleMeta[role].badge}</Pill>}
+        right={<Pill>{t(roleMeta[role].badge)}</Pill>}
       />
 
       {state.user && (
         <Surface className="mb-4 p-5">
-          <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Signed in</p>
+          <p className="text-xs uppercase tracking-[0.18em] text-slate-500">{t("mobile.signed_in")}</p>
           <p className="mt-1 text-[18px] font-medium">{state.user.displayName}</p>
           <p className="text-sm text-slate-500">{state.user.username} · {state.user.role}</p>
           <button
@@ -411,14 +462,14 @@ export function MoreScreen({ role }: { role: UserRole }) {
             }}
             className="mt-4 inline-flex items-center gap-2 rounded-[18px] bg-black px-4 py-2.5 text-sm font-medium text-white"
           >
-            <LogOut size={14} /> Sign out
+            <LogOut size={14} /> {t("mobile.sign_out")}
           </button>
         </Surface>
       )}
 
       <Surface className="mt-4 p-5">
         <div className="mb-4 flex items-center justify-between">
-          <p className="text-[18px] font-medium">All Features</p>
+          <p className="text-[18px] font-medium">{t("mobile.all_features")}</p>
           <Users size={18} className="text-slate-500" />
         </div>
         <div className="space-y-2">
@@ -428,7 +479,7 @@ export function MoreScreen({ role }: { role: UserRole }) {
               <NavLink key={link.to} to={link.to} className="flex items-center justify-between rounded-[18px] p-2 transition active:bg-white">
                 <div className="flex items-center gap-3">
                   <Icon size={16} className="text-slate-500" />
-                  <p className="text-[15px] text-slate-700">{link.label}</p>
+                  <p className="text-[15px] text-slate-700">{t(link.label)}</p>
                 </div>
                 <ChevronRight size={18} className="text-slate-300" />
               </NavLink>
@@ -442,13 +493,13 @@ export function MoreScreen({ role }: { role: UserRole }) {
           to="/add-listing"
           className="mt-4 flex items-center justify-center gap-2 rounded-[22px] bg-black px-4 py-4 text-sm font-medium text-white"
         >
-          <Plus size={16} /> Add new listing
+          <Plus size={16} /> {t("mobile.add_new_listing")}
         </NavLink>
       )}
 
       <Surface className="mt-4 p-5">
         <div className="mb-4 flex items-center justify-between">
-          <p className="text-[18px] font-medium">Sourcing Mix</p>
+          <p className="text-[18px] font-medium">{t("mobile.sourcing_mix")}</p>
           <Trophy size={18} className="text-slate-500" />
         </div>
         <div className="space-y-4">

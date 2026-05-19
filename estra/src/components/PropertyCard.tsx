@@ -1,6 +1,19 @@
 import { Building2, UserRound } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Property } from "../data/mockData";
 import { cls } from "../lib/ui";
+
+const propertyStatusKey: Record<Property["status"], string> = {
+  Exclusive: "property_status.exclusive",
+  "Open Inventory": "property_status.open_inventory",
+  "Visited by Team": "property_status.visited_by_team",
+  "Client Match": "property_status.client_match",
+  Closed: "property_status.closed",
+  Available: "property_status.available",
+  Visited: "property_status.visited",
+  "Interested Client": "property_status.interested_client",
+  "Rented/Sold": "property_status.rented_sold",
+};
 
 const statusColors: Record<Property["status"], string> = {
   Exclusive: "bg-amber-50 text-amber-700",
@@ -19,6 +32,7 @@ interface PropertyCardProps {
 }
 
 export function PropertyCard({ property }: PropertyCardProps) {
+  const { t } = useTranslation();
   return (
     <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft">
       <img src={property.image} alt={property.name} className="h-44 w-full object-cover" />
@@ -31,7 +45,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
               statusColors[property.status]
             )}
           >
-            {property.status}
+            {t(propertyStatusKey[property.status])}
           </span>
         </div>
         <p className="text-sm text-slate-500">{property.address}</p>

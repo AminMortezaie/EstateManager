@@ -18,6 +18,7 @@ import {
   Moon,
   Sun,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Topbar } from "../components/Topbar";
 import { useAppState, ACCOUNTS } from "../state/AppState";
 import { desktopLinksByRole, UserRole, roleMeta } from "../lib/roles";
@@ -62,6 +63,7 @@ function Kpi({ label, value, accent }: { label: string; value: string | number; 
 /* -------------------------------------------------------------------------- */
 export function ClientsPage() {
   const { state } = useAppState();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const nodes = state.nodes;
 
@@ -80,15 +82,15 @@ export function ClientsPage() {
   return (
     <div>
       <Topbar
-        title="Master Admin — Node & Subscription Management"
-        subtitle="Platform owner view for agency onboarding, activation, and renewals"
+        title={t("clients.title")}
+        subtitle={t("clients.subtitle")}
       />
 
       <div className="mb-4 grid gap-3 sm:grid-cols-4">
-        <Kpi label="Total Nodes" value={nodes.length} />
-        <Kpi label="Active" value={active} accent="text-emerald-700" />
-        <Kpi label="Trial" value={trial} accent="text-blue-700" />
-        <Kpi label="At Risk" value={pastDue} accent="text-rose-700" />
+        <Kpi label={t("clients.kpi.total_nodes")} value={nodes.length} />
+        <Kpi label={t("clients.kpi.active")} value={active} accent="text-emerald-700" />
+        <Kpi label={t("clients.kpi.trial")} value={trial} accent="text-blue-700" />
+        <Kpi label={t("clients.kpi.at_risk")} value={pastDue} accent="text-rose-700" />
       </div>
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
@@ -107,21 +109,21 @@ export function ClientsPage() {
           </button>
         ))}
         <span className="ml-auto text-xs text-slate-500">
-          Approx MRR: <strong className="text-slate-800">${mrr.toLocaleString()}</strong>
+          {t("clients.approx_mrr")} <strong className="text-slate-800">${mrr.toLocaleString()}</strong>
         </span>
         {canManage && (
           <button
             onClick={() => navigate("/nodes")}
             className="inline-flex items-center gap-1 rounded-full bg-black px-3 py-1.5 text-xs text-white hover:bg-slate-800"
           >
-            <Plus size={12} /> Manage Nodes
+            <Plus size={12} /> {t("clients.manage_nodes")}
           </button>
         )}
       </div>
 
-      <Card title="Subscriptions" icon={Layers3}>
+      <Card title={t("clients.subscriptions")} icon={Layers3}>
         {filtered.length === 0 && (
-          <p className="rounded-xl bg-slate-50 px-3 py-3 text-xs text-slate-500">No nodes for this filter.</p>
+          <p className="rounded-xl bg-slate-50 px-3 py-3 text-xs text-slate-500">{t("clients.no_nodes")}</p>
         )}
         <div className="space-y-2">
           {filtered.map((node) => (
@@ -130,7 +132,7 @@ export function ClientsPage() {
                 <div className="min-w-0">
                   <p className="truncate text-sm font-medium text-slate-900">{node.agency}</p>
                   <p className="truncate text-xs text-slate-500">
-                    {node.plan} · {node.seats} seats · {node.mrr}
+                    {node.plan} · {node.seats} {t("clients.seats")} · {node.mrr}
                   </p>
                 </div>
                 <span
@@ -147,7 +149,7 @@ export function ClientsPage() {
                 </span>
               </div>
               <p className="mt-2 text-xs text-slate-500">
-                Director: {node.director} · Region: {node.region} · Renewal: {node.billingDate}
+                {t("clients.director")} {node.director} · {t("clients.region")} {node.region} · {t("clients.renewal")} {node.billingDate}
               </p>
             </div>
           ))}
@@ -162,13 +164,14 @@ export function ClientsPage() {
 /* -------------------------------------------------------------------------- */
 export function OwnersPage() {
   const { state } = useAppState();
+  const { t } = useTranslation();
   const me = state.user;
 
   return (
     <div>
       <Topbar
-        title="Users & Permissions"
-        subtitle="Per-node access control for directors, secretaries, and agents"
+        title={t("owners.title")}
+        subtitle={t("owners.subtitle")}
       />
 
       <div className="mb-4 grid gap-3 sm:grid-cols-3">
@@ -178,25 +181,25 @@ export function OwnersPage() {
           return (
             <div key={role} className="rounded-2xl border border-[#efe9dd] bg-white p-4">
               <p className="text-[11px] uppercase tracking-[0.18em] text-slate-500">
-                {roleMeta[role].label}
+                {t(roleMeta[role].label)}
               </p>
-              <p className="mt-1 text-xl font-semibold text-slate-800">{count} user</p>
-              <p className="mt-1 text-xs text-slate-500">{features} features available</p>
+              <p className="mt-1 text-xl font-semibold text-slate-800">{count} {t("owners.user")}</p>
+              <p className="mt-1 text-xs text-slate-500">{features} {t("owners.features")}</p>
             </div>
           );
         })}
       </div>
 
-      <Card title="Accounts" icon={UsersRound}>
+      <Card title={t("owners.accounts")} icon={UsersRound}>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
               <tr className="text-[11px] uppercase tracking-[0.16em] text-slate-500">
-                <th className="py-2">User</th>
-                <th className="py-2">Role</th>
-                <th className="py-2">Username</th>
-                <th className="py-2">Linked agent</th>
-                <th className="py-2 text-right">Status</th>
+                <th className="py-2">{t("owners.col.user")}</th>
+                <th className="py-2">{t("owners.col.role")}</th>
+                <th className="py-2">{t("owners.col.username")}</th>
+                <th className="py-2">{t("owners.col.linked_agent")}</th>
+                <th className="py-2 text-right">{t("owners.col.status")}</th>
               </tr>
             </thead>
             <tbody>
@@ -210,21 +213,21 @@ export function OwnersPage() {
                         <span className="font-medium text-slate-900">{acc.displayName}</span>
                         {isMe && (
                           <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] text-emerald-700">
-                            You
+                            {t("owners.you")}
                           </span>
                         )}
                       </div>
                     </td>
                     <td className="py-3">
                       <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700">
-                        {roleMeta[acc.role].label}
+                        {t(roleMeta[acc.role].label)}
                       </span>
                     </td>
                     <td className="py-3 text-slate-600">{acc.username}</td>
                     <td className="py-3 text-slate-600">
                       {linkedAgent ? `${linkedAgent.name} · ${linkedAgent.district}` : "—"}
                     </td>
-                    <td className="py-3 text-right text-xs text-emerald-700">Active</td>
+                    <td className="py-3 text-right text-xs text-emerald-700">{t("owners.active")}</td>
                   </tr>
                 );
               })}
@@ -238,13 +241,13 @@ export function OwnersPage() {
           <div key={role} className="rounded-2xl border border-[#efe9dd] bg-white p-4">
             <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
               <ShieldCheck size={14} className="text-brand-600" />
-              {roleMeta[role].label} access
+              {t(roleMeta[role].label)} {t("owners.access")}
             </p>
-            <p className="mt-1 text-xs text-slate-500">{roleMeta[role].subtitle}</p>
+            <p className="mt-1 text-xs text-slate-500">{t(roleMeta[role].subtitle)}</p>
             <ul className="mt-3 space-y-1 text-sm text-slate-600">
               {desktopLinksByRole[role].map((l) => (
                 <li key={l.to} className="flex items-center justify-between gap-2">
-                  <span>• {l.label}</span>
+                  <span>• {t(l.label)}</span>
                   <Link to={l.to} className="text-[11px] text-slate-400 hover:text-slate-700">
                     {l.to}
                   </Link>
@@ -279,6 +282,7 @@ interface Notice {
 
 export function NotificationsPage() {
   const { state } = useAppState();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [readIds, setReadIds] = useState<Set<string>>(new Set());
 
@@ -300,7 +304,7 @@ export function NotificationsPage() {
         id: `field-${a.id}`,
         tone: "ok",
         icon: <Activity size={14} className="text-emerald-700" />,
-        title: `${a.name} is on-field`,
+        title: `${a.name} ${t("notifications.on_field")}`,
         body: `${a.location} · ${a.district}`,
         to: "/ops",
       })
@@ -314,7 +318,7 @@ export function NotificationsPage() {
         id: `listing-${l.propertyId}`,
         tone: "info",
         icon: <Building2 size={14} className="text-brand-600" />,
-        title: `${agent?.name ?? "An agent"} added "${prop.name}"`,
+        title: `${agent?.name ?? "An agent"} ${t("notifications.added")} "${prop.name}"`,
         body: `${prop.address} · ${prop.price}`,
         to: "/properties",
       });
@@ -325,40 +329,40 @@ export function NotificationsPage() {
         id: `conflict-${p.id}`,
         tone: "warn",
         icon: <AlertTriangle size={14} className="text-amber-700" />,
-        title: `Conflict on ${p.address}`,
-        body: p.conflictNote ?? "Possible duplicate visit",
+        title: `${t("notifications.conflict_on")} ${p.address}`,
+        body: p.conflictNote ?? t("notifications.possible_duplicate"),
         to: "/conflict-check",
       })
     );
 
     return out;
-  }, [state]);
+  }, [state, t]);
 
   const unread = items.filter((i) => !readIds.has(i.id)).length;
 
   return (
     <div>
       <Topbar
-        title="Notifications"
-        subtitle="Live feed from agents, listings, and conflict signals"
+        title={t("notifications.title")}
+        subtitle={t("notifications.subtitle")}
       />
 
       <div className="mb-4 flex items-center justify-between">
         <p className="text-sm text-slate-600">
-          <strong className="text-slate-900">{unread}</strong> unread of {items.length}
+          <strong className="text-slate-900">{unread}</strong> {t("notifications.unread")} {items.length}
         </p>
         <button
           onClick={() => setReadIds(new Set(items.map((i) => i.id)))}
           className="inline-flex items-center gap-1 rounded-full border border-[#ece6db] bg-white px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50"
         >
-          <CheckCheck size={12} /> Mark all read
+          <CheckCheck size={12} /> {t("notifications.mark_all_read")}
         </button>
       </div>
 
-      <Card title="Recent activity" icon={BellRing}>
+      <Card title={t("notifications.recent_activity")} icon={BellRing}>
         {items.length === 0 && (
           <p className="rounded-xl bg-slate-50 px-3 py-3 text-xs text-slate-500">
-            Nothing to show right now.
+            {t("notifications.nothing")}
           </p>
         )}
         <ul className="divide-y divide-[#efe9dd]">
@@ -394,7 +398,7 @@ export function NotificationsPage() {
                       onClick={() => navigate(n.to!)}
                       className="rounded-full border border-[#ece6db] px-2 py-1 text-[11px] text-slate-700 hover:bg-slate-50"
                     >
-                      Open
+                      {t("notifications.open")}
                     </button>
                   )}
                   {!isRead && (
@@ -408,7 +412,7 @@ export function NotificationsPage() {
                       }
                       className="text-[11px] text-slate-500 underline-offset-2 hover:underline"
                     >
-                      Mark read
+                      {t("notifications.mark_read")}
                     </button>
                   )}
                 </div>
@@ -429,6 +433,7 @@ const DENSITY_KEY = "estateflow-density-v1";
 
 export function SettingsPage() {
   const { state, logout } = useAppState();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const me = state.user;
   const linkedAgent = me ? state.agents.find((a) => a.id === me.agentId) : null;
@@ -461,19 +466,19 @@ export function SettingsPage() {
 
   return (
     <div>
-      <Topbar title="Settings" subtitle="Account, preferences, and session" />
+      <Topbar title={t("settings.title")} subtitle={t("settings.subtitle")} />
 
       <div className="grid gap-4 lg:grid-cols-[1.1fr_1fr]">
-        <Card title="Account" icon={UsersRound}>
+        <Card title={t("settings.account")} icon={UsersRound}>
           <div className="space-y-2 text-sm">
-            <Row label="Signed in as" value={me.displayName} />
-            <Row label="Username" value={me.username} />
-            <Row label="Role" value={roleMeta[me.role].label} />
+            <Row label={t("settings.signed_in_as")} value={me.displayName} />
+            <Row label={t("settings.username")} value={me.username} />
+            <Row label={t("settings.role")} value={t(roleMeta[me.role].label)} />
             {linkedAgent && (
               <>
-                <Row label="Linked agent" value={linkedAgent.name} />
-                <Row label="District" value={linkedAgent.district} />
-                <Row label="Today's status" value={linkedAgent.status} />
+                <Row label={t("settings.linked_agent")} value={linkedAgent.name} />
+                <Row label={t("settings.district")} value={linkedAgent.district} />
+                <Row label={t("settings.todays_status")} value={linkedAgent.status} />
               </>
             )}
           </div>
@@ -481,16 +486,16 @@ export function SettingsPage() {
             onClick={onSignOut}
             className="mt-4 inline-flex items-center gap-2 rounded-full bg-rose-600 px-4 py-2 text-sm text-white hover:bg-rose-700"
           >
-            <LogOut size={14} /> Sign out
+            <LogOut size={14} /> {t("settings.sign_out")}
           </button>
         </Card>
 
-        <Card title="Preferences" icon={Settings2}>
+        <Card title={t("settings.preferences")} icon={Settings2}>
           <div className="space-y-3 text-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-slate-900">Theme</p>
-                <p className="text-xs text-slate-500">Applies across desktop and mobile shell</p>
+                <p className="font-medium text-slate-900">{t("settings.theme")}</p>
+                <p className="text-xs text-slate-500">{t("settings.theme_desc")}</p>
               </div>
               <div className="flex rounded-full border border-[#ece6db] bg-white p-1">
                 <button
@@ -500,7 +505,7 @@ export function SettingsPage() {
                     theme === "light" ? "bg-black text-white" : "text-slate-600"
                   )}
                 >
-                  <Sun size={12} /> Light
+                  <Sun size={12} /> {t("settings.light")}
                 </button>
                 <button
                   onClick={() => setTheme("dark")}
@@ -509,15 +514,15 @@ export function SettingsPage() {
                     theme === "dark" ? "bg-black text-white" : "text-slate-600"
                   )}
                 >
-                  <Moon size={12} /> Dark
+                  <Moon size={12} /> {t("settings.dark")}
                 </button>
               </div>
             </div>
 
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-slate-900">Density</p>
-                <p className="text-xs text-slate-500">Adjusts list and card spacing</p>
+                <p className="font-medium text-slate-900">{t("settings.density")}</p>
+                <p className="text-xs text-slate-500">{t("settings.density_desc")}</p>
               </div>
               <div className="flex rounded-full border border-[#ece6db] bg-white p-1">
                 <button
@@ -527,7 +532,7 @@ export function SettingsPage() {
                     density === "comfortable" ? "bg-black text-white" : "text-slate-600"
                   )}
                 >
-                  Comfortable
+                  {t("settings.comfortable")}
                 </button>
                 <button
                   onClick={() => setDensity("compact")}
@@ -536,16 +541,16 @@ export function SettingsPage() {
                     density === "compact" ? "bg-black text-white" : "text-slate-600"
                   )}
                 >
-                  Compact
+                  {t("settings.compact")}
                 </button>
               </div>
             </div>
 
             <div className="rounded-xl border border-dashed border-[#ece6db] bg-slate-50 px-3 py-3 text-xs text-slate-500">
               <p className="inline-flex items-center gap-1 text-slate-700">
-                <Sparkles size={12} /> Tip
+                <Sparkles size={12} /> {t("settings.tip")}
               </p>
-              Preferences are persisted in this browser only. They follow you across reloads but not across devices.
+              {t("settings.tip_text")}
             </div>
           </div>
         </Card>
@@ -555,20 +560,20 @@ export function SettingsPage() {
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
           <ActionCard
             icon={<CreditCard size={14} className="text-brand-600" />}
-            title="Commissions"
-            desc="Open the calculator"
+            title={t("settings.commissions")}
+            desc={t("settings.commissions_desc")}
             to="/commission"
           />
           <ActionCard
             icon={<Trash2 size={14} className="text-rose-600" />}
-            title="Manage nodes"
-            desc="Add or remove subscriptions"
+            title={t("settings.manage_nodes")}
+            desc={t("settings.manage_nodes_desc")}
             to="/nodes"
           />
           <ActionCard
             icon={<ShieldCheck size={14} className="text-emerald-700" />}
-            title="Users & permissions"
-            desc="Review role access"
+            title={t("settings.users_permissions")}
+            desc={t("settings.users_permissions_desc")}
             to="/owners"
           />
         </div>

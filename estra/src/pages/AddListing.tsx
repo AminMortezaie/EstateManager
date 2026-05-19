@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AlertTriangle, CheckCircle2, ArrowLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Topbar } from "../components/Topbar";
 import { useAppState, SOURCING_OPTIONS, DISTRICTS } from "../state/AppState";
 import { Property } from "../data/mockData";
@@ -8,6 +9,7 @@ import { Property } from "../data/mockData";
 export function AddListing() {
   const { state, addListing, findConflict, todayCount } = useAppState();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const me = state.user;
   const myAgent = state.agents.find((a) => a.id === me?.agentId);
   const target = myAgent?.dailyTarget ?? 3;
@@ -35,7 +37,7 @@ export function AddListing() {
     setError(null);
     setSuccess(false);
     if (!name || !address || !price || !owner) {
-      setError("Please fill in all required fields");
+      setError(t("add_listing.error_required"));
       return;
     }
     const res = addListing(
@@ -57,21 +59,21 @@ export function AddListing() {
 
   return (
     <>
-      <Topbar title="Add Listing" subtitle={`Today's progress: ${done + (success ? 0 : 0)}/${target} options`} />
+      <Topbar title={t("add_listing.title")} subtitle={`Today's progress: ${done + (success ? 0 : 0)}/${target} options`} />
 
       <button
         onClick={() => navigate(-1)}
         className="mb-4 inline-flex items-center gap-2 rounded-[18px] border border-[#ece6db] bg-white px-3 py-2 text-sm text-slate-600 hover:bg-slate-50"
       >
-        <ArrowLeft size={14} /> Back
+        <ArrowLeft size={14} /> {t("add_listing.back")}
       </button>
 
       <div className="mb-4 rounded-[24px] border border-white/80 bg-[#fbfaf6] p-4">
-        <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Daily Goal</p>
+        <p className="text-xs uppercase tracking-[0.18em] text-slate-500">{t("add_listing.daily_goal")}</p>
         <div className="mt-2 flex items-center justify-between">
           <p className="text-2xl font-semibold text-[#111111]">{done} / {target}</p>
           <span className="text-xs text-slate-500">
-            {done >= target ? "✅ Goal reached" : `${target - done} more to go`}
+            {done >= target ? t("add_listing.goal_reached") : `${target - done} ${t("add_listing.more_to_go")}`}
           </span>
         </div>
         <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-[#ece6db]">
@@ -83,11 +85,11 @@ export function AddListing() {
       </div>
 
       <form onSubmit={submit} className="space-y-4 rounded-[24px] border border-white/80 bg-[#fbfaf6] p-5">
-        <Field label="Listing name">
+        <Field label={t("add_listing.field.name")}>
           <input value={name} onChange={(e) => setName(e.target.value)} className={inputCls} placeholder="2BR Apartment near Komitas" />
         </Field>
 
-        <Field label="Address">
+        <Field label={t("add_listing.field.address")}>
           <input value={address} onChange={(e) => setAddress(e.target.value)} className={inputCls} placeholder="Komitas Ave 12, Arabkir" />
           {liveConflict && (
             <p className="mt-2 inline-flex items-start gap-2 rounded-[14px] bg-amber-50 px-3 py-2 text-xs text-amber-800">
@@ -101,25 +103,25 @@ export function AddListing() {
         </Field>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="District">
+          <Field label={t("add_listing.field.district")}>
             <select value={district} onChange={(e) => setDistrict(e.target.value)} className={inputCls}>
               {DISTRICTS.map((d) => <option key={d}>{d}</option>)}
             </select>
           </Field>
-          <Field label="Type">
+          <Field label={t("add_listing.field.type")}>
             <select value={type} onChange={(e) => setType(e.target.value as Property["type"])} className={inputCls}>
-              {["Apartment", "House", "Commercial", "Studio"].map((t) => <option key={t}>{t}</option>)}
+              {["Apartment", "House", "Commercial", "Studio"].map((typeOpt) => <option key={typeOpt}>{typeOpt}</option>)}
             </select>
           </Field>
-          <Field label="Price">
+          <Field label={t("add_listing.field.price")}>
             <input value={price} onChange={(e) => setPrice(e.target.value)} className={inputCls} placeholder="$145,000" />
           </Field>
-          <Field label="Owner">
+          <Field label={t("add_listing.field.owner")}>
             <input value={owner} onChange={(e) => setOwner(e.target.value)} className={inputCls} placeholder="Owner name" />
           </Field>
         </div>
 
-        <Field label="How did you find this listing?">
+        <Field label={t("add_listing.field.sourcing")}>
           <select value={sourcing} onChange={(e) => setSourcing(e.target.value)} className={inputCls}>
             {SOURCING_OPTIONS.map((s) => <option key={s}>{s}</option>)}
           </select>
@@ -127,23 +129,25 @@ export function AddListing() {
 
         <label className="flex items-center gap-3 rounded-[18px] border border-[#ece6db] bg-white px-4 py-3">
           <input type="checkbox" checked={exclusive} onChange={(e) => setExclusive(e.target.checked)} />
-          <span className="text-sm">Mark as <strong>Exclusive</strong> (owner committed to our agency only)</span>
+          <span className="text-sm">
+            {t("add_listing.exclusive_mark")} <strong>{t("add_listing.exclusive_bold")}</strong> {t("add_listing.exclusive_desc")}
+          </span>
         </label>
 
         {error && <p className="rounded-[14px] bg-red-50 px-3 py-2 text-xs text-red-700">{error}</p>}
 
         {conflict && (
           <div className="rounded-[14px] bg-red-50 px-4 py-3 text-sm text-red-800">
-            <p className="font-semibold flex items-center gap-2"><AlertTriangle size={14} /> Conflict — cannot save</p>
+            <p className="font-semibold flex items-center gap-2"><AlertTriangle size={14} /> {t("add_listing.conflict_header")}</p>
             <p className="mt-1 text-xs">
-              <strong>{conflict.lastVisitedBy}</strong> already visited <em>"{conflict.address}"</em> on {conflict.lastVisitedAt}.
+              <strong>{conflict.lastVisitedBy}</strong> {t("add_listing.conflict_detail")} <em>"{conflict.address}"</em> on {conflict.lastVisitedAt}.
             </p>
           </div>
         )}
 
         {success && (
           <div className="rounded-[14px] bg-emerald-50 px-4 py-3 text-sm text-emerald-800 inline-flex items-center gap-2">
-            <CheckCircle2 size={16} /> Listing saved. Counter updated.
+            <CheckCircle2 size={16} /> {t("add_listing.success")}
           </div>
         )}
 
@@ -151,7 +155,7 @@ export function AddListing() {
           type="submit"
           className="w-full rounded-[20px] bg-black px-4 py-3 text-sm font-medium text-white shadow-[0_10px_24px_rgba(0,0,0,0.14)]"
         >
-          Save listing
+          {t("add_listing.save")}
         </button>
       </form>
     </>

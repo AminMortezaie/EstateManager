@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 import { ReactNode } from "react";
 import { Navigate, NavLink, Route, Routes } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Topbar } from "../components/Topbar";
 import { agents, properties, visits } from "../data/mockData";
 import { cls } from "../lib/ui";
@@ -81,6 +82,7 @@ function ScreenHeader({
 }
 
 function MobileBottomNav() {
+  const { t } = useTranslation();
   const itemClass = ({ isActive }: { isActive: boolean }) =>
     cls(
       "flex flex-col items-center gap-0.5 rounded-lg px-2 py-1 text-[10px] font-medium",
@@ -92,20 +94,20 @@ function MobileBottomNav() {
       <nav className="grid grid-cols-5 items-center rounded-2xl border border-slate-200 bg-white px-2 py-2 text-slate-500 shadow-sm">
         <NavLink to="/mobile-app/home" className={itemClass}>
           <Home size={16} />
-          Home
+          {t("mobileapp.nav.home")}
         </NavLink>
         <NavLink to="/mobile-app/visits" className={itemClass}>
           <CheckCircle2 size={16} />
-          Visits
+          {t("mobileapp.nav.visits")}
         </NavLink>
         <span aria-hidden className="block" />
         <NavLink to="/mobile-app/clients" className={itemClass}>
           <Users size={16} />
-          Clients
+          {t("mobileapp.nav.clients")}
         </NavLink>
         <NavLink to="/mobile-app/profile" className={itemClass}>
           <MoreHorizontal size={16} />
-          More
+          {t("mobileapp.nav.more")}
         </NavLink>
       </nav>
       <button
@@ -120,6 +122,7 @@ function MobileBottomNav() {
 }
 
 function LoginScreen() {
+  const { t } = useTranslation();
   return (
     <PhoneShell>
       <div className="-mx-4 -mt-2 pb-2">
@@ -127,8 +130,8 @@ function LoginScreen() {
           <p className="text-3xl font-semibold tracking-tight text-slate-900">
             Estate<span className="text-brand-600">Flow</span>
           </p>
-          <p className="mt-1 text-[12px] font-semibold text-slate-700">Real Estate Operations Platform</p>
-          <p className="mt-0.5 text-[11px] text-slate-500">Manage agents. Track visits. Close more deals.</p>
+          <p className="mt-1 text-[12px] font-semibold text-slate-700">{t("mobileapp.login.tagline")}</p>
+          <p className="mt-0.5 text-[11px] text-slate-500">{t("mobileapp.login.manage")}</p>
         </div>
         <div className="mt-4 h-24 bg-gradient-to-b from-white via-brand-50/40 to-brand-100/80">
           <svg viewBox="0 0 420 120" className="h-full w-full text-brand-300">
@@ -149,22 +152,22 @@ function LoginScreen() {
         </div>
 
         <div className="mt-[-4px] rounded-t-[2rem] bg-white px-5 pb-5 pt-4 shadow-[0_-8px_24px_rgba(15,23,42,0.06)]">
-          <p className="text-center text-[22px] font-semibold text-slate-900">Welcome back!</p>
-          <p className="mt-1 text-center text-[15px] text-slate-500">Please sign in to continue</p>
+          <p className="text-center text-[22px] font-semibold text-slate-900">{t("mobileapp.login.welcome")}</p>
+          <p className="mt-1 text-center text-[15px] text-slate-500">{t("mobileapp.login.subtitle")}</p>
 
           <div className="mt-4 space-y-3">
             <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3 py-2.5">
               <Mail size={16} className="text-brand-600" />
               <div className="min-w-0">
-                <p className="text-[12px] font-medium text-slate-700">Email</p>
-                <p className="truncate text-[13px] text-slate-400">Enter your email</p>
+                <p className="text-[12px] font-medium text-slate-700">{t("mobileapp.login.email")}</p>
+                <p className="truncate text-[13px] text-slate-400">{t("mobileapp.login.email_ph")}</p>
               </div>
             </div>
             <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3 py-2.5">
               <Lock size={16} className="text-brand-600" />
               <div className="min-w-0 flex-1">
-                <p className="text-[12px] font-medium text-slate-700">Password</p>
-                <p className="truncate text-[13px] text-slate-400">Enter your password</p>
+                <p className="text-[12px] font-medium text-slate-700">{t("mobileapp.login.password")}</p>
+                <p className="truncate text-[13px] text-slate-400">{t("mobileapp.login.password_ph")}</p>
               </div>
               <Eye size={16} className="text-slate-400" />
             </div>
@@ -175,19 +178,19 @@ function LoginScreen() {
               <span className="inline-flex h-4 w-4 items-center justify-center rounded bg-brand-600 text-white">
                 <Check size={12} />
               </span>
-              Remember me
+              {t("mobileapp.login.remember")}
             </span>
-            <button className="font-semibold text-brand-600">Forgot password?</button>
+            <button className="font-semibold text-brand-600">{t("mobileapp.login.forgot")}</button>
           </div>
 
           <button className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-600 py-3 text-lg font-semibold text-white">
-            Log In
+            {t("mobileapp.login.btn")}
             <ArrowRight size={18} />
           </button>
 
           <div className="mt-4 flex items-center gap-2 text-[13px] text-slate-400">
             <span className="h-px flex-1 bg-slate-200" />
-            or continue with
+            {t("mobileapp.login.or")}
             <span className="h-px flex-1 bg-slate-200" />
           </div>
 
@@ -204,7 +207,7 @@ function LoginScreen() {
           </div>
 
           <p className="mt-4 text-center text-[14px] text-slate-600">
-            Don&apos;t have an account? <span className="font-semibold text-brand-600">Sign up</span>
+            {t("mobileapp.login.no_account")} <span className="font-semibold text-brand-600">{t("mobileapp.login.sign_up")}</span>
           </p>
         </div>
       </div>
@@ -213,12 +216,14 @@ function LoginScreen() {
 }
 
 function HomeScreen() {
+  const { t } = useTranslation();
+
   const kpiCards = [
-    { label: "Active Agents", value: "12", sub: "2 today", icon: Users, positive: true },
-    { label: "Visits Today", value: "28", sub: "15%", icon: Calendar, positive: true },
-    { label: "New Leads", value: "7", sub: "3 today", icon: User, positive: true },
-    { label: "Deals Closed", value: "4", sub: "This Week", icon: CheckCircle2, positive: null },
-    { label: "Pending follow-ups", value: "3", sub: "2 today", icon: Clock3, positive: false },
+    { label: t("mobileapp.home.kpi.active_agents"), value: "12", sub: "2 today", icon: Users, positive: true },
+    { label: t("mobileapp.home.kpi.visits_today"), value: "28", sub: "15%", icon: Calendar, positive: true },
+    { label: t("mobileapp.home.kpi.new_leads"), value: "7", sub: "3 today", icon: User, positive: true },
+    { label: t("mobileapp.home.kpi.deals_closed"), value: "4", sub: t("mobileapp.home.kpi.this_week"), icon: CheckCircle2, positive: null },
+    { label: t("mobileapp.home.kpi.pending"), value: "3", sub: "2 today", icon: Clock3, positive: false },
   ];
 
   const visitRows = [
@@ -228,6 +233,12 @@ function HomeScreen() {
     { time: "16:00", property: "Apartment in Arabkir", client: "Narek A.", agent: "Lilit H.", status: "Scheduled" },
   ];
 
+  const statusLabel: Record<string, string> = {
+    "Completed": t("mobileapp.home.status.completed"),
+    "In Progress": t("mobileapp.home.status.in_progress"),
+    "Scheduled": t("mobileapp.home.status.scheduled"),
+  };
+
   return (
     <PhoneShell>
       <div className="mb-3 flex items-center justify-between">
@@ -235,7 +246,7 @@ function HomeScreen() {
           <Menu size={19} />
         </button>
         <div className="mr-auto ml-2">
-          <p className="text-[13px] font-medium text-slate-700">Good morning,</p>
+          <p className="text-[13px] font-medium text-slate-700">{t("mobileapp.home.good_morning")}</p>
           <p className="text-xl font-semibold leading-6 text-slate-900">
             Tatevik <span className="text-[17px]">👋</span>
           </p>
@@ -265,8 +276,8 @@ function HomeScreen() {
 
       <article className="mt-2 rounded-2xl border border-slate-100 bg-white p-2 shadow-[0_6px_18px_rgba(15,23,42,0.05)]">
         <div className="mb-2 flex items-center justify-between">
-          <p className="text-xs font-semibold text-slate-900">Live Agents</p>
-          <button className="text-[11px] font-semibold text-brand-600">See all</button>
+          <p className="text-xs font-semibold text-slate-900">{t("mobileapp.home.live_agents")}</p>
+          <button className="text-[11px] font-semibold text-brand-600">{t("mobileapp.home.see_all")}</button>
         </div>
         <div className="relative h-40 overflow-hidden rounded-xl border border-slate-100 bg-sky-50">
           <svg viewBox="0 0 100 60" className="absolute inset-0 h-full w-full text-brand-400/80">
@@ -295,8 +306,8 @@ function HomeScreen() {
       <div className="mt-2 grid grid-cols-2 gap-2">
         <article className="rounded-2xl border border-slate-100 bg-white p-2 shadow-[0_6px_18px_rgba(15,23,42,0.05)]">
           <div className="mb-2 flex items-center justify-between">
-            <p className="text-xs font-semibold text-slate-900">Today&apos;s Timeline</p>
-            <button className="text-[11px] font-semibold text-brand-600">See all</button>
+            <p className="text-xs font-semibold text-slate-900">{t("mobileapp.home.timeline")}</p>
+            <button className="text-[11px] font-semibold text-brand-600">{t("mobileapp.home.see_all")}</button>
           </div>
           <div className="space-y-2">
             {["10:00", "12:30", "14:15", "16:00"].map((time, idx) => (
@@ -309,7 +320,9 @@ function HomeScreen() {
                   className="h-5 w-5 rounded-full object-cover"
                 />
                 <div>
-                  <p className="text-[11px] font-semibold leading-3 text-slate-900">{agents[idx % agents.length].name.split(" ")[0]} visited</p>
+                  <p className="text-[11px] font-semibold leading-3 text-slate-900">
+                    {agents[idx % agents.length].name.split(" ")[0]} {t("mobileapp.home.visited")}
+                  </p>
                   <p className="text-[10px] text-slate-500">{properties[idx % properties.length].name.split(" ").slice(0, 2).join(" ")}</p>
                 </div>
               </div>
@@ -319,27 +332,27 @@ function HomeScreen() {
 
         <article className="rounded-2xl border border-slate-100 bg-white p-2 shadow-[0_6px_18px_rgba(15,23,42,0.05)]">
           <div className="mb-2 flex items-center justify-between">
-            <p className="text-xs font-semibold text-slate-900">Alerts</p>
-            <button className="text-[11px] font-semibold text-brand-600">See all</button>
+            <p className="text-xs font-semibold text-slate-900">{t("mobileapp.home.alerts")}</p>
+            <button className="text-[11px] font-semibold text-brand-600">{t("mobileapp.home.see_all")}</button>
           </div>
           <div className="space-y-2">
             <div className="flex gap-2">
               <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-rose-50 text-rose-500">!</span>
               <div>
-                <p className="text-[11px] font-semibold leading-4 text-slate-900">Visit delayed</p>
-                <p className="text-[10px] leading-3 text-slate-500">Karen is delayed by 25 min</p>
+                <p className="text-[11px] font-semibold leading-4 text-slate-900">{t("mobileapp.home.visit_delayed")}</p>
+                <p className="text-[10px] leading-3 text-slate-500">{t("mobileapp.home.visit_delayed_desc")}</p>
               </div>
             </div>
             <div className="flex gap-2">
               <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-amber-50 text-amber-500">•</span>
               <div>
-                <p className="text-[11px] font-semibold leading-4 text-slate-900">No check-out</p>
-                <p className="text-[10px] leading-3 text-slate-500">Aram did not check out yet</p>
+                <p className="text-[11px] font-semibold leading-4 text-slate-900">{t("mobileapp.home.no_checkout")}</p>
+                <p className="text-[10px] leading-3 text-slate-500">{t("mobileapp.home.no_checkout_desc")}</p>
               </div>
             </div>
             <div className="rounded-xl bg-brand-50 p-2">
-              <p className="text-[11px] font-semibold text-slate-900">Agent App</p>
-              <p className="text-[10px] leading-3 text-slate-600">Track visits, upload photos, and get updates.</p>
+              <p className="text-[11px] font-semibold text-slate-900">{t("mobileapp.home.agent_app")}</p>
+              <p className="text-[10px] leading-3 text-slate-600">{t("mobileapp.home.agent_app_desc")}</p>
             </div>
           </div>
         </article>
@@ -347,8 +360,8 @@ function HomeScreen() {
 
       <article className="mt-2 rounded-2xl border border-slate-100 bg-white p-2 shadow-[0_6px_18px_rgba(15,23,42,0.05)]">
         <div className="mb-2 flex items-center justify-between">
-          <p className="text-xs font-semibold text-slate-900">Today&apos;s Visits</p>
-          <button className="text-[11px] font-semibold text-brand-600">See all</button>
+          <p className="text-xs font-semibold text-slate-900">{t("mobileapp.home.today_visits")}</p>
+          <button className="text-[11px] font-semibold text-brand-600">{t("mobileapp.home.see_all")}</button>
         </div>
         <div className="space-y-1.5">
           {visitRows.map((row, idx) => (
@@ -373,7 +386,7 @@ function HomeScreen() {
                   row.status === "Scheduled" && "bg-brand-50 text-brand-700"
                 )}
               >
-                {row.status}
+                {statusLabel[row.status] ?? row.status}
               </span>
               <ChevronRight size={12} className="text-slate-400" />
             </div>
@@ -387,12 +400,13 @@ function HomeScreen() {
 }
 
 function VisitsScreen() {
+  const { t } = useTranslation();
   return (
     <PhoneShell>
       <div className="flex min-h-[620px] flex-col">
-        <ScreenHeader title="Visits" subtitle="May 15, 2024" showBack />
+        <ScreenHeader title={t("mobileapp.visits.title")} subtitle={t("mobileapp.visits.subtitle")} showBack />
         <div className="mb-2 flex rounded-xl bg-slate-100 p-1 text-[10px]">
-          {["Today", "Upcoming", "History"].map((tab, idx) => (
+          {[t("mobileapp.visits.today"), t("mobileapp.visits.upcoming"), t("mobileapp.visits.history")].map((tab, idx) => (
             <button
               key={tab}
               className={cls(
@@ -422,7 +436,7 @@ function VisitsScreen() {
           })}
         </div>
         <button className="mt-auto inline-flex w-full items-center justify-center gap-1 rounded-xl bg-brand-600 py-2 text-xs font-semibold text-white shadow-[0_8px_20px_rgba(79,70,229,0.25)]">
-          <Plus size={14} /> Add Visit
+          <Plus size={14} /> {t("mobileapp.visits.add")}
         </button>
         <MobileBottomNav />
       </div>
@@ -431,12 +445,13 @@ function VisitsScreen() {
 }
 
 function VisitDetailsScreen() {
+  const { t } = useTranslation();
   const property = properties[0];
   const agent = agents[2];
 
   return (
     <PhoneShell>
-      <ScreenHeader title="Visit Details" showBack />
+      <ScreenHeader title={t("mobileapp.visit_details.title")} showBack />
       <img src={property.image} alt={property.name} className="h-28 w-full rounded-xl object-cover" />
       <div className="mt-2">
         <p className="text-sm font-semibold text-slate-900">{property.name}</p>
@@ -444,16 +459,16 @@ function VisitDetailsScreen() {
       </div>
       <div className="mt-2 grid grid-cols-2 gap-2 text-[10px]">
         <div className="rounded-xl bg-slate-50 p-2">
-          <p className="text-slate-500">Price</p>
+          <p className="text-slate-500">{t("mobileapp.visit_details.price")}</p>
           <p className="font-semibold text-slate-900">{property.price}</p>
         </div>
         <div className="rounded-xl bg-slate-50 p-2">
-          <p className="text-slate-500">Duration</p>
-          <p className="font-semibold text-slate-900">30 min</p>
+          <p className="text-slate-500">{t("mobileapp.visit_details.duration")}</p>
+          <p className="font-semibold text-slate-900">{t("mobileapp.visit_details.duration_val")}</p>
         </div>
       </div>
       <div className="mt-2 rounded-xl border border-slate-200 p-2">
-        <p className="mb-1 text-[10px] font-semibold text-slate-500">Owner</p>
+        <p className="mb-1 text-[10px] font-semibold text-slate-500">{t("mobileapp.visit_details.owner")}</p>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img src={agent.avatar} alt={agent.name} className="h-8 w-8 rounded-full object-cover" />
@@ -467,16 +482,17 @@ function VisitDetailsScreen() {
           </button>
         </div>
       </div>
-      <button className="mt-3 w-full rounded-xl bg-brand-600 py-2 text-xs font-semibold text-white">Complete Visit</button>
+      <button className="mt-3 w-full rounded-xl bg-brand-600 py-2 text-xs font-semibold text-white">{t("mobileapp.visit_details.complete")}</button>
       <MobileBottomNav />
     </PhoneShell>
   );
 }
 
 function AddPhotosScreen() {
+  const { t } = useTranslation();
   return (
     <PhoneShell>
-      <ScreenHeader title="Add Visit Photos" showBack />
+      <ScreenHeader title={t("mobileapp.add_photos.title")} showBack />
       <div className="grid grid-cols-3 gap-2">
         {[properties[0].image, properties[1].image, properties[2].image, properties[3].image, properties[4].image].map(
           (src) => (
@@ -489,7 +505,7 @@ function AddPhotosScreen() {
       </div>
       <button className="mt-3 inline-flex w-full items-center justify-center gap-1 rounded-xl bg-brand-600 py-2 text-xs font-semibold text-white">
         <Camera size={13} />
-        Add Photo
+        {t("mobileapp.add_photos.btn")}
       </button>
       <MobileBottomNav />
     </PhoneShell>
@@ -497,13 +513,26 @@ function AddPhotosScreen() {
 }
 
 function FeedbackScreen() {
-  const reactions = ["Loved it", "Liked", "Neutral", "Not interested"];
-  const tags = ["Location", "Price", "Design", "View", "Kitchen", "Layout"];
+  const { t } = useTranslation();
+  const reactions = [
+    t("mobileapp.feedback.loved"),
+    t("mobileapp.feedback.liked"),
+    t("mobileapp.feedback.neutral"),
+    t("mobileapp.feedback.not_interested"),
+  ];
+  const tags = [
+    t("mobileapp.feedback.tag.location"),
+    t("mobileapp.feedback.tag.price"),
+    t("mobileapp.feedback.tag.design"),
+    t("mobileapp.feedback.tag.view"),
+    t("mobileapp.feedback.tag.kitchen"),
+    t("mobileapp.feedback.tag.layout"),
+  ];
 
   return (
     <PhoneShell>
-      <ScreenHeader title="Client Feedback" showBack />
-      <p className="text-[11px] font-medium text-slate-700">How did the client like this property?</p>
+      <ScreenHeader title={t("mobileapp.feedback.title")} showBack />
+      <p className="text-[11px] font-medium text-slate-700">{t("mobileapp.feedback.q1")}</p>
       <div className="mt-1 grid grid-cols-4 gap-1">
         {reactions.map((label, idx) => (
           <button
@@ -517,7 +546,7 @@ function FeedbackScreen() {
           </button>
         ))}
       </div>
-      <p className="mt-2 text-[11px] font-medium text-slate-700">What did the client like?</p>
+      <p className="mt-2 text-[11px] font-medium text-slate-700">{t("mobileapp.feedback.q2")}</p>
       <div className="mt-1 flex flex-wrap gap-1">
         {tags.map((tag, idx) => (
           <span
@@ -534,18 +563,19 @@ function FeedbackScreen() {
       <textarea
         readOnly
         className="mt-2 h-20 w-full rounded-xl border border-slate-200 p-2 text-[11px] text-slate-600"
-        value="Client loved the location and balcony view. Interested in visiting again this week."
+        value={t("mobileapp.feedback.note")}
       />
-      <button className="mt-3 w-full rounded-xl bg-brand-600 py-2 text-xs font-semibold text-white">Save Feedback</button>
+      <button className="mt-3 w-full rounded-xl bg-brand-600 py-2 text-xs font-semibold text-white">{t("mobileapp.feedback.save")}</button>
       <MobileBottomNav />
     </PhoneShell>
   );
 }
 
 function MapNavigationScreen() {
+  const { t } = useTranslation();
   return (
     <PhoneShell>
-      <ScreenHeader title="Navigate" showBack />
+      <ScreenHeader title={t("mobileapp.navigate.title")} showBack />
       <div className="relative h-48 overflow-hidden rounded-xl border border-slate-200 bg-sky-50">
         <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full text-brand-500">
           <path d="M18 82 C26 71, 38 62, 53 52 S75 36, 86 18" fill="none" stroke="currentColor" strokeWidth="2.8" />
@@ -558,12 +588,12 @@ function MapNavigationScreen() {
         </span>
       </div>
       <div className="mt-2 rounded-xl border border-slate-200 p-2">
-        <p className="text-xs font-semibold text-slate-900">12 min (4.2 km)</p>
-        <p className="text-[11px] text-slate-500">via Mashtots Ave</p>
+        <p className="text-xs font-semibold text-slate-900">{t("mobileapp.navigate.duration")}</p>
+        <p className="text-[11px] text-slate-500">{t("mobileapp.navigate.via")}</p>
       </div>
       <button className="mt-3 inline-flex w-full items-center justify-center gap-1 rounded-xl bg-brand-600 py-2 text-xs font-semibold text-white">
         <Navigation size={13} />
-        Start Navigation
+        {t("mobileapp.navigate.start")}
       </button>
       <MobileBottomNav />
     </PhoneShell>
@@ -571,9 +601,10 @@ function MapNavigationScreen() {
 }
 
 function MapScreen() {
+  const { t } = useTranslation();
   return (
     <PhoneShell>
-      <ScreenHeader title="Map" showBack />
+      <ScreenHeader title={t("mobileapp.map.title")} showBack />
       <div className="relative h-48 overflow-hidden rounded-xl border border-slate-200 bg-sky-50">
         {agents.slice(1, 4).map((agent, idx) => (
           <div
@@ -589,7 +620,7 @@ function MapScreen() {
         ))}
       </div>
       <div className="mt-2 rounded-xl border border-slate-200 bg-white p-2">
-        <p className="mb-2 text-xs font-semibold text-slate-900">Nearby Agents</p>
+        <p className="mb-2 text-xs font-semibold text-slate-900">{t("mobileapp.map.nearby")}</p>
         <div className="space-y-2">
           {agents.slice(1, 4).map((agent, idx) => (
             <div key={agent.id} className="flex items-center justify-between">
@@ -600,7 +631,7 @@ function MapScreen() {
                   <p className="text-[10px] text-slate-500">{agent.location.split(",")[0]}</p>
                 </div>
               </div>
-              <span className="text-[10px] text-slate-500">{2 + idx} min ago</span>
+              <span className="text-[10px] text-slate-500">{2 + idx} {t("mobileapp.map.min_ago")}</span>
             </div>
           ))}
         </div>
@@ -611,29 +642,30 @@ function MapScreen() {
 }
 
 function DailySummaryScreen() {
+  const { t } = useTranslation();
   return (
     <PhoneShell>
-      <ScreenHeader title="Daily Summary" subtitle="May 15, 2024" showBack />
+      <ScreenHeader title={t("mobileapp.summary.title")} subtitle={t("mobileapp.summary.subtitle")} showBack />
       <div className="grid grid-cols-2 gap-2">
         <div className="rounded-xl bg-brand-50 p-2">
-          <p className="text-[10px] text-slate-500">Visits Completed</p>
+          <p className="text-[10px] text-slate-500">{t("mobileapp.summary.visits")}</p>
           <p className="text-base font-semibold text-slate-900">2</p>
         </div>
         <div className="rounded-xl bg-brand-50 p-2">
-          <p className="text-[10px] text-slate-500">New Leads</p>
+          <p className="text-[10px] text-slate-500">{t("mobileapp.summary.leads")}</p>
           <p className="text-base font-semibold text-slate-900">1</p>
         </div>
         <div className="rounded-xl bg-brand-50 p-2">
-          <p className="text-[10px] text-slate-500">Time Traveled</p>
+          <p className="text-[10px] text-slate-500">{t("mobileapp.summary.traveled")}</p>
           <p className="text-base font-semibold text-slate-900">24.5 km</p>
         </div>
         <div className="rounded-xl bg-brand-50 p-2">
-          <p className="text-[10px] text-slate-500">Time Worked</p>
+          <p className="text-[10px] text-slate-500">{t("mobileapp.summary.worked")}</p>
           <p className="text-base font-semibold text-slate-900">6h 45m</p>
         </div>
       </div>
       <div className="mt-3 rounded-xl border border-slate-200 bg-white p-2">
-        <p className="text-xs font-semibold text-slate-900">Activity Timeline</p>
+        <p className="text-xs font-semibold text-slate-900">{t("mobileapp.summary.timeline")}</p>
         <div className="mt-2 space-y-2">
           {["10:22 AM - Apartment in Center", "10:58 AM - Checked out", "12:35 PM - New Building"].map((item) => (
             <p key={item} className="text-[11px] text-slate-600">
@@ -648,13 +680,14 @@ function DailySummaryScreen() {
 }
 
 function MessagesScreen() {
+  const { t } = useTranslation();
   return (
     <PhoneShell>
-      <ScreenHeader title="Messages" />
+      <ScreenHeader title={t("mobileapp.messages.title")} />
       <div className="relative">
         <Search size={13} className="absolute left-3 top-2.5 text-slate-400" />
         <input
-          value="Search messages"
+          value={t("mobileapp.messages.search")}
           readOnly
           className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2 pl-8 pr-3 text-xs text-slate-400"
         />
@@ -666,7 +699,7 @@ function MessagesScreen() {
             <div className="min-w-0 flex-1">
               <p className="truncate text-xs font-semibold text-slate-900">{agent.name}</p>
               <p className="truncate text-[11px] text-slate-500">
-                {idx % 2 === 0 ? "Thanks! for sharing the details..." : "Can we schedule for tomorrow?"}
+                {idx % 2 === 0 ? t("mobileapp.messages.msg1") : t("mobileapp.messages.msg2")}
               </p>
             </div>
             <span className="text-[10px] text-slate-400">10:{idx}0</span>
@@ -679,11 +712,17 @@ function MessagesScreen() {
 }
 
 function PropertiesScreen() {
+  const { t } = useTranslation();
   return (
     <PhoneShell>
-      <ScreenHeader title="Properties" />
+      <ScreenHeader title={t("mobileapp.properties.title")} />
       <div className="mb-2 flex rounded-xl bg-slate-100 p-1 text-[10px]">
-        {["All", "Viewed", "Interested", "Closed"].map((tab, idx) => (
+        {[
+          t("mobileapp.properties.all"),
+          t("mobileapp.properties.viewed"),
+          t("mobileapp.properties.interested"),
+          t("mobileapp.properties.closed"),
+        ].map((tab, idx) => (
           <button
             key={tab}
             className={cls(
@@ -713,23 +752,24 @@ function PropertiesScreen() {
 }
 
 function ProfileScreen() {
+  const { t } = useTranslation();
   const menu = [
-    { icon: User, label: "My Profile" },
-    { icon: CheckCircle2, label: "Performance" },
-    { icon: Calendar, label: "Documents" },
-    { icon: Compass, label: "Settings" },
-    { icon: MessageCircle, label: "Help & Support" },
+    { icon: User, label: t("mobileapp.profile.my_profile") },
+    { icon: CheckCircle2, label: t("mobileapp.profile.performance") },
+    { icon: Calendar, label: t("mobileapp.profile.documents") },
+    { icon: Compass, label: t("mobileapp.profile.settings") },
+    { icon: MessageCircle, label: t("mobileapp.profile.help") },
   ];
 
   return (
     <PhoneShell>
-      <ScreenHeader title="Profile" />
+      <ScreenHeader title={t("mobileapp.profile.title")} />
       <div className="rounded-xl border border-slate-200 p-3">
         <div className="flex items-center gap-3">
           <img src={agents[0].avatar} alt={agents[0].name} className="h-12 w-12 rounded-full object-cover" />
           <div>
             <p className="text-sm font-semibold text-slate-900">{agents[0].name}</p>
-            <p className="text-[11px] text-slate-500">Real Estate Agent</p>
+            <p className="text-[11px] text-slate-500">{t("mobileapp.profile.role")}</p>
           </div>
         </div>
       </div>
@@ -748,7 +788,7 @@ function ProfileScreen() {
         ))}
       </div>
       <button className="mt-2 w-full rounded-xl border border-rose-200 bg-rose-50 py-2 text-xs font-semibold text-rose-600">
-        Logout
+        {t("mobileapp.profile.logout")}
       </button>
       <MobileBottomNav />
     </PhoneShell>
@@ -756,22 +796,23 @@ function ProfileScreen() {
 }
 
 function QuickGrid() {
+  const { t } = useTranslation();
   const cards = [
-    { label: "Visits", to: "/mobile-app/visits", icon: CheckCircle2 },
-    { label: "Visit Details", to: "/mobile-app/visit-details", icon: Clock3 },
-    { label: "Add Photos", to: "/mobile-app/add-photos", icon: ImagePlus },
-    { label: "Feedback", to: "/mobile-app/client-feedback", icon: MessageCircle },
-    { label: "Navigate", to: "/mobile-app/map-navigation", icon: Navigation },
-    { label: "Map", to: "/mobile-app/map", icon: MapPinned },
-    { label: "Summary", to: "/mobile-app/daily-summary", icon: Calendar },
-    { label: "Messages", to: "/mobile-app/messages", icon: MessageSquare },
-    { label: "Properties", to: "/mobile-app/properties", icon: Home },
-    { label: "Profile", to: "/mobile-app/profile", icon: Users },
+    { label: t("mobileapp.nav.visits"), to: "/mobile-app/visits", icon: CheckCircle2 },
+    { label: t("mobileapp.quickgrid.visit_details"), to: "/mobile-app/visit-details", icon: Clock3 },
+    { label: t("mobileapp.quickgrid.add_photos"), to: "/mobile-app/add-photos", icon: ImagePlus },
+    { label: t("mobileapp.quickgrid.feedback"), to: "/mobile-app/client-feedback", icon: MessageCircle },
+    { label: t("mobileapp.quickgrid.navigate"), to: "/mobile-app/map-navigation", icon: Navigation },
+    { label: t("mobileapp.map.title"), to: "/mobile-app/map", icon: MapPinned },
+    { label: t("mobileapp.quickgrid.summary"), to: "/mobile-app/daily-summary", icon: Calendar },
+    { label: t("mobileapp.quickgrid.messages"), to: "/mobile-app/messages", icon: MessageSquare },
+    { label: t("mobileapp.quickgrid.properties"), to: "/mobile-app/properties", icon: Home },
+    { label: t("mobileapp.quickgrid.profile"), to: "/mobile-app/profile", icon: Users },
   ];
 
   return (
     <aside className="rounded-2xl border border-slate-200 bg-white p-3">
-      <p className="mb-2 text-sm font-semibold text-slate-900">Screens</p>
+      <p className="mb-2 text-sm font-semibold text-slate-900">{t("mobileapp.screens")}</p>
       <div className="grid grid-cols-2 gap-2">
         <NavLink
           to="/mobile-app/login"
@@ -783,7 +824,7 @@ function QuickGrid() {
           }
         >
           <User size={14} />
-          Login
+          {t("mobileapp.quickgrid.login")}
         </NavLink>
         <NavLink
           to="/mobile-app/home"
@@ -795,7 +836,7 @@ function QuickGrid() {
           }
         >
           <Home size={14} />
-          Home
+          {t("mobileapp.quickgrid.home")}
         </NavLink>
         {cards.map((card) => (
           <NavLink
@@ -818,11 +859,12 @@ function QuickGrid() {
 }
 
 export function MobileApp() {
+  const { t } = useTranslation();
   return (
     <div>
       <Topbar
-        title="Mobile Agent App Preview"
-        subtitle="Redesigned to match a modern iOS-inspired EstateFlow interface"
+        title={t("mobileapp.title")}
+        subtitle={t("mobileapp.subtitle")}
       />
       <div className="grid gap-4 xl:grid-cols-[320px_1fr]">
         <QuickGrid />

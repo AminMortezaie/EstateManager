@@ -1,4 +1,5 @@
 import { Activity, Coffee, MapPinned, Target } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Topbar } from "../components/Topbar";
 import { agents } from "../data/mockData";
 
@@ -10,17 +11,18 @@ const statusTone: Record<string, string> = {
 };
 
 export function Agents() {
+  const { t } = useTranslation();
   return (
     <div>
       <Topbar
-        title="Real-Time Operations"
-        subtitle="Live agent status, district assignments, field research coverage, and daily activity"
+        title={t("agents.title")}
+        subtitle={t("agents.subtitle")}
       />
       <section className="grid gap-4 xl:grid-cols-[1.4fr_1fr]">
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
           <div className="mb-4 flex items-center gap-2">
             <Activity size={17} className="text-brand-600" />
-            <h3 className="text-lg font-semibold text-slate-900">Live status tracker</h3>
+            <h3 className="text-lg font-semibold text-slate-900">{t("agents.live_tracker")}</h3>
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             {agents.map((agent) => (
@@ -40,17 +42,17 @@ export function Agents() {
                 </div>
                 <div className="mt-4 grid gap-2 sm:grid-cols-2">
                   <div className="rounded-lg bg-slate-50 p-3">
-                    <p className="text-xs text-slate-500">District</p>
+                    <p className="text-xs text-slate-500">{t("agents.district")}</p>
                     <p className="mt-1 text-sm font-semibold text-slate-900">{agent.district}</p>
                   </div>
                   <div className="rounded-lg bg-slate-50 p-3">
-                    <p className="text-xs text-slate-500">Options today</p>
+                    <p className="text-xs text-slate-500">{t("agents.options_today")}</p>
                     <p className="mt-1 text-sm font-semibold text-slate-900">
                       {agent.actualOptions}/{agent.dailyTarget || 0}
                     </p>
                   </div>
                 </div>
-                <p className="mt-3 text-xs text-slate-500">Primary sourcing: {agent.sourcingMethod}</p>
+                <p className="mt-3 text-xs text-slate-500">{t("agents.primary_sourcing")} {agent.sourcingMethod}</p>
               </article>
             ))}
           </div>
@@ -60,7 +62,7 @@ export function Agents() {
           <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
             <div className="mb-3 flex items-center gap-2">
               <MapPinned size={16} className="text-brand-600" />
-              <h3 className="text-lg font-semibold text-slate-900">District coverage</h3>
+              <h3 className="text-lg font-semibold text-slate-900">{t("agents.district_coverage")}</h3>
             </div>
             <div className="space-y-2">
               {["Arabkir", "Ajapnyak", "Nor Nork", "Shengavit", "Commercial Spaces"].map((zone) => {
@@ -71,7 +73,7 @@ export function Agents() {
                   <div key={zone} className="rounded-xl bg-slate-50 p-3">
                     <p className="text-sm font-medium text-slate-900">{zone}</p>
                     <p className="text-xs text-slate-500">
-                      {assigned.length > 0 ? assigned.map((agent) => agent.name).join(", ") : "Unassigned"}
+                      {assigned.length > 0 ? assigned.map((agent) => agent.name).join(", ") : t("agents.unassigned")}
                     </p>
                   </div>
                 );
@@ -82,19 +84,19 @@ export function Agents() {
           <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
             <div className="mb-3 flex items-center gap-2">
               <Target size={16} className="text-brand-600" />
-              <h3 className="text-lg font-semibold text-slate-900">Field research rules</h3>
+              <h3 className="text-lg font-semibold text-slate-900">{t("agents.field_rules")}</h3>
             </div>
             <ul className="space-y-3 text-sm text-slate-600">
-              <li>On-field agents are sourcing unlisted properties through neighbors and building guards.</li>
-              <li>Each district should have a clearly assigned primary agent to avoid duplicated effort.</li>
-              <li>Exclusive leads must be locked immediately into the protected inventory window.</li>
+              <li>{t("agents.rule_1")}</li>
+              <li>{t("agents.rule_2")}</li>
+              <li>{t("agents.rule_3")}</li>
             </ul>
           </article>
 
           <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
             <div className="mb-3 flex items-center gap-2">
               <Coffee size={16} className="text-amber-500" />
-              <h3 className="text-lg font-semibold text-slate-900">Break visibility</h3>
+              <h3 className="text-lg font-semibold text-slate-900">{t("agents.break_visibility")}</h3>
             </div>
             <div className="space-y-2 text-sm text-slate-600">
               {agents

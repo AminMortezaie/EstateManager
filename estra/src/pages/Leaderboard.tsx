@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Trophy, Medal, TrendingUp } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Topbar } from "../components/Topbar";
 import { useAppState } from "../state/AppState";
 import { cls } from "../lib/ui";
@@ -11,6 +12,7 @@ function parseRevenue(s: string) {
 type SortKey = "revenue" | "deals" | "score" | "options";
 
 export function Leaderboard() {
+  const { t } = useTranslation();
   const { state } = useAppState();
   const [sortBy, setSortBy] = useState<SortKey>("revenue");
   const { user } = state;
@@ -35,14 +37,14 @@ export function Leaderboard() {
   return (
     <div>
       <Topbar
-        title={isAgentRole ? "My Ranking" : "Leaderboard"}
-        subtitle={isAgentRole ? "Where you stand among the team this month" : "Monthly agent ranking by performance"}
+        title={isAgentRole ? t("leaderboard.my_title") : t("leaderboard.title")}
+        subtitle={isAgentRole ? t("leaderboard.my_subtitle") : t("leaderboard.subtitle")}
       />
 
       <div className="mb-4 grid gap-3 sm:grid-cols-3">
-        <Kpi label="Total revenue" value={`$${totalRevenue.toLocaleString()}`} />
-        <Kpi label="Completed deals" value={String(totalDeals)} />
-        <Kpi label="Active agents" value={String(ranked.length)} />
+        <Kpi label={t("leaderboard.kpi.total_revenue")} value={`$${totalRevenue.toLocaleString()}`} />
+        <Kpi label={t("leaderboard.kpi.completed_deals")} value={String(totalDeals)} />
+        <Kpi label={t("leaderboard.kpi.active_agents")} value={String(ranked.length)} />
       </div>
 
       <div className="mb-3 flex flex-wrap gap-2">
@@ -55,7 +57,7 @@ export function Leaderboard() {
               sortBy === k ? "border-black bg-black text-white" : "border-[#ece6db] bg-white text-slate-600 hover:bg-slate-50"
             )}
           >
-            Sort by {k}
+            {t("leaderboard.sort_by", { key: t(`leaderboard.sort.${k}`) })}
           </button>
         ))}
       </div>
@@ -65,12 +67,12 @@ export function Leaderboard() {
           <thead className="bg-white/60 text-left text-[11px] uppercase tracking-[0.16em] text-slate-500">
             <tr>
               <th className="px-4 py-3">#</th>
-              <th className="px-4 py-3">Agent</th>
-              <th className="px-4 py-3 hidden sm:table-cell">District</th>
-              <th className="px-4 py-3">Deals</th>
-              <th className="px-4 py-3 hidden md:table-cell">Options</th>
-              <th className="px-4 py-3 hidden md:table-cell">Score</th>
-              <th className="px-4 py-3 text-right">Revenue</th>
+              <th className="px-4 py-3">{t("leaderboard.col.agent")}</th>
+              <th className="px-4 py-3 hidden sm:table-cell">{t("leaderboard.col.district")}</th>
+              <th className="px-4 py-3">{t("leaderboard.col.deals")}</th>
+              <th className="px-4 py-3 hidden md:table-cell">{t("leaderboard.col.options")}</th>
+              <th className="px-4 py-3 hidden md:table-cell">{t("leaderboard.col.score")}</th>
+              <th className="px-4 py-3 text-right">{t("leaderboard.col.revenue")}</th>
             </tr>
           </thead>
           <tbody>
@@ -91,7 +93,7 @@ export function Leaderboard() {
                     <div className="flex items-center gap-2">
                       <img src={a.avatar} alt="" className="h-8 w-8 rounded-full object-cover" />
                       <div>
-                        <p className="font-medium text-slate-800">{a.name}{isMe && <span className="ml-2 text-[10px] uppercase tracking-wider text-emerald-700">You</span>}</p>
+                        <p className="font-medium text-slate-800">{a.name}{isMe && <span className="ml-2 text-[10px] uppercase tracking-wider text-emerald-700">{t("leaderboard.you")}</span>}</p>
                         <p className="text-xs text-slate-500">{a.specialty}</p>
                       </div>
                     </div>

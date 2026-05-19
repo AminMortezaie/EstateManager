@@ -1,8 +1,10 @@
 import { Medal, Target, TrendingUp } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Topbar } from "../components/Topbar";
 import { agents, sourcingBreakdown } from "../data/mockData";
 
 export function Reports() {
+  const { t } = useTranslation();
   const rankedAgents = agents
     .filter((agent) => agent.role === "Agent")
     .slice()
@@ -11,24 +13,24 @@ export function Reports() {
   return (
     <div>
       <Topbar
-        title="Performance & Goal Tracking"
-        subtitle="Daily options goals, sourcing analysis, and monthly ranking by deals and revenue"
+        title={t("reports.title")}
+        subtitle={t("reports.subtitle")}
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <article className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft">
-          <p className="text-sm text-slate-500">Agents at target</p>
+          <p className="text-sm text-slate-500">{t("reports.kpi.at_target")}</p>
           <p className="mt-2 text-3xl font-semibold text-slate-900">3 / 4</p>
         </article>
         <article className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft">
-          <p className="text-sm text-slate-500">Options logged today</p>
+          <p className="text-sm text-slate-500">{t("reports.kpi.options_today")}</p>
           <p className="mt-2 text-3xl font-semibold text-slate-900">14</p>
         </article>
         <article className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft">
-          <p className="text-sm text-slate-500">Deals this month</p>
+          <p className="text-sm text-slate-500">{t("reports.kpi.deals_month")}</p>
           <p className="mt-2 text-3xl font-semibold text-slate-900">20</p>
         </article>
         <article className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft">
-          <p className="text-sm text-slate-500">Revenue this month</p>
+          <p className="text-sm text-slate-500">{t("reports.kpi.revenue_month")}</p>
           <p className="mt-2 text-3xl font-semibold text-slate-900">$50.9k</p>
         </article>
       </div>
@@ -37,7 +39,7 @@ export function Reports() {
         <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
           <div className="mb-4 flex items-center gap-2">
             <Target size={18} className="text-brand-600" />
-            <h3 className="text-lg font-semibold text-slate-900">Target vs actual by agent</h3>
+            <h3 className="text-lg font-semibold text-slate-900">{t("reports.target_vs_actual")}</h3>
           </div>
           <div className="space-y-4">
             {rankedAgents.map((agent) => {
@@ -47,13 +49,13 @@ export function Reports() {
                   <div className="mb-1 flex items-center justify-between text-sm">
                     <p className="font-medium text-slate-900">{agent.name}</p>
                     <p className="text-slate-500">
-                      {agent.actualOptions}/{agent.dailyTarget} options
+                      {agent.actualOptions}/{agent.dailyTarget} {t("reports.options_suffix")}
                     </p>
                   </div>
                   <div className="h-2 rounded-full bg-slate-100">
                     <div className="h-full rounded-full bg-brand-600" style={{ width: `${progress}%` }} />
                   </div>
-                  <p className="mt-1 text-xs text-slate-500">Primary source: {agent.sourcingMethod}</p>
+                  <p className="mt-1 text-xs text-slate-500">{t("reports.primary_source")}: {agent.sourcingMethod}</p>
                 </div>
               );
             })}
@@ -63,7 +65,7 @@ export function Reports() {
         <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
           <div className="mb-4 flex items-center gap-2">
             <Medal size={18} className="text-amber-500" />
-            <h3 className="text-lg font-semibold text-slate-900">Monthly agent leaderboard</h3>
+            <h3 className="text-lg font-semibold text-slate-900">{t("reports.monthly_leaderboard")}</h3>
           </div>
           <div className="space-y-3">
             {rankedAgents.map((agent, index) => (
@@ -73,10 +75,10 @@ export function Reports() {
                     #{index + 1} {agent.name}
                   </p>
                   <span className="rounded-full bg-brand-50 px-2 py-1 text-xs font-semibold text-brand-700">
-                    {agent.completedDeals} deals
+                    {agent.completedDeals} {t("reports.deals_suffix")}
                   </span>
                 </div>
-                <p className="mt-1 text-xs text-slate-500">{agent.revenue} revenue • {agent.district}</p>
+                <p className="mt-1 text-xs text-slate-500">{agent.revenue} {t("reports.revenue_suffix")} • {agent.district}</p>
               </div>
             ))}
           </div>
@@ -86,7 +88,7 @@ export function Reports() {
       <article className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-soft">
         <div className="mb-4 flex items-center gap-2">
           <TrendingUp size={18} className="text-brand-600" />
-          <h3 className="text-lg font-semibold text-slate-900">Sourcing method analysis</h3>
+          <h3 className="text-lg font-semibold text-slate-900">{t("reports.sourcing_analysis")}</h3>
         </div>
         <div className="grid gap-3 md:grid-cols-4">
           {sourcingBreakdown.map((item) => (

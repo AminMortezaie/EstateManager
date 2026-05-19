@@ -1,15 +1,17 @@
 import { Navigation, Radio } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { mapMarkers } from "../data/mockData";
 import { cls } from "../lib/ui";
 
 export function MapMock() {
+  const { t } = useTranslation();
   return (
     <div className="relative overflow-hidden rounded-[28px] border border-white/80 bg-[#fbfaf6] p-4 shadow-[0_10px_28px_rgba(0,0,0,0.04)]">
       <div className="mb-2 flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-slate-900">Live map</h3>
+        <h3 className="text-sm font-semibold text-slate-900">{t("map_mock.title")}</h3>
         <span className="inline-flex items-center gap-1 rounded-full bg-[#e8f8ea] px-3 py-1 text-[11px] text-[#1a9d36]">
           <Radio size={13} className="text-[#1a9d36]" />
-          Live mock
+          {t("map_mock.live")}
         </span>
       </div>
       <div
@@ -49,11 +51,11 @@ export function MapMock() {
           </div>
         ))}
         <p className="absolute left-1/2 top-1/2 -translate-x-1/2 rounded-lg bg-white/95 px-3 py-1 text-xs font-medium text-slate-700 shadow">
-          Yerevan
+          {t("map_mock.city")}
         </p>
       </div>
       <p className="mt-2 inline-flex items-center gap-1 text-[11px] text-slate-600">
-        <Navigation size={13} /> Mock route overlays between visits in Kentron and Arabkir
+        <Navigation size={13} /> {t("map_mock.route")}
       </p>
     </div>
   );

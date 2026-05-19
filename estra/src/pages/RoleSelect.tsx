@@ -1,5 +1,6 @@
 import { Crown, ShieldCheck, Smartphone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { roleMeta, UserRole } from "../lib/roles";
 
 const roleCards: Array<{
@@ -35,6 +36,7 @@ export function RoleSelect({
   mobile?: boolean;
 }) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const openRole = (role: UserRole) => {
     setRole(role);
@@ -49,12 +51,12 @@ export function RoleSelect({
     <main className="min-h-screen bg-[#f6f4ee] px-4 py-6 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-[1600px]">
         <div className="mb-8 text-center">
-          <p className="text-xs uppercase tracking-[0.25em] text-[#2ca64a]">EstateFlow</p>
+          <p className="text-xs uppercase tracking-[0.25em] text-[#2ca64a]">{t("role_select.eyebrow")}</p>
           <h1 className="mt-3 text-3xl font-medium tracking-tight text-[#111111] sm:text-4xl">
-            Choose your workspace
+            {t("role_select.title")}
           </h1>
           <p className="mt-3 text-base text-slate-500">
-            Enter as Director, Secretary, or Agent and see only the capabilities relevant to that role.
+            {t("role_select.subtitle")}
           </p>
         </div>
 
@@ -74,9 +76,9 @@ export function RoleSelect({
                 <div className="mb-5 inline-flex h-20 w-20 items-center justify-center rounded-full bg-[#e8f8ea] text-[#1a9d36]">
                   <card.icon size={30} />
                 </div>
-                <h2 className="text-[28px] font-medium tracking-tight">{roleMeta[card.role].label}</h2>
+                <h2 className="text-[28px] font-medium tracking-tight">{t(roleMeta[card.role].label)}</h2>
                 <p className={`mt-5 max-w-[28rem] text-xl leading-relaxed ${card.role === "secretary" ? "text-white/70" : "text-slate-500"}`}>
-                  {roleMeta[card.role].subtitle}
+                  {t(roleMeta[card.role].subtitle)}
                 </p>
               </div>
             </button>

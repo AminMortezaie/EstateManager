@@ -1,10 +1,12 @@
 import { useMemo, useState } from "react";
 import { Search, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Topbar } from "../components/Topbar";
 import { useAppState } from "../state/AppState";
 
 export function ConflictCheck() {
   const { state } = useAppState();
+  const { t } = useTranslation();
   const [query, setQuery] = useState("");
 
   const results = useMemo(() => {
@@ -20,7 +22,7 @@ export function ConflictCheck() {
 
   return (
     <>
-      <Topbar title="Conflict Check" subtitle="Search before you visit — avoid duplicate outreach" />
+      <Topbar title={t("conflict.title")} subtitle={t("conflict.subtitle")} />
 
       <div className="mb-4 rounded-[24px] border border-white/80 bg-[#fbfaf6] p-4">
         <div className="flex items-center gap-2 rounded-[18px] border border-[#ece6db] bg-white px-4 py-3">
@@ -29,7 +31,7 @@ export function ConflictCheck() {
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Type an address, owner name, or listing..."
+            placeholder={t("conflict.search_placeholder")}
             className="w-full bg-transparent text-sm outline-none placeholder:text-slate-400"
           />
         </div>
@@ -37,7 +39,7 @@ export function ConflictCheck() {
 
       {query.trim().length >= 2 && results.length === 0 && (
         <div className="rounded-[20px] bg-emerald-50 px-4 py-4 text-sm text-emerald-800 inline-flex items-center gap-2">
-          <CheckCircle2 size={16} /> No matches. Safe to proceed — nobody has visited this yet.
+          <CheckCircle2 size={16} /> {t("conflict.no_matches")}
         </div>
       )}
 
@@ -50,16 +52,16 @@ export function ConflictCheck() {
                 <p className="text-xs text-slate-500">{p.address} · {p.district}</p>
               </div>
               {p.exclusive && (
-                <span className="rounded-full bg-black px-3 py-1 text-xs font-medium text-white">Exclusive</span>
+                <span className="rounded-full bg-black px-3 py-1 text-xs font-medium text-white">{t("conflict.exclusive")}</span>
               )}
             </div>
             <div className="mt-3 inline-flex items-start gap-2 rounded-[14px] bg-amber-50 px-3 py-2 text-xs text-amber-800">
               <AlertTriangle size={14} className="mt-0.5 shrink-0" />
               <span>
-                Last worked by <strong>{p.lastVisitedBy}</strong> on {p.lastVisitedAt}. {p.conflictNote}
+                {t("conflict.last_worked")} <strong>{p.lastVisitedBy}</strong> on {p.lastVisitedAt}. {p.conflictNote}
               </span>
             </div>
-            <p className="mt-2 text-xs text-slate-500">Owner: {p.owner} · {p.price} · {p.status}</p>
+            <p className="mt-2 text-xs text-slate-500">{t("conflict.owner_label")} {p.owner} · {p.price} · {p.status}</p>
           </div>
         ))}
       </div>
