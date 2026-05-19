@@ -1,7 +1,6 @@
 {
   "app.name": "EstateFlow",
   "app.tagline": "Role-Based CRM Prototype",
-
   "role.director.label": "Director",
   "role.director.subtitle": "Full visibility across agents, inventory, performance, and commissions",
   "role.director.badge": "Full Access",
@@ -11,7 +10,6 @@
   "role.agent.label": "Agent",
   "role.agent.subtitle": "Field sourcing, personal targets, listings, and mobile execution",
   "role.agent.badge": "Mobile First",
-
   "nav.overview": "Overview",
   "nav.live_status": "Live Status",
   "nav.agents": "Agents",
@@ -30,7 +28,6 @@
   "nav.my_ranking": "My Ranking",
   "nav.my_districts": "My Districts",
   "nav.permissions": "Permissions",
-
   "login.title": "Sign in",
   "login.subtitle": "Use one of the demo accounts below",
   "login.username": "Username",
@@ -38,7 +35,6 @@
   "login.signin": "Sign in",
   "login.demo_accounts": "Demo accounts",
   "login.error_failed": "Login failed",
-
   "topbar.search_placeholder": "Search inventory... (press Enter)",
   "topbar.reports": "Reports",
   "topbar.settings": "Settings",
@@ -48,7 +44,6 @@
   "topbar.lang.en": "EN",
   "topbar.lang.hy": "HY",
   "topbar.lang.ru": "RU",
-
   "dashboard.title": "Director Overview",
   "dashboard.subtitle": "Agency-level control of people, protected listings, targets, and monthly outcomes",
   "dashboard.active_node": "Active node",
@@ -75,7 +70,6 @@
   "dashboard.director_alerts": "Director alerts",
   "dashboard.owner_seat": "Owner seat",
   "dashboard.sourcing_mix": "Sourcing mix this month",
-
   "properties.title": "Inventory & Listings",
   "properties.subtitle": "Searchable database with exclusives, conflict prevention, and full sourcing history",
   "properties.kpi.total": "Total",
@@ -116,7 +110,6 @@
   "properties.detail.conflict_status": "Conflict status",
   "properties.detail.run_conflict": "Run conflict check",
   "properties.detail.team_activity": "See team activity",
-
   "clients.title": "Master Admin — Node & Subscription Management",
   "clients.subtitle": "Platform owner view for agency onboarding, activation, and renewals",
   "clients.kpi.total_nodes": "Total Nodes",
@@ -131,7 +124,6 @@
   "clients.region": "Region:",
   "clients.renewal": "Renewal:",
   "clients.seats": "seats",
-
   "owners.title": "Users & Permissions",
   "owners.subtitle": "Per-node access control for directors, secretaries, and agents",
   "owners.user": "user",
@@ -145,7 +137,6 @@
   "owners.you": "You",
   "owners.active": "Active",
   "owners.access": "access",
-
   "notifications.title": "Notifications",
   "notifications.subtitle": "Live feed from agents, listings, and conflict signals",
   "notifications.unread": "unread of",
@@ -158,7 +149,6 @@
   "notifications.added": "added",
   "notifications.conflict_on": "Conflict on",
   "notifications.possible_duplicate": "Possible duplicate visit",
-
   "settings.title": "Settings",
   "settings.subtitle": "Account, preferences, and session",
   "settings.account": "Account",
@@ -186,7 +176,6 @@
   "settings.manage_nodes_desc": "Add or remove subscriptions",
   "settings.users_permissions": "Users & permissions",
   "settings.users_permissions_desc": "Review role access",
-
   "add_listing.title": "Add Listing",
   "add_listing.back": "Back",
   "add_listing.daily_goal": "Daily Goal",
@@ -205,9 +194,14 @@
   "add_listing.error_required": "Please fill in all required fields",
   "add_listing.conflict_header": "Conflict — cannot save",
   "add_listing.conflict_detail": "already visited",
+  "add_listing.subtitle_progress": "Today's progress: {{done}}/{{target}} options",
+  "add_listing.placeholder.name": "2BR Apartment near Komitas",
+  "add_listing.placeholder.address": "Komitas Ave 12, Arabkir",
+  "add_listing.placeholder.price": "$145,000",
+  "add_listing.placeholder.owner": "Owner name",
+  "login.placeholder.email": "ernest",
   "add_listing.success": "Listing saved. Counter updated.",
   "add_listing.save": "Save listing",
-
   "agents.title": "Real-Time Operations",
   "agents.subtitle": "Live agent status, district assignments, field research coverage, and daily activity",
   "agents.live_tracker": "Live status tracker",
@@ -221,7 +215,6 @@
   "agents.rule_2": "Each district should have a clearly assigned primary agent to avoid duplicated effort.",
   "agents.rule_3": "Exclusive leads must be locked immediately into the protected inventory window.",
   "agents.break_visibility": "Break visibility",
-
   "commission.title": "Commission Calculator",
   "commission.subtitle": "Split gross commission between agency and agents",
   "commission.deal_inputs": "Deal Inputs",
@@ -239,7 +232,6 @@
   "commission.agent_pool": "Agent pool",
   "commission.agent_payout": "Agent payout",
   "commission.example": "Example: $120,000 deal × 3% = $3,600 gross. With 60/40 split, agency keeps $2,160 and the agent pool is $1,440. Toggle collaboration to split the agent pool (e.g. 20/20).",
-
   "conflict.title": "Conflict Check",
   "conflict.subtitle": "Search before you visit — avoid duplicate outreach",
   "conflict.search_placeholder": "Type an address, owner name, or listing...",
@@ -247,7 +239,6 @@
   "conflict.last_worked": "Last worked by",
   "conflict.exclusive": "Exclusive",
   "conflict.owner_label": "Owner:",
-
   "mobile.my_day": "My Day",
   "mobile.operations_board": "Operations Board",
   "mobile.director_board": "Director Board",
@@ -304,7 +295,6 @@
   "mobile.office_team": "Office Team",
   "mobile.field_team": "Field Team",
   "mobile.message_placeholder": "Enter your message",
-
   "mobile.priority.director.1": "Review node subscription health and at-risk renewals.",
   "mobile.priority.director.2": "Approve exclusive listing ownership and conflict routing.",
   "mobile.priority.director.3": "Check leaderboard and commission approval queue.",
@@ -314,23 +304,19 @@
   "mobile.priority.agent.1": "Update your field status before leaving the office.",
   "mobile.priority.agent.2": "Review exclusive and recently visited properties.",
   "mobile.priority.agent.3": "Log sourcing method and progress toward today's options goal.",
-
   "mobile.chat.director.1": "North District Homes renewal is flagged. Review before tomorrow.",
   "mobile.chat.director.2": "Approve exclusive ownership after secretary confirms paperwork.",
   "mobile.chat.secretary.1": "Owner document package is ready. Reassign Nor Nork follow-up after lunch.",
   "mobile.chat.secretary.2": "I'll update the status board and block duplicate outreach.",
   "mobile.chat.agent.1": "Neighbor confirmed a second-floor vacancy. Logging it as on-field source.",
   "mobile.chat.agent.2": "Need owner phone number and whether the listing is already visited.",
-
   "mobileapp.title": "Mobile Agent App Preview",
   "mobileapp.subtitle": "Redesigned to match a modern iOS-inspired EstateFlow interface",
   "mobileapp.screens": "Screens",
-
   "mobileapp.nav.home": "Home",
   "mobileapp.nav.visits": "Visits",
   "mobileapp.nav.clients": "Clients",
   "mobileapp.nav.more": "More",
-
   "mobileapp.login.tagline": "Real Estate Operations Platform",
   "mobileapp.login.manage": "Manage agents. Track visits. Close more deals.",
   "mobileapp.login.welcome": "Welcome back!",
@@ -345,7 +331,6 @@
   "mobileapp.login.or": "or continue with",
   "mobileapp.login.no_account": "Don't have an account?",
   "mobileapp.login.sign_up": "Sign up",
-
   "mobileapp.home.good_morning": "Good morning,",
   "mobileapp.home.live_agents": "Live Agents",
   "mobileapp.home.see_all": "See all",
@@ -368,24 +353,20 @@
   "mobileapp.home.status.completed": "Completed",
   "mobileapp.home.status.in_progress": "In Progress",
   "mobileapp.home.status.scheduled": "Scheduled",
-
   "mobileapp.visits.title": "Visits",
   "mobileapp.visits.subtitle": "May 15, 2024",
   "mobileapp.visits.today": "Today",
   "mobileapp.visits.upcoming": "Upcoming",
   "mobileapp.visits.history": "History",
   "mobileapp.visits.add": "Add Visit",
-
   "mobileapp.visit_details.title": "Visit Details",
   "mobileapp.visit_details.price": "Price",
   "mobileapp.visit_details.duration": "Duration",
   "mobileapp.visit_details.duration_val": "30 min",
   "mobileapp.visit_details.owner": "Owner",
   "mobileapp.visit_details.complete": "Complete Visit",
-
   "mobileapp.add_photos.title": "Add Visit Photos",
   "mobileapp.add_photos.btn": "Add Photo",
-
   "mobileapp.feedback.title": "Client Feedback",
   "mobileapp.feedback.q1": "How did the client like this property?",
   "mobileapp.feedback.loved": "Loved it",
@@ -401,16 +382,13 @@
   "mobileapp.feedback.tag.view": "View",
   "mobileapp.feedback.tag.kitchen": "Kitchen",
   "mobileapp.feedback.tag.layout": "Layout",
-
   "mobileapp.navigate.title": "Navigate",
   "mobileapp.navigate.duration": "12 min (4.2 km)",
   "mobileapp.navigate.via": "via Mashtots Ave",
   "mobileapp.navigate.start": "Start Navigation",
-
   "mobileapp.map.title": "Map",
   "mobileapp.map.nearby": "Nearby Agents",
   "mobileapp.map.min_ago": "min ago",
-
   "mobileapp.summary.title": "Daily Summary",
   "mobileapp.summary.subtitle": "May 15, 2024",
   "mobileapp.summary.visits": "Visits Completed",
@@ -418,18 +396,15 @@
   "mobileapp.summary.traveled": "Time Traveled",
   "mobileapp.summary.worked": "Time Worked",
   "mobileapp.summary.timeline": "Activity Timeline",
-
   "mobileapp.messages.title": "Messages",
   "mobileapp.messages.search": "Search messages",
   "mobileapp.messages.msg1": "Thanks! for sharing the details...",
   "mobileapp.messages.msg2": "Can we schedule for tomorrow?",
-
   "mobileapp.properties.title": "Properties",
   "mobileapp.properties.all": "All",
   "mobileapp.properties.viewed": "Viewed",
   "mobileapp.properties.interested": "Interested",
   "mobileapp.properties.closed": "Closed",
-
   "mobileapp.profile.title": "Profile",
   "mobileapp.profile.role": "Real Estate Agent",
   "mobileapp.profile.my_profile": "My Profile",
@@ -438,7 +413,6 @@
   "mobileapp.profile.settings": "Settings",
   "mobileapp.profile.help": "Help & Support",
   "mobileapp.profile.logout": "Logout",
-
   "mobileapp.quickgrid.login": "Login",
   "mobileapp.quickgrid.home": "Home",
   "mobileapp.quickgrid.visit_details": "Visit Details",
@@ -449,7 +423,6 @@
   "mobileapp.quickgrid.messages": "Messages",
   "mobileapp.quickgrid.properties": "Properties",
   "mobileapp.quickgrid.profile": "Profile",
-
   "agent_card.options_today": "Options today",
   "agent_card.score": "Score",
   "agent_status.in_office": "In-Office",
@@ -460,7 +433,6 @@
   "agent_status.in_visit": "In Visit",
   "agent_status.traveling": "Traveling",
   "agent_status.offline": "Offline",
-
   "property_status.exclusive": "Exclusive",
   "property_status.open_inventory": "Open Inventory",
   "property_status.visited_by_team": "Visited by Team",
@@ -470,18 +442,15 @@
   "property_status.visited": "Visited",
   "property_status.interested_client": "Interested Client",
   "property_status.rented_sold": "Rented/Sold",
-
   "visit_status.scheduled": "Scheduled",
   "visit_status.in_progress": "In Progress",
   "visit_status.completed": "Completed",
   "visit_status.delayed": "Delayed",
   "visit_timeline.title": "Visit timeline",
-
   "map_mock.title": "Live map",
   "map_mock.live": "Live mock",
   "map_mock.city": "Yerevan",
   "map_mock.route": "Mock route overlays between visits in Kentron and Arabkir",
-
   "mobile_preview.screen.overview": "Overview",
   "mobile_preview.screen.overview_detail": "Hero pricing and planning view",
   "mobile_preview.screen.property": "Property",
@@ -513,7 +482,6 @@
   "mobile_preview.note3": "Mint success states and black primary actions",
   "mobile_preview.note4": "Property imagery takes visual priority",
   "mobile_preview.note5": "Presentation-first screens for stakeholder review",
-
   "landing.badge": "EstateFlow - Multi-node real estate operations platform",
   "landing.hero_title": "Presentation-ready mock for master admin, director, and agent workflows",
   "landing.hero_desc": "This prototype is now framed around subscription-based agency nodes, role-based access, live field operations, conflict-free inventory, performance ranking, and commission logic.",
@@ -531,11 +499,9 @@
   "landing.feature2_desc": "Track live operations, exclusive inventory, daily options, and monthly leaderboard outcomes.",
   "landing.feature3_title": "Agent Mobile Flow",
   "landing.feature3_desc": "Show how field agents update status, source new listings, and log progress while on-field.",
-
   "role_select.eyebrow": "EstateFlow",
   "role_select.title": "Choose your workspace",
   "role_select.subtitle": "Enter as Director, Secretary, or Agent and see only the capabilities relevant to that role.",
-
   "visits.title": "Visits",
   "visits.subtitle": "Track scheduled, active, completed, and delayed visits",
   "visits.tab.today": "Today",
@@ -544,7 +510,6 @@
   "visits.agent": "Agent",
   "visits.client": "Client",
   "visits.open_details": "Open details",
-
   "visit_detail.back": "Back to visits",
   "visit_detail.title": "Visit Detail - {{id}}",
   "visit_detail.price": "Price",
@@ -563,7 +528,6 @@
   "visit_detail.notes": "Notes",
   "visit_detail.schedule_followup": "Schedule Follow-up",
   "visit_detail.export_summary": "Export Summary",
-
   "leaderboard.title": "Leaderboard",
   "leaderboard.subtitle": "Monthly agent ranking by performance",
   "leaderboard.my_title": "My Ranking",
@@ -583,7 +547,6 @@
   "leaderboard.col.score": "Score",
   "leaderboard.col.revenue": "Revenue",
   "leaderboard.you": "You",
-
   "reports.title": "Performance & Goal Tracking",
   "reports.subtitle": "Daily options goals, sourcing analysis, and monthly ranking by deals and revenue",
   "reports.kpi.at_target": "Agents at target",
@@ -597,7 +560,6 @@
   "reports.deals_suffix": "deals",
   "reports.revenue_suffix": "revenue",
   "reports.sourcing_analysis": "Sourcing method analysis",
-
   "agent_home.greeting": "Good day, {{name}}",
   "agent_home.day_glance": "Your day at a glance",
   "agent_home.my_status": "My status",
@@ -610,7 +572,6 @@
   "agent_home.my_listings": "My listings",
   "agent_home.my_listings_desc": "All properties I can see",
   "agent_home.sign_out": "Sign out",
-
   "ops.title": "Live Status Board",
   "ops.subtitle": "See where every agent is right now",
   "ops.my_status": "My Status",
@@ -620,7 +581,6 @@
   "ops.visits_today": "Visits today",
   "ops.options": "Options",
   "ops.no_match": "No agents match this filter.",
-
   "mappage.title": "District & Field Coverage",
   "mappage.subtitle": "Live view of agents, exclusives, and conflicts per district",
   "mappage.kpi.listings": "Listings",
@@ -639,7 +599,6 @@
   "mappage.overview": "District overview",
   "mappage.row_stats": "{{listings}} listings · {{agents}} agents · {{onField}} on-field",
   "mappage.all": "All",
-
   "nodes_admin.title": "Node Subscriptions",
   "nodes_admin.subtitle": "Manage agency nodes, plans, and seats",
   "nodes_admin.total": "Total nodes",
@@ -670,5 +629,53 @@
   "nodes_admin.modal.mrr": "MRR",
   "nodes_admin.modal.billing": "Next billing date",
   "nodes_admin.modal.cancel": "Cancel",
-  "nodes_admin.modal.add": "Add node"
+  "nodes_admin.modal.add": "Add node",
+  "common.city_yerevan": "Yerevan",
+  "mobile.attach": "Attach",
+  "mobile.plan_label": "Plan",
+  "sourcing.talking_to_neighbors": "Talking to neighbors",
+  "sourcing.building_guards": "Building guards",
+  "sourcing.on_field_research": "On-field research",
+  "sourcing.referral_network": "Referral network",
+  "sourcing.word_of_mouth": "Word of mouth",
+  "sourcing.online_listing": "Online listing",
+  "sourcing.on_field_search": "On-field search",
+  "sourcing.commercial_network": "Commercial network",
+  "sourcing.desk_workflow": "Desk workflow",
+  "sourcing.management": "Management",
+  "kpi.subscribed_nodes": "Subscribed Nodes",
+  "kpi.active_agents_today": "Active Agents Today",
+  "kpi.exclusive_listings": "Exclusive Listings",
+  "kpi.monthly_revenue": "Monthly Revenue",
+  "kpi.options_logged": "Options Logged",
+  "kpi.change.this_month": "+2 this month",
+  "kpi.change.on_field_now": "38 on-field now",
+  "kpi.change.protected": "+11 protected",
+  "kpi.change.vs_april": "+14% vs April",
+  "kpi.change.target_pace": "93% target pace",
+  "timeline.item0.title": "Director briefing",
+  "timeline.item0.subtitle": "Targets confirmed by district and specialty",
+  "timeline.item1.title": "Exclusive secured",
+  "timeline.item1.subtitle": "Arabkir apartment moved to protected inventory",
+  "timeline.item2.title": "Secretary workflow",
+  "timeline.item2.subtitle": "Owner documents queued for signing",
+  "timeline.item3.title": "On-field check-in",
+  "timeline.item3.subtitle": "Nor Nork sourcing route updated live",
+  "timeline.item4.title": "Daily options review",
+  "timeline.item4.subtitle": "Target vs actual closes at 93% pace",
+  "add_listing.live_conflict_prefix": "⚠️ Possible conflict:",
+  "add_listing.on": "on",
+  "mobileapp.navigate.start_point": "Start",
+  "mobileapp.navigate.visit_point": "Visit",
+  "mobileapp.summary.item1": "10:22 AM — Apartment in Center",
+  "mobileapp.summary.item2": "10:58 AM — Checked out",
+  "mobileapp.summary.item3": "12:35 PM — New Building",
+  "alert.item1": "North District Homes subscription renews on 2026-05-18 and is marked At Risk.",
+  "alert.item2": "Two on-field agents are working the same Nor Nork cluster; conflict prevention requires reassignment.",
+  "alert.item3": "Exclusive listing approval pending for Komitas Ave apartment.",
+  "properties.status.closed": "Closed",
+  "mobile.secretary.open_files": "6 owner files",
+  "mobile.secretary.follow_ups_pending": "14 pending",
+  "mobile.secretary.coverage_zones": "Arabkir + Nor Nork",
+  "mobile.secretary.blocked_visits": "2 blocked visits"
 }

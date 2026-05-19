@@ -3,6 +3,17 @@ import { useTranslation } from "react-i18next";
 import { Topbar } from "../components/Topbar";
 import { agents, sourcingBreakdown } from "../data/mockData";
 
+const sourcingKey: Record<string, string> = {
+  "On-field search": "sourcing.on_field_search",
+  "Word of mouth": "sourcing.word_of_mouth",
+  "Referral network": "sourcing.referral_network",
+  "Commercial network": "sourcing.commercial_network",
+  "Talking to neighbors": "sourcing.talking_to_neighbors",
+  "Building guards": "sourcing.building_guards",
+  "Desk workflow": "sourcing.desk_workflow",
+  "Management": "sourcing.management",
+};
+
 export function Reports() {
   const { t } = useTranslation();
   const rankedAgents = agents
@@ -55,7 +66,7 @@ export function Reports() {
                   <div className="h-2 rounded-full bg-slate-100">
                     <div className="h-full rounded-full bg-brand-600" style={{ width: `${progress}%` }} />
                   </div>
-                  <p className="mt-1 text-xs text-slate-500">{t("reports.primary_source")}: {agent.sourcingMethod}</p>
+                  <p className="mt-1 text-xs text-slate-500">{t("reports.primary_source")}: {t(sourcingKey[agent.sourcingMethod] ?? agent.sourcingMethod)}</p>
                 </div>
               );
             })}
@@ -93,7 +104,7 @@ export function Reports() {
         <div className="grid gap-3 md:grid-cols-4">
           {sourcingBreakdown.map((item) => (
             <div key={item.label} className="rounded-xl border border-slate-200 p-3">
-              <p className="text-sm text-slate-600">{item.label}</p>
+              <p className="text-sm text-slate-600">{t(sourcingKey[item.label] ?? item.label)}</p>
               <p className="mt-1 text-2xl font-semibold text-slate-900">{item.value}%</p>
               <div className="mt-2 h-2 rounded-full bg-slate-100">
                 <div className="h-full rounded-full bg-brand-500" style={{ width: `${item.value}%` }} />

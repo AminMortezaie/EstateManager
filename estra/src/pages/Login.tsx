@@ -57,7 +57,7 @@ export function Login() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className="mt-2 w-full rounded-[18px] border border-[#ece6db] bg-white px-4 py-3 text-sm outline-none focus:border-black"
-            placeholder="ernest"
+            placeholder={t("login.placeholder.email")}
             autoFocus
           />
 

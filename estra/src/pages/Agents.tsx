@@ -10,6 +10,17 @@ const statusTone: Record<string, string> = {
   "On-Field": "bg-indigo-50 text-indigo-700",
 };
 
+const agentStatusKey: Record<string, string> = {
+  "In-Office": "agent_status.in_office",
+  "Coffee Break": "agent_status.coffee_break",
+  "Lunch Break": "agent_status.lunch_break",
+  "On-Field": "agent_status.on_field",
+  "Available": "agent_status.available",
+  "In Visit": "agent_status.in_visit",
+  "Traveling": "agent_status.traveling",
+  "Offline": "agent_status.offline",
+};
+
 export function Agents() {
   const { t } = useTranslation();
   return (
@@ -33,7 +44,7 @@ export function Agents() {
                     <div className="flex flex-wrap items-center gap-2">
                       <h3 className="text-sm font-semibold text-slate-900">{agent.name}</h3>
                       <span className={`rounded-full px-2 py-1 text-[11px] font-medium ${statusTone[agent.status] ?? "bg-slate-100 text-slate-700"}`}>
-                        {agent.status}
+                        {t(agentStatusKey[agent.status] ?? agent.status)}
                       </span>
                     </div>
                     <p className="mt-1 text-xs text-slate-500">{agent.role} • {agent.specialty}</p>
@@ -103,7 +114,7 @@ export function Agents() {
                 .filter((agent) => agent.status === "Coffee Break" || agent.status === "Lunch Break")
                 .map((agent) => (
                   <div key={agent.id} className="rounded-xl bg-slate-50 p-3">
-                    {agent.name} • {agent.status}
+                    {agent.name} • {t(agentStatusKey[agent.status] ?? agent.status)}
                   </div>
                 ))}
             </div>

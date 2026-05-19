@@ -284,7 +284,7 @@ function HomeScreen() {
             <path d="M8 52 C22 42, 32 38, 46 24 S70 16, 82 11" fill="none" stroke="currentColor" strokeWidth="1.8" />
             <path d="M22 52 C34 41, 44 33, 62 24 S82 18, 95 8" fill="none" stroke="currentColor" strokeWidth="1.8" />
           </svg>
-          <p className="absolute left-[44%] top-[42%] -translate-x-1/2 text-xl font-medium text-slate-700">Yerevan</p>
+          <p className="absolute left-[44%] top-[42%] -translate-x-1/2 text-xl font-medium text-slate-700">{t("common.city_yerevan")}</p>
           {[agents[0], agents[1], agents[2], agents[3]].map((agent, idx) => (
             <img
               key={agent.id}
@@ -428,7 +428,7 @@ function VisitsScreen() {
                 <div className="mt-1 flex items-center justify-between">
                   <span className="text-[10px] font-semibold text-slate-500">{visit.start}</span>
                   <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[9px] font-semibold text-emerald-700">
-                    {visit.status}
+                    {t(`visit_status.${visit.status.toLowerCase().replace(/\s+/g, "_")}`)}
                   </span>
                 </div>
               </div>
@@ -581,10 +581,10 @@ function MapNavigationScreen() {
           <path d="M18 82 C26 71, 38 62, 53 52 S75 36, 86 18" fill="none" stroke="currentColor" strokeWidth="2.8" />
         </svg>
         <span className="absolute left-[20%] top-[78%] rounded-full bg-brand-600 px-2 py-0.5 text-[10px] font-semibold text-white">
-          Start
+          {t("mobileapp.navigate.start_point")}
         </span>
         <span className="absolute right-[14%] top-[14%] rounded-full bg-emerald-500 px-2 py-0.5 text-[10px] font-semibold text-white">
-          Visit
+          {t("mobileapp.navigate.visit_point")}
         </span>
       </div>
       <div className="mt-2 rounded-xl border border-slate-200 p-2">
@@ -667,7 +667,7 @@ function DailySummaryScreen() {
       <div className="mt-3 rounded-xl border border-slate-200 bg-white p-2">
         <p className="text-xs font-semibold text-slate-900">{t("mobileapp.summary.timeline")}</p>
         <div className="mt-2 space-y-2">
-          {["10:22 AM - Apartment in Center", "10:58 AM - Checked out", "12:35 PM - New Building"].map((item) => (
+          {[t("mobileapp.summary.item1"), t("mobileapp.summary.item2"), t("mobileapp.summary.item3")].map((item) => (
             <p key={item} className="text-[11px] text-slate-600">
               {item}
             </p>

@@ -22,6 +22,42 @@ export function Dashboard() {
   const fieldAgents = agents.filter((agent) => agent.status === "On-Field");
   const director = agents.find((agent) => agent.role === "Director");
 
+  const kpiKeys = [
+    { labelKey: "kpi.subscribed_nodes", changeKey: "kpi.change.this_month" },
+    { labelKey: "kpi.active_agents_today", changeKey: "kpi.change.on_field_now" },
+    { labelKey: "kpi.exclusive_listings", changeKey: "kpi.change.protected" },
+    { labelKey: "kpi.monthly_revenue", changeKey: "kpi.change.vs_april" },
+    { labelKey: "kpi.options_logged", changeKey: "kpi.change.target_pace" },
+  ];
+
+  const sourcingKey: Record<string, string> = {
+    "On-field search": "sourcing.on_field_search",
+    "Word of mouth": "sourcing.word_of_mouth",
+    "Referral network": "sourcing.referral_network",
+    "Commercial network": "sourcing.commercial_network",
+    "Talking to neighbors": "sourcing.talking_to_neighbors",
+    "Building guards": "sourcing.building_guards",
+    "Desk workflow": "sourcing.desk_workflow",
+    "Management": "sourcing.management",
+  };
+
+  const agentStatusKey: Record<string, string> = {
+    "In-Office": "agent_status.in_office",
+    "Coffee Break": "agent_status.coffee_break",
+    "Lunch Break": "agent_status.lunch_break",
+    "On-Field": "agent_status.on_field",
+    "Available": "agent_status.available",
+    "In Visit": "agent_status.in_visit",
+    "Traveling": "agent_status.traveling",
+    "Offline": "agent_status.offline",
+  };
+
+  const nodeStatusKey: Record<string, string> = {
+    "Active": "nodes_admin.status.active",
+    "Trial": "nodes_admin.status.trial",
+    "At Risk": "nodes_admin.status.at_risk",
+  };
+
   return (
     <div>
       <Topbar
@@ -30,7 +66,13 @@ export function Dashboard() {
       />
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
         {kpis.map((kpi, index) => (
-          <StatCard key={kpi.label} {...kpi} icon={icons[index]} />
+          <StatCard
+            key={kpi.label}
+            label={t(kpiKeys[index].labelKey)}
+            value={kpi.value}
+            change={t(kpiKeys[index].changeKey)}
+            icon={icons[index]}
+          />
         ))}
       </div>
 
@@ -43,7 +85,7 @@ export function Dashboard() {
               <p className="text-sm text-slate-500">{t("dashboard.plan_seats", { plan: activeNode.plan, seats: activeNode.seats })}</p>
             </div>
             <span className="rounded-full bg-[#e8f8ea] px-4 py-2 text-sm font-medium text-[#1a9d36]">
-              {activeNode.status}
+              {t(nodeStatusKey[activeNode.status] ?? "nodes_admin.status.active")}
             </span>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
@@ -109,12 +151,12 @@ export function Dashboard() {
           <article className="rounded-[28px] border border-white/80 bg-[#fbfaf6] p-5 shadow-[0_10px_28px_rgba(0,0,0,0.04)]">
             <h3 className="mb-3 text-sm font-semibold text-slate-900">{t("dashboard.daily_timeline")}</h3>
             <div className="space-y-2.5">
-              {timeline.map((item) => (
+              {timeline.map((item, idx) => (
                 <div key={item.time} className="flex gap-3">
                   <span className="w-14 text-[11px] font-semibold text-slate-500">{item.time}</span>
                   <div>
-                    <p className="text-xs font-medium text-slate-900">{item.title}</p>
-                    <p className="text-[11px] text-slate-500">{item.subtitle}</p>
+                    <p className="text-xs font-medium text-slate-900">{t(`timeline.item${idx}.title`)}</p>
+                    <p className="text-[11px] text-slate-500">{t(`timeline.item${idx}.subtitle`)}</p>
                   </div>
                 </div>
               ))}
@@ -148,14 +190,14 @@ export function Dashboard() {
                     <tr key={agent.id} className="border-b border-slate-100">
                       <td className="py-2 pr-3 font-medium text-slate-900">{agent.name}</td>
                       <td className="py-2 pr-3 text-slate-600">{agent.district}</td>
-                      <td className="py-2 pr-3 text-slate-600">{agent.status}</td>
+                      <td className="py-2 pr-3 text-slate-600">{t(agentStatusKey[agent.status] ?? agent.status)}</td>
                       <td className="py-2 pr-3 text-slate-600">{agent.dailyTarget}</td>
                       <td className="py-2 pr-3">
                         <span className="rounded-full bg-[#e8f8ea] px-3 py-1 font-semibold text-[#1a9d36]">
                           {agent.actualOptions}
                         </span>
                       </td>
-                      <td className="py-2 pr-3 text-slate-600">{agent.sourcingMethod}</td>
+                      <td className="py-2 pr-3 text-slate-600">{t(sourcingKey[agent.sourcingMethod] ?? agent.sourcingMethod)}</td>
                     </tr>
                   ))}
               </tbody>
@@ -169,9 +211,9 @@ export function Dashboard() {
             <h3 className="text-sm font-semibold text-slate-900">{t("dashboard.director_alerts")}</h3>
           </div>
           <ul className="space-y-3">
-            {alerts.map((alert) => (
+            {alerts.map((alert, idx) => (
               <li key={alert} className="rounded-[22px] bg-white p-4 text-sm text-slate-600">
-                {alert}
+                {t(`alert.item${idx + 1}`)}
               </li>
             ))}
           </ul>
@@ -190,7 +232,7 @@ export function Dashboard() {
         <div className="grid gap-3 md:grid-cols-4">
           {sourcingBreakdown.map((item) => (
             <div key={item.label} className="rounded-[22px] border border-[#ece6db] bg-white p-4">
-              <p className="text-sm text-slate-600">{item.label}</p>
+              <p className="text-sm text-slate-600">{t(sourcingKey[item.label] ?? item.label)}</p>
               <p className="mt-1 text-2xl font-semibold text-slate-900">{item.value}%</p>
               <div className="mt-2 h-2 rounded-full bg-slate-100">
                 <div className="h-full rounded-full bg-[#11a82e]" style={{ width: `${item.value}%` }} />

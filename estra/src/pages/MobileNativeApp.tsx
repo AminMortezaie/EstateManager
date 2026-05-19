@@ -299,16 +299,16 @@ function WorkspaceScreen({ role }: { role: UserRole }) {
     role === "director"
       ? [
           [t("dashboard.director_label"), nodes[0].director],
-          ["MRR", nodes[0].mrr],
+          [t("nodes_admin.col.mrr"), nodes[0].mrr],
           [t("dashboard.renewal_date"), nodes[0].billingDate],
-          ["Plan", nodes[0].plan],
+          [t("mobile.plan_label"), nodes[0].plan],
         ]
       : role === "secretary"
       ? [
-          [t("mobile.open_paperwork"), "6 owner files"],
-          [t("mobile.follow_ups_stat"), "14 pending"],
-          [t("mobile.coverage_label"), "Arabkir + Nor Nork"],
-          [t("mobile.escalations_label"), "2 blocked visits"],
+          [t("mobile.open_paperwork"), t("mobile.secretary.open_files")],
+          [t("mobile.follow_ups_stat"), t("mobile.secretary.follow_ups_pending")],
+          [t("mobile.coverage_label"), t("mobile.secretary.coverage_zones")],
+          [t("mobile.escalations_label"), t("mobile.secretary.blocked_visits")],
         ]
       : [
           [t("properties.detail.owner"), property.owner],
@@ -392,7 +392,7 @@ function ChatScreen({ role }: { role: UserRole }) {
       <PageHeader
         title={chatTitle}
         left={<CircleLink to={`/dashboard`}><ArrowLeft size={18} /></CircleLink>}
-        right={<Pill>23 Online</Pill>}
+        right={<Pill>{t("mobile_preview.online", { count: 23 })}</Pill>}
       />
 
       <div className="space-y-4">
@@ -425,7 +425,7 @@ function ChatScreen({ role }: { role: UserRole }) {
           placeholder={t("mobile.message_placeholder")}
           className="flex-1 bg-transparent text-[17px] outline-none placeholder:text-slate-400"
         />
-        <button type="button" className="text-slate-500" title="Attach">
+        <button type="button" className="text-slate-500" title={t("mobile.attach")}>
           <Paperclip size={20} />
         </button>
         <button type="submit" className="flex h-14 w-14 items-center justify-center rounded-full bg-black text-white disabled:opacity-40" disabled={!draft.trim()}>
@@ -435,6 +435,13 @@ function ChatScreen({ role }: { role: UserRole }) {
     </AppShell>
   );
 }
+
+const sourcingKey: Record<string, string> = {
+  "On-field search": "sourcing.on_field_search",
+  "Word of mouth": "sourcing.word_of_mouth",
+  "Referral network": "sourcing.referral_network",
+  "Commercial network": "sourcing.commercial_network",
+};
 
 export function MoreScreen({ role }: { role: UserRole }) {
   const { state, logout } = useAppState();
@@ -506,7 +513,7 @@ export function MoreScreen({ role }: { role: UserRole }) {
           {sourcingBreakdown.slice(0, 3).map((item) => (
             <div key={item.label}>
               <div className="mb-2 flex items-center justify-between text-sm">
-                <span className="text-slate-500">{item.label}</span>
+                <span className="text-slate-500">{t(sourcingKey[item.label] ?? item.label)}</span>
                 <span className="font-medium text-black">{item.value}%</span>
               </div>
               <div className="h-2 rounded-full bg-[#e5e2d9]">

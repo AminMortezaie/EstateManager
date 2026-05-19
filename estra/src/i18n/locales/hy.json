@@ -10,7 +10,6 @@
   "role.agent.label": "Գործակալ",
   "role.agent.subtitle": "Դաշտային աղբյուրագտում, անձնական թիրախներ, ցուցակներ և բջջային կատարողականություն",
   "role.agent.badge": "Բջջային",
-
   "nav.overview": "Ակնարկ",
   "nav.live_status": "Կենդանի կարգավիճակ",
   "nav.agents": "Գործակալներ",
@@ -29,7 +28,6 @@
   "nav.my_ranking": "Իմ վարկանիշը",
   "nav.my_districts": "Իմ շրջանները",
   "nav.permissions": "Թույլտվություններ",
-
   "login.title": "Մուտք գործել",
   "login.subtitle": "Օգտվեք ստորև նշված դեմո հաշիվներից մեկից",
   "login.username": "Օգտվողի անուն",
@@ -37,7 +35,6 @@
   "login.signin": "Մուտք",
   "login.demo_accounts": "Դեմո հաշիվներ",
   "login.error_failed": "Մուտքը ձախողվեց",
-
   "topbar.search_placeholder": "Փնտրել ինվենտար... (Enter սեղմել)",
   "topbar.reports": "Հաշվետվություններ",
   "topbar.settings": "Կարգավորումներ",
@@ -47,7 +44,6 @@
   "topbar.lang.en": "EN",
   "topbar.lang.hy": "ՀԱ",
   "topbar.lang.ru": "ՌՈ",
-
   "dashboard.title": "Tnoreni Aknark",
   "dashboard.subtitle": "Gordzakalutyan maktardakayin verakhumb mardkants, pashpanvats zucakneri, therakneri ev amsekan ardyunqneri nkatmamb",
   "dashboard.active_node": "Aktiv hanguyts",
@@ -74,7 +70,6 @@
   "dashboard.director_alerts": "Tnoreni tsanucumner",
   "dashboard.owner_seat": "Sepakanatzuteain tegh",
   "dashboard.sourcing_mix": "Amis aqbyuragtnuymi khaurduyd",
-
   "properties.title": "Inventar ev Zucakner",
   "properties.subtitle": "Pntrvogh tvayin bazaner bachariknerov, bakhumi kaankhelnov ev aqbyuragtnuymi amboghj patmutyamb",
   "properties.kpi.total": "Yyndamanur",
@@ -115,7 +110,6 @@
   "properties.detail.conflict_status": "Bakhumi karavichak",
   "properties.detail.run_conflict": "Katarel bakhumi stugum",
   "properties.detail.team_activity": "Tesnel yakhti gordzuneutyune",
-
   "clients.title": "Glkhor Kangnensh — Hanguyts ev Bandzhnatsutyyan Karavarchum",
   "clients.subtitle": "Platforma-sepakanaterzuteain tesutyun gordzakalyay onboardingi, aktyivatsiayi ev yerkyarvumnerow",
   "clients.kpi.total_nodes": "Yyndamanur Hanguyts",
@@ -130,7 +124,6 @@
   "clients.region": "Taratsashrghan:",
   "clients.renewal": "Tarmatsnum:",
   "clients.seats": "tegher",
-
   "owners.title": "Ogtvorumner ev Thylatrvutynner",
   "owners.subtitle": "Hanguyts-hasak verahskvum tnorenineri, kartutsarnerow ev gordzakalnerow hamar",
   "owners.user": "ogtvogh",
@@ -144,7 +137,6 @@
   "owners.you": "Duk",
   "owners.active": "Aktiv",
   "owners.access": "mutq",
-
   "notifications.title": "Tsanucumner",
   "notifications.subtitle": "Gordzakalneric, zucakneric ev bakhumi znakner hashvits kendani hisk",
   "notifications.unread": "chtartvats",
@@ -157,7 +149,6 @@
   "notifications.added": "avelatsel e",
   "notifications.conflict_on": "Bakhum",
   "notifications.possible_duplicate": "Hnarave koypnapet aycelem",
-
   "settings.title": "Karavoghutynner",
   "settings.subtitle": "Hashiv, nakhntrutynner ev nistr",
   "settings.account": "Hashiv",
@@ -185,7 +176,6 @@
   "settings.manage_nodes_desc": "Avelatsnel kam hatnel bandzhnatsutyunner",
   "settings.users_permissions": "Ogtvorumner ev thylatrvutynner",
   "settings.users_permissions_desc": "Verahtsoghel dern mutqy",
-
   "add_listing.title": "Avelatsnel Zucak",
   "add_listing.back": "Hetos",
   "add_listing.daily_goal": "Amenaory Nparak",
@@ -206,7 +196,6 @@
   "add_listing.conflict_detail": "ardzhen aycevats e",
   "add_listing.success": "Zucaky pahpanvatse: Hashichy tarmatsvatse:",
   "add_listing.save": "Pahpanel zucaky",
-
   "agents.title": "Irakakan Zhamanakin Gorcarnayin",
   "agents.subtitle": "Gordzakali kendani karavichak, sharjhanner nshanakoghutynner, dashtayin hetazotutyan tsatskuyt ev amenaory gortsuneutyun",
   "agents.live_tracker": "Kendani karavichaqi hetekhich",
@@ -220,7 +209,6 @@
   "agents.rule_2": "Amboghe sharzhany piti unenan hstakapes nshanakvats himnayin gordzakal krcknabnapakap dashtyayin tsknnutynner kaankhelnow:",
   "agents.rule_3": "Bacharik arandznaharnerny petk e angaynap gortsel pashpanvats inventar panjaram:",
   "agents.break_visibility": "Endmijumi tesaneliyutyun",
-
   "commission.title": "Komisioni Hashvark",
   "commission.subtitle": "Bakhanel yyndhanur komisiony gordzakalyayin ev gordzakalnerov mijyev",
   "commission.deal_inputs": "Gordzarqi Tvyalner",
@@ -238,7 +226,6 @@
   "commission.agent_pool": "Gordzakalneri fond",
   "commission.agent_payout": "Gordzakali vcharuym",
   "commission.example": "Orinakum: $120,000 gordzarq × 3% = $3,600 yyndhanur: 60/40 bakhnelov, gordzakalyutyuny pahum e $2,160 ev gordzakalneri fondy $1,440 e: Miatsek hamakertsutyun, bayts yev fondy bakhelov (orinakum 20/20):",
-
   "conflict.title": "Bakhumi Stugum",
   "conflict.subtitle": "Stugek aycelumits arraj — khusaphek krcknabets yndunutyunits",
   "conflict.search_placeholder": "Mutqagrets hastzey, sepakanatzuteain anun kam zucak...",
@@ -246,7 +233,6 @@
   "conflict.last_worked": "Verchin ashtkhatel e",
   "conflict.exclusive": "Bacharik",
   "conflict.owner_label": "Sepakanater:",
-
   "mobile.my_day": "Ims Ory",
   "mobile.operations_board": "Gorcarnayin Khorchat",
   "mobile.director_board": "Tnoreni Khorchat",
@@ -303,7 +289,6 @@
   "mobile.office_team": "Grasenakay Khumb",
   "mobile.field_team": "Dashtin Khumb",
   "mobile.message_placeholder": "Muts dzer haghordakutyuny",
-
   "mobile.priority.director.1": "Stugel hanguytsayin bandzhnatsutyany ev vkhanakay tarmatsumnery:",
   "mobile.priority.director.2": "Harqel bacharik zucakay sepakanutyan ev bakhumi yuntravutyunery:",
   "mobile.priority.director.3": "Stugel varkanihn ev komisioni hartselov hazhishman charbevy:",
@@ -313,23 +298,19 @@
   "mobile.priority.agent.1": "Tdarnekalic arraj tarmatsrel dashtyayin karavichaky:",
   "mobile.priority.agent.2": "Stugel bacharik ev verchin aycvats guyqer:",
   "mobile.priority.agent.3": "Kaytsagrel aqbyuragtnuymi masin ev aysvory entraniqneri nparak:",
-
   "mobile.chat.director.1": "North District Homes-i tarmatsumne nshmvatse: Stugel vory vorchin arraj:",
   "mobile.chat.director.2": "Harqel bacharik sepakanutyan quartesagri hstatagrumits heto:",
   "mobile.chat.secretary.1": "Sepakanaterzuteay bnagreri pakety patrastel e: Nornorqi sharchunakutyuny cachayl veranasnich:",
   "mobile.chat.secretary.2": "Tarmatsnem karavichaqi khorchat ev kargaragnem krcknabets bthnoghutynery:",
   "mobile.chat.agent.1": "Harevano erkrord hartak bahanoghutynner hstatagrvatse: Lragrets orpes dashtin aqbyur:",
   "mobile.chat.agent.2": "Petq e sepakanaterzuteay hamerakary ev ardzhen aycvelutyany:",
-
   "mobileapp.title": "Bazhayin Gordzakal Tsragri Nakhatsuyts",
   "mobileapp.subtitle": "Veranamavats haykayin iOS-orenakanin amramit EstateFlow interfeys",
   "mobileapp.screens": "Ekranner",
-
   "mobileapp.nav.home": "Tun",
   "mobileapp.nav.visits": "Aytselumner",
   "mobileapp.nav.clients": "Hatshakhordner",
   "mobileapp.nav.more": "Avelin",
-
   "mobileapp.login.tagline": "Ansharzh Guyqi Gorcarnayin Hartak",
   "mobileapp.login.manage": "Karavarech gordzakagnery. Hetekh aytselumnery. Knqel avel gordzarqner.",
   "mobileapp.login.welcome": "Bari Veradarts!",
@@ -344,7 +325,6 @@
   "mobileapp.login.or": "kam sharchunakel",
   "mobileapp.login.no_account": "Hashiv chunek?",
   "mobileapp.login.sign_up": "Grancvel",
-
   "mobileapp.home.good_morning": "Bari Luys,",
   "mobileapp.home.live_agents": "Aktiv Gordzakagner",
   "mobileapp.home.see_all": "Tesnel Bory",
@@ -367,24 +347,20 @@
   "mobileapp.home.status.completed": "Avartvatsel",
   "mobileapp.home.status.in_progress": "Irakatsvogh",
   "mobileapp.home.status.scheduled": "Kazmakerpvatsel",
-
   "mobileapp.visits.title": "Aytselumner",
   "mobileapp.visits.subtitle": "Mayis 15, 2024",
   "mobileapp.visits.today": "Aysor",
   "mobileapp.visits.upcoming": "Galis",
   "mobileapp.visits.history": "Patmutyun",
   "mobileapp.visits.add": "Avelatsnel Aytselum",
-
   "mobileapp.visit_details.title": "Aytselumi Mancramasustynner",
   "mobileapp.visit_details.price": "Gin",
   "mobileapp.visit_details.duration": "Tarevoluytyun",
   "mobileapp.visit_details.duration_val": "30 rope",
   "mobileapp.visit_details.owner": "Sepakanater",
   "mobileapp.visit_details.complete": "Avartel Aytselum",
-
   "mobileapp.add_photos.title": "Avelatsnel Lusner",
   "mobileapp.add_photos.btn": "Avelatsnel Lusankar",
-
   "mobileapp.feedback.title": "Patschoki Ardzagankutyun",
   "mobileapp.feedback.q1": "Ynche patschoxy siretse guyqy?",
   "mobileapp.feedback.loved": "Shat sirets",
@@ -400,16 +376,13 @@
   "mobileapp.feedback.tag.view": "Tesk",
   "mobileapp.feedback.tag.kitchen": "Khohoch",
   "mobileapp.feedback.tag.layout": "Kazmakerpum",
-
   "mobileapp.navigate.title": "Navardel",
   "mobileapp.navigate.duration": "12 rope (4.2 km)",
   "mobileapp.navigate.via": "Mashtots Poghota mijotsi",
   "mobileapp.navigate.start": "Sksnel Navardel",
-
   "mobileapp.map.title": "Karteznashargh",
   "mobileapp.map.nearby": "Masin Gordzakagner",
   "mobileapp.map.min_ago": "rope arraj",
-
   "mobileapp.summary.title": "Amenaory Kratkagir",
   "mobileapp.summary.subtitle": "Mayis 15, 2024",
   "mobileapp.summary.visits": "Avartvatsel Aytselumner",
@@ -417,18 +390,15 @@
   "mobileapp.summary.traveled": "Anvats Chanaparh",
   "mobileapp.summary.worked": "Ashkhatanqi Zham",
   "mobileapp.summary.timeline": "Gortsuneyutyan Jamanakacuts",
-
   "mobileapp.messages.title": "Hasarkumnner",
   "mobileapp.messages.search": "Pntrel hasarkumnner",
   "mobileapp.messages.msg1": "Shnorhakal! Mancramasustunnery kayuyn kardalou hamar...",
   "mobileapp.messages.msg2": "Karogh ek kazmakerpel vaghy?",
-
   "mobileapp.properties.title": "Guyqer",
   "mobileapp.properties.all": "Bolor",
   "mobileapp.properties.viewed": "Dittsel",
   "mobileapp.properties.interested": "Huzum ka",
   "mobileapp.properties.closed": "Knqvats",
-
   "mobileapp.profile.title": "Andznaket",
   "mobileapp.profile.role": "Ansharzh Guyqi Gordzakal",
   "mobileapp.profile.my_profile": "Ims Andznaket",
@@ -437,7 +407,6 @@
   "mobileapp.profile.settings": "Karavoghutynner",
   "mobileapp.profile.help": "Ognutyun ev Sahmanumner",
   "mobileapp.profile.logout": "Yelt",
-
   "mobileapp.quickgrid.login": "Mutq",
   "mobileapp.quickgrid.home": "Tun",
   "mobileapp.quickgrid.visit_details": "Aytselumi Mancramasustynner",
@@ -448,7 +417,6 @@
   "mobileapp.quickgrid.messages": "Hasarkumnner",
   "mobileapp.quickgrid.properties": "Guyqer",
   "mobileapp.quickgrid.profile": "Andznaket",
-
   "agent_card.options_today": "Aysory entranqner",
   "agent_card.score": "Mijnotak",
   "agent_status.in_office": "Grasenyakum",
@@ -459,7 +427,6 @@
   "agent_status.in_visit": "Aytseluts",
   "agent_status.traveling": "Champin",
   "agent_status.offline": "Ankap",
-
   "property_status.exclusive": "Bacarrik",
   "property_status.open_inventory": "Bats inventar",
   "property_status.visited_by_team": "Aytselel e jokovurdy",
@@ -469,18 +436,15 @@
   "property_status.visited": "Aytselel",
   "property_status.interested_client": "Huzum kar hajordagar",
   "property_status.rented_sold": "Vacharrvats/Vacharrats",
-
   "visit_status.scheduled": "Kazmakerpvats",
   "visit_status.in_progress": "Irakatsvogh",
   "visit_status.completed": "Avartvats",
   "visit_status.delayed": "Ushatsvats",
   "visit_timeline.title": "Aytselumneri zhamanakatcuts",
-
   "map_mock.title": "Aktiv karteznashar",
   "map_mock.live": "Aktiv emulyatsia",
-  "map_mock.city": "Yerevan",
+  "map_mock.city": "Երևան",
   "map_mock.route": "Emulyats champin Kentroni ev Arabkiri mijev",
-
   "mobile_preview.screen.overview": "Akhardzhakhumb",
   "mobile_preview.screen.overview_detail": "Gini ev plani tesakhumb",
   "mobile_preview.screen.property": "Guyq",
@@ -512,7 +476,6 @@
   "mobile_preview.note3": "Khoraman antsumneri vichakner ev sev hamabardzakak gortsoghutyunner",
   "mobile_preview.note4": "Guyqi lusankarner unen visual arrajnahertutyun",
   "mobile_preview.note5": "Nerkayatsum-arajardzhain ekranner shaheri vorovel hamar",
-
   "landing.badge": "EstateFlow - Bazmahangoyts ansharch guyqi gortsuneutyan platform",
   "landing.hero_title": "Nerkayatsumi patrast prototip master administratori, tnoreni ev gordzakali ashkhataotsneri hamar",
   "landing.hero_desc": "Ays prototipy hima karuyts e bashkhetagrutyun-himnvats gortsakalutyan hangoytsneri, deri matchelutyan, aktiv datum, hakapayqar inventar, kataroghutyan vargakargum ev komisioni tramabanutyan vra.",
@@ -530,11 +493,9 @@
   "landing.feature2_desc": "Hetekhel aktiv gortsuneutyun, bacarrik inventar, aysory entranqner ev amsekan vargakargi ardyunqner.",
   "landing.feature3_title": "Gordzakali buyurakhos hosanq",
   "landing.feature3_desc": "Tsuyts tval, vorsher datum gordzakagnery norokum yen vichak, aragatsnumen nor tsutsakavorumner ev gratsnumen arajadimutyuny datum egnelis.",
-
   "role_select.eyebrow": "EstateFlow",
   "role_select.title": "Yntrek dzer ashkhatani tarrats",
   "role_select.subtitle": "Mtek vorpes tnoren, qartughar kam gordzakal ev tesek miayn ayn karoghutyunnery, voronq verraberum yen dzer derin.",
-
   "visits.title": "Aytselumner",
   "visits.subtitle": "Hetekhel kazmakerpvats, aktiv, avartvats ev ushatsvats aytselumner",
   "visits.tab.today": "Aysor",
@@ -543,7 +504,6 @@
   "visits.agent": "Gordzakal",
   "visits.client": "Hajordagar",
   "visits.open_details": "Batsel mantsmasner",
-
   "visit_detail.back": "Hetadarrnal aytselumneri",
   "visit_detail.title": "Aytselumi mantsmas - {{id}}",
   "visit_detail.price": "Gin",
@@ -562,7 +522,6 @@
   "visit_detail.notes": "Nshumner",
   "visit_detail.schedule_followup": "Pajordagrel hajordvogh aytselum",
   "visit_detail.export_summary": "Artahanel kratkagiry",
-
   "leaderboard.title": "Liderneri tcuts",
   "leaderboard.subtitle": "Amsekan gordzakagneri vargakargum est kataroghutyan",
   "leaderboard.my_title": "Im vargakargumy",
@@ -582,7 +541,6 @@
   "leaderboard.col.score": "Mijnotak",
   "leaderboard.col.revenue": "Ekamut",
   "leaderboard.you": "Du",
-
   "reports.title": "Kataroghutyun ev npatakneri hetekhum",
   "reports.subtitle": "Oryakan entranqneri npatakner, aragandzneri verlutsutyun ev amsekan vargakargum est gordzarqneri ev ekamuti",
   "reports.kpi.at_target": "Gordzakagner npataki vra",
@@ -596,7 +554,6 @@
   "reports.deals_suffix": "gordzarqner",
   "reports.revenue_suffix": "ekamut",
   "reports.sourcing_analysis": "Aragandzayin metodi verlutsutyun",
-
   "agent_home.greeting": "Bari or, {{name}}",
   "agent_home.day_glance": "Dzer ory hayatsq mek",
   "agent_home.my_status": "Im vichaky",
@@ -609,7 +566,6 @@
   "agent_home.my_listings": "Im tsutsakavorumnery",
   "agent_home.my_listings_desc": "Bolor guyqery vor karogh em tesnel",
   "agent_home.sign_out": "Durs gal",
-
   "ops.title": "Aktiv vichaki vahanak",
   "ops.subtitle": "Tesek, vortegh e gordzakal nerkayis pahin",
   "ops.my_status": "Im vichaky",
@@ -619,7 +575,6 @@
   "ops.visits_today": "Aytselumner aysor",
   "ops.options": "Entranqner",
   "ops.no_match": "Voch mi gordzakal chi hamapatashkhanum ays zttichi.",
-
   "mappage.title": "Shrjanneri ev datumi tsadzkayum",
   "mappage.subtitle": "Aktiv tesakhumb gordzakagneri, bacarrikneri ev hakapaykarneri yur ashkhi shrjanin",
   "mappage.kpi.listings": "Tsutsakavorumner",
@@ -638,7 +593,6 @@
   "mappage.overview": "Shrjanneri akhardzhakhumb",
   "mappage.row_stats": "{{listings}} tsutsakavorum · {{agents}} gordzakal · {{onField}} datum",
   "mappage.all": "Bolory",
-
   "nodes_admin.title": "Hangoytsi bashkhetagrumner",
   "nodes_admin.subtitle": "Karavarel gortsakalutyan hangoytsnery, planery ev texery",
   "nodes_admin.total": "Yndhanur hangoytsner",
@@ -669,5 +623,59 @@
   "nodes_admin.modal.mrr": "MRR",
   "nodes_admin.modal.billing": "Hajord vcharman amsativ",
   "nodes_admin.modal.cancel": "Cherryl",
-  "nodes_admin.modal.add": "Avelatsnel hangoyts"
+  "nodes_admin.modal.add": "Avelatsnel hangoyts",
+  "add_listing.subtitle_progress": "Aysory aragatsumy: {{done}}/{{target}} entranqner",
+  "add_listing.placeholder.name": "2 senyakanots bnakaran Komitasi merdz",
+  "add_listing.placeholder.address": "Komitasi pox 12, Arabkir",
+  "add_listing.placeholder.price": "$145,000",
+  "add_listing.placeholder.owner": "Sepakanatiri anuny",
+  "login.placeholder.email": "ernest",
+  "common.city_yerevan": "Երևան",
+  "mobile.attach": "Kapel",
+  "mobile.plan_label": "Plan",
+  "sourcing.talking_to_neighbors": "Kharsi het khoselem",
+  "sourcing.building_guards": "Shenqayin pahakanner",
+  "sourcing.on_field_research": "Dashtyum hetazotoghutyun",
+  "sourcing.referral_network": "Haroshakhayin tsancot",
+  "sourcing.word_of_mouth": "Beren-beran",
+  "sourcing.online_listing": "Interni tsutsakavorum",
+  "sourcing.on_field_search": "Dashtyum pntrum",
+  "sourcing.commercial_network": "Vacharayin tsancot",
+  "sourcing.desk_workflow": "Grasenaki ashkhatanq",
+  "sourcing.management": "Karavarchum",
+  "kpi.subscribed_nodes": "Bashkhetagrats hangoytsner",
+  "kpi.active_agents_today": "Aysor aktiv gordzakagner",
+  "kpi.exclusive_listings": "Bacharik tsutsakavorumner",
+  "kpi.monthly_revenue": "Amsekan ekamut",
+  "kpi.options_logged": "Grarvats entranqner",
+  "kpi.change.this_month": "+2 ays amis",
+  "kpi.change.on_field_now": "38 hima datum",
+  "kpi.change.protected": "+11 pashpanvats",
+  "kpi.change.vs_april": "+14% aprilyits",
+  "kpi.change.target_pace": "93% npataki tempi",
+  "timeline.item0.title": "Tnoreni briefing",
+  "timeline.item0.subtitle": "Npatakner hashvarvats shrjannerov ev masnagitutyamb",
+  "timeline.item1.title": "Bacharik amurachvats",
+  "timeline.item1.subtitle": "Arabkiri bnakaran teghafarkvats pashpanvats inventar",
+  "timeline.item2.title": "Qartutshari ashkhatanq",
+  "timeline.item2.subtitle": "Sepakanatiri bnagrery khandznem storagrutyun",
+  "timeline.item3.title": "Dashtyayin nyuther",
+  "timeline.item3.subtitle": "Nor Norqi aragandzagtnumi chanaparhy tarmatsrvats kendani",
+  "timeline.item4.title": "Oryakan entranqneri tesakhumb",
+  "timeline.item4.subtitle": "Npatak ev irakanutyuny knqvum en 93% tempi vra",
+  "add_listing.live_conflict_prefix": "⚠️ Hakapaykari hnaravoryutyun:",
+  "add_listing.on": "amsatvin",
+  "mobileapp.navigate.start_point": "Sksnel",
+  "mobileapp.navigate.visit_point": "Aytselum",
+  "mobileapp.summary.item1": "10:22 - Kentronakan bnakaran",
+  "mobileapp.summary.item2": "10:58 - Durs gal aytselumits",
+  "mobileapp.summary.item3": "12:35 - Nor shen",
+  "alert.item1": "North District Homes bashkhetagrutyuny norokvum e 2026-05-18 ev risk vichakum e.",
+  "alert.item2": "Erku dashtyayin gordzakal ashkhatum en nuyni klasterum; hakapayqary kaankhelu hamar petadrvm e veranshanakoghum.",
+  "alert.item3": "Komitasi poghoti bnakaran bacharik tsutsakavorumi hartsuma akhvats e.",
+  "properties.status.closed": "Փakva",
+  "mobile.secretary.open_files": "6 soghakan fayl",
+  "mobile.secretary.follow_ups_pending": "14 skhalosvaç",
+  "mobile.secretary.coverage_zones": "Arabkir + Nor Nork",
+  "mobile.secretary.blocked_visits": "2 ardgelvats ayts"
 }

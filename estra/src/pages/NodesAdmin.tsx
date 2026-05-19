@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import { Plus, Trash2, Boxes, AlertTriangle, CheckCircle2, Clock } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Topbar } from "../components/Topbar";
 import { useAppState } from "../state/AppState";
 import { NodeSubscription } from "../data/mockData";
@@ -9,17 +10,18 @@ const PLANS = ["Starter", "Growth", "Scale"] as const;
 const STATUSES: NodeSubscription["status"][] = ["Active", "Trial", "At Risk"];
 
 export function NodesAdmin() {
+  const { t } = useTranslation();
   const { state, addNode, removeNode } = useAppState();
   const [open, setOpen] = useState(false);
 
   return (
     <div>
-      <Topbar title="Node Subscriptions" subtitle="Manage agency nodes, plans, and seats" />
+      <Topbar title={t("nodes_admin.title")} subtitle={t("nodes_admin.subtitle")} />
 
       <div className="mb-4 grid gap-3 sm:grid-cols-3">
-        <Stat icon={<Boxes size={14} />} label="Total nodes" value={state.nodes.length} />
-        <Stat icon={<CheckCircle2 size={14} />} label="Active" value={state.nodes.filter((n) => n.status === "Active").length} />
-        <Stat icon={<AlertTriangle size={14} />} label="At risk" value={state.nodes.filter((n) => n.status === "At Risk").length} />
+        <Stat icon={<Boxes size={14} />} label={t("nodes_admin.total")} value={state.nodes.length} />
+        <Stat icon={<CheckCircle2 size={14} />} label={t("nodes_admin.active")} value={state.nodes.filter((n) => n.status === "Active").length} />
+        <Stat icon={<AlertTriangle size={14} />} label={t("nodes_admin.at_risk")} value={state.nodes.filter((n) => n.status === "At Risk").length} />
       </div>
 
       <div className="mb-3 flex justify-end">
@@ -27,7 +29,7 @@ export function NodesAdmin() {
           onClick={() => setOpen(true)}
           className="inline-flex items-center gap-2 rounded-[18px] bg-black px-4 py-2.5 text-sm font-medium text-white"
         >
-          <Plus size={14} /> Add Node
+          <Plus size={14} /> {t("nodes_admin.add_node")}
         </button>
       </div>
 
@@ -35,14 +37,14 @@ export function NodesAdmin() {
         <table className="w-full text-sm">
           <thead className="bg-white/60 text-left text-[11px] uppercase tracking-[0.16em] text-slate-500">
             <tr>
-              <th className="px-4 py-3">Agency</th>
-              <th className="px-4 py-3 hidden md:table-cell">Director</th>
-              <th className="px-4 py-3 hidden sm:table-cell">Region</th>
-              <th className="px-4 py-3">Plan</th>
-              <th className="px-4 py-3">Seats</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3 hidden lg:table-cell">Billing</th>
-              <th className="px-4 py-3 text-right">MRR</th>
+              <th className="px-4 py-3">{t("nodes_admin.col.agency")}</th>
+              <th className="px-4 py-3 hidden md:table-cell">{t("nodes_admin.col.director")}</th>
+              <th className="px-4 py-3 hidden sm:table-cell">{t("nodes_admin.col.region")}</th>
+              <th className="px-4 py-3">{t("nodes_admin.col.plan")}</th>
+              <th className="px-4 py-3">{t("nodes_admin.col.seats")}</th>
+              <th className="px-4 py-3">{t("nodes_admin.col.status")}</th>
+              <th className="px-4 py-3 hidden lg:table-cell">{t("nodes_admin.col.billing")}</th>
+              <th className="px-4 py-3 text-right">{t("nodes_admin.col.mrr")}</th>
               <th className="px-4 py-3"></th>
             </tr>
           </thead>
@@ -60,10 +62,10 @@ export function NodesAdmin() {
                 <td className="px-4 py-3 text-right">
                   <button
                     onClick={() => {
-                      if (confirm(`Remove node "${n.agency}"?`)) removeNode(n.id);
+                      if (confirm(t("nodes_admin.remove_confirm", { agency: n.agency }))) removeNode(n.id);
                     }}
                     className="rounded-full p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"
-                    title="Remove"
+                    title={t("nodes_admin.remove")}
                   >
                     <Trash2 size={14} />
                   </button>
@@ -73,7 +75,7 @@ export function NodesAdmin() {
             {state.nodes.length === 0 && (
               <tr>
                 <td colSpan={9} className="px-4 py-8 text-center text-sm text-slate-500">
-                  No nodes yet. Add the first subscription.
+                  {t("nodes_admin.no_nodes")}
                 </td>
               </tr>
             )}
@@ -98,6 +100,12 @@ function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; va
 }
 
 function StatusPill({ status }: { status: NodeSubscription["status"] }) {
+  const { t } = useTranslation();
+  const labelKey: Record<NodeSubscription["status"], string> = {
+    Active: "nodes_admin.status.active",
+    Trial: "nodes_admin.status.trial",
+    "At Risk": "nodes_admin.status.at_risk",
+  };
   const styles: Record<NodeSubscription["status"], string> = {
     Active: "bg-emerald-50 text-emerald-700 border-emerald-200",
     Trial: "bg-blue-50 text-blue-700 border-blue-200",
@@ -106,7 +114,7 @@ function StatusPill({ status }: { status: NodeSubscription["status"] }) {
   const Icon = status === "Active" ? CheckCircle2 : status === "Trial" ? Clock : AlertTriangle;
   return (
     <span className={cls("inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs", styles[status])}>
-      <Icon size={11} /> {status}
+      <Icon size={11} /> {t(labelKey[status])}
     </span>
   );
 }
@@ -118,6 +126,7 @@ function AddNodeModal({
   onClose: () => void;
   onAdd: (node: Omit<NodeSubscription, "id" | "activatedAt">) => void;
 }) {
+  const { t } = useTranslation();
   const [agency, setAgency] = useState("");
   const [director, setDirector] = useState("");
   const [region, setRegion] = useState("Yerevan");
@@ -140,18 +149,18 @@ function AddNodeModal({
         onSubmit={submit}
         className="w-full max-w-md rounded-[24px] border border-white/80 bg-[#fbfaf6] p-5 shadow-xl"
       >
-        <h3 className="mb-4 text-lg font-semibold">Add new node</h3>
+        <h3 className="mb-4 text-lg font-semibold">{t("nodes_admin.modal.title")}</h3>
         <div className="space-y-3">
-          <Input label="Agency name" value={agency} onChange={setAgency} required />
-          <Input label="Director" value={director} onChange={setDirector} required />
-          <Input label="Region" value={region} onChange={setRegion} />
+          <Input label={t("nodes_admin.modal.agency")} value={agency} onChange={setAgency} required />
+          <Input label={t("nodes_admin.modal.director")} value={director} onChange={setDirector} required />
+          <Input label={t("nodes_admin.modal.region")} value={region} onChange={setRegion} />
           <div className="grid grid-cols-2 gap-3">
-            <Select label="Plan" value={plan} onChange={(v) => setPlan(v as any)} options={[...PLANS]} />
-            <Select label="Status" value={status} onChange={(v) => setStatus(v as any)} options={STATUSES} />
+            <Select label={t("nodes_admin.modal.plan")} value={plan} onChange={(v) => setPlan(v as any)} options={[...PLANS]} />
+            <Select label={t("nodes_admin.modal.status")} value={status} onChange={(v) => setStatus(v as any)} options={STATUSES} />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <label className="block rounded-[16px] border border-[#ece6db] bg-white px-3 py-2">
-              <span className="text-[11px] uppercase tracking-[0.16em] text-slate-500">Seats</span>
+              <span className="text-[11px] uppercase tracking-[0.16em] text-slate-500">{t("nodes_admin.modal.seats")}</span>
               <input
                 type="number"
                 min={1}
@@ -160,16 +169,16 @@ function AddNodeModal({
                 className="w-full bg-transparent text-sm outline-none"
               />
             </label>
-            <Input label="MRR" value={mrr} onChange={setMrr} />
+            <Input label={t("nodes_admin.modal.mrr")} value={mrr} onChange={setMrr} />
           </div>
-          <Input label="Next billing date" value={billingDate} onChange={setBillingDate} type="date" />
+          <Input label={t("nodes_admin.modal.billing")} value={billingDate} onChange={setBillingDate} type="date" />
         </div>
         <div className="mt-5 flex justify-end gap-2">
           <button type="button" onClick={onClose} className="rounded-[16px] border border-[#ece6db] bg-white px-4 py-2 text-sm">
-            Cancel
+            {t("nodes_admin.modal.cancel")}
           </button>
           <button type="submit" className="rounded-[16px] bg-black px-4 py-2 text-sm font-medium text-white">
-            Add node
+            {t("nodes_admin.modal.add")}
           </button>
         </div>
       </form>

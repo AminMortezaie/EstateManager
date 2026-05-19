@@ -71,6 +71,13 @@ function Surface({ children, className }: { children: ReactNode; className?: str
   );
 }
 
+const previewSourcingKey: Record<string, string> = {
+  "On-field search": "sourcing.on_field_search",
+  "Word of mouth": "sourcing.word_of_mouth",
+  "Referral network": "sourcing.referral_network",
+  "Commercial network": "sourcing.commercial_network",
+};
+
 function ScreenContent(id: ScreenId, t: (key: string, opts?: any) => string, compact = false) {
   const property = properties[0];
   const text = compact ? "text-[10px]" : "text-xs";
@@ -225,7 +232,7 @@ function ScreenContent(id: ScreenId, t: (key: string, opts?: any) => string, com
         {sourcingBreakdown.slice(0, 2).map((item) => (
           <div key={item.label} className="mb-3 last:mb-0">
             <div className="mb-1 flex items-center justify-between">
-              <span className="text-slate-500">{item.label}</span>
+              <span className="text-slate-500">{t(previewSourcingKey[item.label] ?? item.label)}</span>
               <span className="text-slate-900">{item.value}%</span>
             </div>
             <div className="h-2 rounded-full bg-[#e5e2d9]">

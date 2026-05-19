@@ -140,6 +140,18 @@ function PropertyCard({
   );
 }
 
+const sourcingKey: Record<string, string> = {
+  "On-field search": "sourcing.on_field_search",
+  "Word of mouth": "sourcing.word_of_mouth",
+  "Referral network": "sourcing.referral_network",
+  "Commercial network": "sourcing.commercial_network",
+  "Talking to neighbors": "sourcing.talking_to_neighbors",
+  "Building guards": "sourcing.building_guards",
+  "Desk workflow": "sourcing.desk_workflow",
+  "Management": "sourcing.management",
+  "On-field research": "sourcing.on_field_research",
+};
+
 function DetailDrawer({
   property,
   onClose,
@@ -186,12 +198,12 @@ function DetailDrawer({
             <div className="rounded-xl bg-slate-50 p-3">
               <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500">{t("properties.detail.type")}</p>
               <p className="mt-1 inline-flex items-center gap-1 text-base font-semibold text-slate-900">
-                <Icon size={14} /> {property.type}
+                <Icon size={14} /> {t(`properties.type.${property.type.toLowerCase()}`)}
               </p>
             </div>
             <div className="rounded-xl bg-slate-50 p-3">
               <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500">{t("properties.detail.status")}</p>
-              <p className="mt-1 text-base font-semibold text-slate-900">{property.status}</p>
+              <p className="mt-1 text-base font-semibold text-slate-900">{t(`properties.status.${property.status.toLowerCase().replace(/ /g, "_")}`, { defaultValue: property.status })}</p>
             </div>
           </div>
 
@@ -207,7 +219,7 @@ function DetailDrawer({
 
           <div className="rounded-xl border border-[#efe9dd] p-3">
             <p className="text-xs font-semibold text-slate-700">{t("properties.detail.sourcing_history")}</p>
-            <p className="mt-1 text-xs text-slate-500">{t("properties.detail.source")} {property.sourcingMethod}</p>
+            <p className="mt-1 text-xs text-slate-500">{t("properties.detail.source")} {t(sourcingKey[property.sourcingMethod] ?? property.sourcingMethod)}</p>
             <p className="mt-1 text-xs text-slate-500">
               {t("properties.detail.last_visited")} <strong className="text-slate-700">{property.lastVisitedBy}</strong>{" "}
               {t("properties.detail.on")} {property.lastVisitedAt}
@@ -414,7 +426,7 @@ export function Properties() {
           className="rounded-full border border-[#ece6db] bg-white px-3 py-2 text-sm text-slate-700 outline-none"
         >
           {(["All", "Apartment", "House", "Commercial", "Studio"] as const).map((typeOpt) => (
-            <option key={typeOpt}>{typeOpt}</option>
+            <option key={typeOpt} value={typeOpt}>{typeOpt === "All" ? t("properties.tab.all") : t(`properties.type.${typeOpt.toLowerCase()}`)}</option>
           ))}
         </select>
       </div>
