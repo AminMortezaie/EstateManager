@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b380c38f-e512-4fe1-b676-3b9b6dc12350" name="Changes" comment="feat: add i18n support and integrate translations across components.">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/EstateManager.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.junie/memory/errors.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.junie/memory/feedback.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.junie/memory/language.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.junie/memory/memory.version" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.junie/memory/tasks.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/estra/src/i18n/locales/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/estra/src/i18n/locales/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estra/src/i18n/locales/hy.json" beforeDir="false" afterPath="$PROJECT_DIR$/estra/src/i18n/locales/hy.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estra/src/i18n/locales/ru.json" beforeDir="false" afterPath="$PROJECT_DIR$/estra/src/i18n/locales/ru.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estra/src/pages/AddListing.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/estra/src/pages/AddListing.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estra/src/pages/MobileApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/estra/src/pages/MobileApp.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estra/src/pages/MobileNativeApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/estra/src/pages/MobileNativeApp.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/estra/src/pages/NodesAdmin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/estra/src/pages/NodesAdmin.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="82" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0417469235938603" />
+      <entry key="MS500" value="2.880258850266677" />
+      <entry key="S2" value="10.813303585866425" />
+      <entry key="S5" value="24.402255632611865" />
+      <entry key="S10" value="43.456886705604376" />
+      <entry key="S30" value="80.79611395889287" />
+      <entry key="S60" value="98.36496477776628" />
+      <entry key="M2" value="109.28949465543676" />
+      <entry key="M5" value="116.84581636532235" />
+      <entry key="M10" value="123.44924400051673" />
+      <entry key="M15" value="132.55138504637674" />
+      <entry key="M30" value="158.16932209812245" />
+      <entry key="H1" value="185.92945926549132" />
+      <entry key="H2" value="206.67116562102336" />
+      <entry key="H4" value="219.3929831450216" />
+      <entry key="D1" value="231.42303227466215" />
+      <entry key="W1" value="233.6282114865602" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="3.073608223820035E-140" />
+      <entry key="S10" value="1.75317090547956E-70" />
+      <entry key="S30" value="5.5968210119033534E-24" />
+      <entry key="S60" value="2.365760134059095E-12" />
+      <entry key="M2" value="1.53810277096789E-6" />
+      <entry key="M5" value="0.0047292703558868745" />
+      <entry key="M10" value="0.06876969067755677" />
+      <entry key="M15" value="0.16785387847045233" />
+      <entry key="M30" value="0.40969974184816305" />
+      <entry key="H1" value="0.6400779185756716" />
+      <entry key="H2" value="0.8000486976276313" />
+      <entry key="H4" value="0.8944544133870828" />
+      <entry key="D1" value="0.9815815089482085" />
+      <entry key="W1" value="0.9973477771702437" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.0132990474802803" />
+      <entry key="MS500" value="2.866633163397682" />
+      <entry key="S2" value="10.801605957394607" />
+      <entry key="S5" value="24.39165173560225" />
+      <entry key="S10" value="43.44727554061741" />
+      <entry key="S30" value="80.79002664416878" />
+      <entry key="S60" value="98.3612355584775" />
+      <entry key="M2" value="109.28741772015688" />
+      <entry key="M5" value="116.84963928996781" />
+      <entry key="M10" value="123.5174281622926" />
+      <entry key="M15" value="132.71871479825643" />
+      <entry key="M30" value="158.57859182519914" />
+      <entry key="H1" value="186.56923986733364" />
+      <entry key="H2" value="207.4710365750472" />
+      <entry key="H4" value="220.28734002061177" />
+      <entry key="D1" value="232.40459618592737" />
+      <entry key="W1" value="234.62555671498208" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 1,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3DwEAjVb7Rogf0QeQnkRjkVdYmZ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "javascript.preferred.runtime.type.id": "node",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/Users/amin/dev/p-projects/armenia/EstateManager",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "/Users/amin/dev/p-projects/armenia/EstateManager/estra/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.24374.125" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b380c38f-e512-4fe1-b676-3b9b6dc12350" name="Changes" comment="" />
+      <created>1779184590227</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1779184590227</updated>
+      <workItem from="1779184591235" duration="5882000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat: add i18n support and integrate translations across components.">
+      <option name="closed" value="true" />
+      <created>1779188881796</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1779188881796</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/estra/vite.config.js" />
+        <option value="$PROJECT_DIR$/estra/vite.config.d.ts" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: add i18n support and integrate translations across components." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add i18n support and integrate translations across components." />
+  </component>
+</project>
